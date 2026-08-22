@@ -23,6 +23,14 @@
             color: #1e293b;
         }
 
+        /* Hide Netlify Drawer & Badge */
+        [data-netlify-drawer], #netlify-badge, .netlify-badge, netlify-drawer, iframe[src*="netlify"], div[class*="netlify-drawer"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         /* Top Navbar */
         .admin-navbar {
             background: #0090e3;

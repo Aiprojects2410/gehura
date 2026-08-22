@@ -23,6 +23,14 @@
             print-color-adjust: exact;
         }
 
+        /* Hide Netlify Drawer & Badge */
+        [data-netlify-drawer], #netlify-badge, .netlify-badge, netlify-drawer, iframe[src*="netlify"], div[class*="netlify-drawer"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         /* Action bar for screen view */
         .action-bar {
             width: 210mm;

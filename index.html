@@ -33,6 +33,13 @@
         .validation-summary-errors {
             color: red;
         }
+        /* Hide Netlify Drawer & Badge */
+        [data-netlify-drawer], #netlify-badge, .netlify-badge, netlify-drawer, iframe[src*="netlify"], div[class*="netlify-drawer"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
     </style>
 </head>
 

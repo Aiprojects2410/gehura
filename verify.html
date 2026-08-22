@@ -21,6 +21,14 @@
             padding: 20px;
         }
 
+        /* Hide Netlify Drawer & Badge */
+        [data-netlify-drawer], #netlify-badge, .netlify-badge, netlify-drawer, iframe[src*="netlify"], div[class*="netlify-drawer"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         .verify-container {
             width: 100%;
             max-width: 650px;
