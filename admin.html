@@ -657,12 +657,17 @@
                                 <input type="email" id="inpEmail" class="form-control-custom" placeholder="e.g. student@gmail.com" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Official Email</label>
-                                <input type="email" id="inpOfficialEmail" class="form-control-custom" placeholder="e.g. student@geu.ac.in">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Profile Photo File</label>
-                                <input type="text" id="inpPhoto" class="form-control-custom" value="candidate_photo.png">
+                                <label class="form-label">Profile Photo (Upload / Change)</label>
+                                <div style="display:flex; align-items:center; gap:12px; margin-top:4px;">
+                                    <img id="inpPhotoPreview" src="candidate_photo.png" style="width:46px; height:46px; border-radius:6px; object-fit:cover; border:2px solid #0284c7; box-shadow:0 1px 3px rgba(0,0,0,0.15);" alt="Preview">
+                                    <div>
+                                        <input type="file" id="inpPhotoFileInput" accept="image/*" style="display:none;" onchange="previewAndSetPhoto(this, 'inpPhotoPreview', 'inpPhoto')">
+                                        <button type="button" class="btn-action-sm blue" onclick="document.getElementById('inpPhotoFileInput').click()" style="padding:7px 12px; font-size:12px;">
+                                            <i class="fa fa-upload"></i> Upload Photo
+                                        </button>
+                                        <input type="hidden" id="inpPhoto" value="candidate_photo.png">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -946,8 +951,17 @@
                             <input type="email" id="editOfficialEmail" class="form-control-custom">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Photo File / URL</label>
-                            <input type="text" id="editPhoto" class="form-control-custom">
+                            <label class="form-label">Profile Photo (Upload / Change)</label>
+                            <div style="display:flex; align-items:center; gap:12px; margin-top:4px;">
+                                <img id="editPhotoPreview" src="candidate_photo.png" style="width:46px; height:46px; border-radius:6px; object-fit:cover; border:2px solid #0284c7; box-shadow:0 1px 3px rgba(0,0,0,0.15);" alt="Preview">
+                                <div>
+                                    <input type="file" id="editPhotoFileInput" accept="image/*" style="display:none;" onchange="previewAndSetPhoto(this, 'editPhotoPreview', 'editPhoto')">
+                                    <button type="button" class="btn-action-sm blue" onclick="document.getElementById('editPhotoFileInput').click()" style="padding:7px 12px; font-size:12px;">
+                                        <i class="fa fa-upload"></i> Upload Photo
+                                    </button>
+                                    <input type="hidden" id="editPhoto" value="candidate_photo.png">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1093,6 +1107,18 @@
             allTbody.innerHTML = allHtml;
         }
 
+        function previewAndSetPhoto(input, previewImgId, hiddenInputId) {
+            if (input.files && input.files[0]) {
+                var file = input.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewImgId).src = e.target.result;
+                    document.getElementById(hiddenInputId).value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
         function openEditStudentModal(enrollNo) {
             const s = cachedStudents.find(x => x.enroll_no === enrollNo);
             if (!s) return;
@@ -1108,7 +1134,10 @@
             document.getElementById('editPhone').value = s.phone || '';
             document.getElementById('editEmail').value = s.email || '';
             document.getElementById('editOfficialEmail').value = s.official_email || s.email || '';
-            document.getElementById('editPhoto').value = s.photo || 'candidate_photo.png';
+            
+            var photoSrc = s.photo || 'candidate_photo.png';
+            document.getElementById('editPhotoPreview').src = photoSrc;
+            document.getElementById('editPhoto').value = photoSrc;
 
             document.getElementById('modalEditStudent').style.display = 'flex';
         }
@@ -1189,6 +1218,7 @@
             sessionStorage.setItem('course', s.course);
             sessionStorage.setItem('classRollNo', s.class_roll_no);
             sessionStorage.setItem('enrollNo', s.enroll_no);
+            sessionStorage.setItem('photo', s.photo || 'candidate_photo.png');
 
             window.open('dashboard.html', '_blank');
         }
