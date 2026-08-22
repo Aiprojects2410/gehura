@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University | Official Fee Receipt</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background-color: #525659;
+            color: #111111;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Action Top Bar */
+        .action-bar {
+            width: 210mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .action-bar a, .action-bar button {
+            background-color: #0090e3;
+            color: #ffffff;
+            border: none;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .action-bar a:hover, .action-bar button:hover {
+            background-color: #0077c2;
+        }
+
+        /* A4 Page */
+        .receipt-page {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: #ffffff;
+            padding: 16mm 20mm 15mm 20mm;
+            position: relative;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Image */
+        .receipt-header-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .receipt-title-box {
+            text-align: center;
+            border-top: 2px solid #c62828;
+            border-bottom: 2px solid #c62828;
+            padding: 6px 0;
+            margin-bottom: 16px;
+        }
+        .receipt-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #c62828;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .receipt-subtitle {
+            font-size: 11px;
+            color: #555555;
+            font-weight: 600;
+        }
+
+        /* Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 12px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+        .detail-row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+        .detail-lbl {
+            width: 135px;
+            color: #475569;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .detail-val {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* Fee Table */
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            margin-bottom: 18px;
+        }
+        .fee-table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+            padding: 9px 12px;
+            border: 1px solid #cbd5e1;
+            text-align: left;
+        }
+        .fee-table th.text-right, .fee-table td.text-right {
+            text-align: right;
+        }
+        .fee-table td {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+        }
+        .fee-table tr.total-row td {
+            font-weight: 800;
+            background-color: #f8fafc;
+            color: #0f172a;
+            border-top: 2px solid #0f172a;
+        }
+
+        /* Payment Summary Box */
+        .payment-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1.5px dashed #22c55e;
+            background: #f0fdf4;
+            border-radius: 6px;
+            padding: 12px 18px;
+            margin-bottom: 20px;
+        }
+        .pay-status-badge {
+            display: inline-block;
+            background: #16a34a;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 4px;
+        }
+
+        /* Footer & Signatures */
+        .receipt-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #cbd5e1;
+        }
+        .qr-seal-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .seal-circle {
+            width: 75px;
+            height: 75px;
+            border: 2px dashed #c62828;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #c62828;
+            font-size: 9px;
+            font-weight: 800;
+            text-align: center;
+            transform: rotate(-10deg);
+        }
+        .sig-box {
+            text-align: right;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .action-bar {
+                display: none;
+            }
+            .receipt-page {
+                box-shadow: none;
+                padding: 12mm 15mm;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+        <a href="dashboard.html">&larr; Back to Dashboard</a>
+        <button onclick="window.print()"><i class="fa fa-print"></i> Print / Download Receipt</button>
+    </div>
+
+    <!-- Receipt Page -->
+    <div class="receipt-page">
+        <div>
+            <!-- Authentic Header -->
+            <img src="marksheet_header.png" class="receipt-header-img" alt="Graphic Era Hill University">
+
+            <!-- Title -->
+            <div class="receipt-title-box">
+                <div class="receipt-title">Student Fee Payment Receipt</div>
+                <div class="receipt-subtitle">Academic Session: 2025-2026 (Semester I)</div>
+            </div>
+
+            <!-- Student & Receipt Details -->
+            <div class="details-grid">
+                <div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Receipt No:</span>
+                        <span class="detail-val" id="recNo">GEHU/2025-26/REC-92841</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Student Name:</span>
+                        <span class="detail-val" id="recName">MOHD HASHIM</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Father's Name:</span>
+                        <span class="detail-val" id="recFather">SAEED</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Admission / Enroll No:</span>
+                        <span class="detail-val" id="recEnroll">GE-21545586</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Date of Payment:</span>
+                        <span class="detail-val" id="recDate">15-Jul-2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Class Roll No:</span>
+                        <span class="detail-val" id="recRoll">2154682</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Course / Branch:</span>
+                        <span class="detail-val" id="recCourse">B.COM Hons I</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">Campus:</span>
+                        <span class="detail-val">Dehradun (Main Campus)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fee Breakdown Table -->
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">S.No</th>
+                        <th style="width: 62%;">Fee Particulars</th>
+                        <th style="width: 30%;" class="text-right">Amount (INR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Tuition Fee (Semester I)</td>
+                        <td class="text-right">₹ 52,000.00</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>University Examination & Evaluation Fee</td>
+                        <td class="text-right">₹ 4,500.00</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Academic Development & Lab Charges</td>
+                        <td class="text-right">₹ 6,000.00</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Library & Learning Resource Deposit</td>
+                        <td class="text-right">₹ 3,000.00</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Student Activity & Sports Council Fee</td>
+                        <td class="text-right">₹ 3,000.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2" class="text-right">Total Amount Paid:</td>
+                        <td class="text-right" style="color:#16a34a; font-size:14px;">₹ 68,500.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Payment Transaction Status -->
+            <div class="payment-summary">
+                <div>
+                    <span class="pay-status-badge"><i class="fa fa-check-circle"></i> PAYMENT SUCCESSFUL</span>
+                    <div style="font-size:12px; color:#166534; font-weight:600; margin-top:2px;">
+                        Transaction Ref: <strong>UPI/928472910482/PAYTM</strong> | Bank Ref: <strong>SBIN0008472</strong>
+                    </div>
+                    <div style="font-size:11px; color:#64748b; margin-top:2px;">
+                        Payment Mode: <strong>Online Portal (Razorpay Gateway)</strong>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:11px; color:#64748b; font-weight:600;">Net Balance Due:</div>
+                    <div style="font-size:16px; font-weight:800; color:#16a34a;">₹ 0.00 (NIL)</div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div style="font-size:10.5px; color:#64748b; line-height:1.4;">
+                <strong>Terms & Conditions:</strong><br>
+                1. This is a computer-generated official receipt and does not require physical signature.<br>
+                2. Fee once paid is subject to university refund policies as per UGC guidelines.<br>
+                3. Keep this receipt safely for semester registration and library clearance.
+            </div>
+        </div>
+
+        <!-- Footer Seal & Signature -->
+        <div class="receipt-footer">
+            <div class="qr-seal-box">
+                <!-- Real Scannable QR Code -->
+                <div id="receiptQRCode" style="width:68px; height:68px; display:flex; align-items:center; justify-content:center;"></div>
+
+                <div class="seal-circle">
+                    <div>GRAPHIC ERA</div>
+                    <div style="font-size:7px;">FEE CELL</div>
+                    <div style="font-size:7px;">VERIFIED</div>
+                </div>
+            </div>
+
+            <div class="sig-box">
+                <div style="color:#1e40af; font-weight:bold; font-size:16px; font-family:'Brush Script MT', 'Segoe Script', cursive; transform:rotate(-4deg); margin-bottom:2px;">
+                    Sandeep Kumar
+                </div>
+                <div style="border-top:1px solid #334155; padding-top:2px;">
+                    Authorized Signatory: <strong>Sandeep Kumar</strong><br>
+                    <span style="font-size:10px; color:#64748b; font-weight:normal;">Accounts & Finance Department</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="qrcode.min.js"></script>
+    <script>
+        // Load Session Data
+        var sName = sessionStorage.getItem('userName') || 'MOHD HASHIM';
+        var sFather = sessionStorage.getItem('fatherName') || 'SAEED';
+        var sEnroll = sessionStorage.getItem('enrollNo') || 'GE-21545586';
+        var sRoll = sessionStorage.getItem('classRollNo') || '2154682';
+        var sCourse = sessionStorage.getItem('course') || 'B.COM Hons I';
+
+        document.getElementById('recName').textContent = sName.toUpperCase();
+        document.getElementById('recFather').textContent = sFather.toUpperCase();
+        document.getElementById('recEnroll').textContent = sEnroll;
+        document.getElementById('recRoll').textContent = sRoll;
+        document.getElementById('recCourse').textContent = sCourse;
+
+        // Generate Real Scannable QR Code
+        try {
+            var qrCont = document.getElementById('receiptQRCode');
+            qrCont.innerHTML = '';
+            
+            var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                ? (window.location.protocol + '//172.20.10.8:8080')
+                : window.location.origin;
+            var verifyUrl = baseUrl + '/verify.html?type=fee_receipt&id=' + encodeURIComponent(sEnroll) + '&name=' + encodeURIComponent(sName) + '&roll=' + encodeURIComponent(sRoll) + '&course=' + encodeURIComponent(sCourse) + '&status=PAID';
+            
+            new QRCode(qrCont, {
+                text: verifyUrl,
+                width: 68,
+                height: 68,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        } catch(e) {
+            console.error("Fee QR error:", e);
+        }
+    </script>
+</body>
+</html>

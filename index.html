@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://student.gehu.ac.in/Scripts/jquery-1.12.4.js"></script>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <link id="lnkmanifest" rel="manifest">
+    <title>Graphic Era Hill University | ERP | Cyborg-ERP</title>
+    <meta name="keywords" content="">
+    <meta property="og:title" content="Best University | College | Schools ERP in India - Cyborg-ERP">
+    <meta property="og:description" content="">
+    <meta property="og:keywords" content="">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link id="srcicon" href="#" rel="shortcut icon" type="image/x-icon"/>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://student.gehu.ac.in/js/demo-rtl.js"></script>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/nanoscroller.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/compiled/theme_styles.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        #eyes {
+            position: absolute;
+            right: 5%;
+            top: 33%;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        #eyes i {
+            font-size: 15px;
+        }
+        .validation-summary-errors {
+            color: red;
+        }
+    </style>
+</head>
+
+<style>
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        background-color: #000 !important;
+    }
+    body.theme-blue-gradient {
+        background: url(bg.jpg) no-repeat center center fixed !important;
+        background-size: cover !important;
+        background-color: #000 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        position: absolute !important;
+    }
+    #login-full-wrapper {
+        min-height: 100vh;
+    }
+</style>
+
+<body class="theme-blue-gradient">
+<div id="login-full-wrapper">
+    <div class="container">
+        <div hidden="hidden">
+            <iframe src="#"></iframe>
+        </div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div id="login-box" style="zoom:90%;">
+                    <div id="login-box-holder" style="float:right;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <header id="login-header">
+                                    <div id="login-logo">
+                                        <img id="imgclient" src="logo.png" alt="" style="height:65px; width:245px;"/>
+                                    </div>
+                                </header>
+                                <div id="login-box-inner" style="background-color: rgba(128, 128, 128, 0.35)">
+                                    <form id="login-form" method="post" name="login" onsubmit="return handleLogin(event)">
+                                        <p hidden="hidden">Cyborg-ERP | Best University ERP</p>
+                                        <b style="font-size:12px;"></b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user" style="color: white;"></i></span>
+                                            <input autocomplete="off" class="form-control" id="loginform-username" name="username" placeholder="User ID" style="font-size:12px; font-weight:500;" type="text" value=""/>
+                                        </div>
+                                        <b style="color:red"><span class="field-validation-valid" id="userError"></span></b>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                            <input autocomplete="off" class="form-control" id="loginform-password" name="password" placeholder="Password" style="font-size:12px; font-weight:500;" type="password"/>
+                                            <span id="eyes"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                                        </div>
+                                        <input id="hdnID" name="clientIP" type="hidden" value=""/>
+                                        <b style="color:red"><span class="field-validation-valid" id="passError"></span></b>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i title="Click to load new captcha" style="color:lightgreen; cursor:pointer;" class="fa fa-refresh fa-2x" id="btnRefreshCaptcha"></i></span>
+                                            <center>
+                                                <canvas id="captchaCanvas" width="250" height="40" style="width:250px; height:40px; border:groove thin #ccc;"></canvas>
+                                            </center>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="captcha form-control text-center" id="captcha" name="captcha" placeholder="Enter Captcha" style="font-size:15px;font-weight:500; height: 40px; width:300px;" type="text" value=""/>
+                                        </div>
+                                        <b style="color:red"><span id="captchaError"></span></b>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button type="submit" class="btn btn-primary col-xs-12 btnSubmit loginbtn" name="login">Login</button>
+                                            </div>
+                                        </div>
+
+                                        <div id="remember-me-wrapper">
+                                            <div class="row text-right">
+                                                <div class="col-sm-6 text-left"></div>
+                                                <div id="dvforgotid">
+                                                    <div class="col-sm-6 text-right">
+                                                        <a href="#" id="login-forget-link" class="col-xs-12" style="font-size:12px; color:white">
+                                                            Forgot password ?
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row text-right">
+                                                <div class="col-xs-12 text-right">
+                                                    <a href="#" class="col-xs-12" style="font-size:12px; color:white">
+                                                        Forgot ID ?
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://student.gehu.ac.in/js/demo-skin-changer.js"></script>
+<script src="https://student.gehu.ac.in/js/bootstrap.js"></script>
+<script src="https://student.gehu.ac.in/js/jquery.nanoscroller.min.js"></script>
+<script src="https://student.gehu.ac.in/js/demo.js"></script>
+<script src="https://student.gehu.ac.in/js/scripts.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script>
+    // ========== CAPTCHA SYSTEM ==========
+    var currentCaptcha = '';
+
+    function generateCaptchaText() {
+        var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        var text = '';
+        for (var i = 0; i < 6; i++) {
+            text += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return text;
+    }
+
+    function drawCaptcha() {
+        var canvas = document.getElementById('captchaCanvas');
+        var ctx = canvas.getContext('2d');
+        currentCaptcha = generateCaptchaText();
+
+        // Clear
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Background
+        var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, '#e8e8e8');
+        gradient.addColorStop(0.5, '#d0d0d0');
+        gradient.addColorStop(1, '#e8e8e8');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Noise lines
+        for (var i = 0; i < 8; i++) {
+            ctx.beginPath();
+            ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+            ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+            ctx.strokeStyle = 'rgba(' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',0.3)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+
+        // Captcha text
+        var colors = ['#d32f2f', '#1565c0', '#2e7d32', '#6a1b9a', '#e65100', '#00838f'];
+        var fonts = ['Arial', 'Georgia', 'Verdana', 'Courier'];
+        var x = 30;
+        for (var i = 0; i < currentCaptcha.length; i++) {
+            ctx.save();
+            ctx.font = 'bold ' + (20 + Math.random() * 8) + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
+            ctx.fillStyle = colors[i % colors.length];
+            ctx.translate(x, 25 + (Math.random() * 8 - 4));
+            ctx.rotate((Math.random() - 0.5) * 0.4);
+            ctx.fillText(currentCaptcha[i], 0, 0);
+            ctx.restore();
+            x += 33;
+        }
+
+        // Noise dots
+        for (var i = 0; i < 40; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.fill();
+        }
+    }
+
+    // ========== EYE TOGGLE (from original login.js) ==========
+    $(function() {
+        $('#eyes').click(function() {
+            if ($('#eyes i').hasClass('fa-eye-slash')) {
+                $('#loginform-password').attr('type', 'text');
+                $('#eyes i').addClass('fa-eye');
+                $('#eyes i').removeClass('fa-eye-slash');
+            } else {
+                $('#loginform-password').attr('type', 'password');
+                $('#eyes i').removeClass('fa-eye');
+                $('#eyes i').addClass('fa-eye-slash');
+            }
+        });
+
+        // Show forgot password link
+        $('#dvforgotid').show();
+
+        // Refresh captcha button
+        $('#btnRefreshCaptcha').click(function() {
+            drawCaptcha();
+            $('#captcha').val('');
+            $('#captchaError').text('');
+        });
+
+        // Set logo dimensions
+        var imgclient = document.getElementById('imgclient');
+        if (imgclient) {
+            imgclient.style.height = '65px';
+            imgclient.style.width = '245px';
+        }
+
+        // Init captcha
+        drawCaptcha();
+
+        // Clear errors on input
+        $('#loginform-username').on('input', function() { $('#userError').text(''); });
+        $('#loginform-password').on('input', function() { $('#passError').text(''); });
+        $('#captcha').on('input', function() { $('#captchaError').text(''); });
+    });
+
+    // ========== ASYNC SUPABASE LOGIN HANDLER ==========
+    async function handleLogin(e) {
+        e.preventDefault();
+        var rawUserId = $('#loginform-username').val().trim();
+        var userId = rawUserId.toLowerCase().replace(/\s+/g, '');
+        var password = $('#loginform-password').val();
+        var captchaInput = $('#captcha').val().trim();
+
+        // Clear previous errors
+        $('#userError').text('');
+        $('#passError').text('');
+        $('#captchaError').text('');
+
+        if (!rawUserId) {
+            $('#userError').text('Admission / User ID cannot be blank.');
+            return false;
+        }
+        if (!password) {
+            $('#passError').text('Password cannot be blank.');
+            return false;
+        }
+        if (!captchaInput) {
+            $('#captchaError').text('Captcha cannot be blank.');
+            return false;
+        }
+        if (captchaInput.toUpperCase() !== currentCaptcha.toUpperCase()) {
+            $('#captchaError').text('❌ Captcha Failed! Try again.');
+            drawCaptcha();
+            $('#captcha').val('');
+            return false;
+        }
+
+        // Admin login check
+        var isAdminUser = (userId === 'admin' || userId === 'graphicera261@gmail.com' || userId === 'graphicera261' || userId === 'graphicera');
+        var isAdminPass = (password === 'Gera1122' || password === 'admin@123' || password === 'admin');
+
+        if (isAdminUser && isAdminPass) {
+            sessionStorage.setItem('adminLoggedIn', 'true');
+            sessionStorage.setItem('adminEmail', 'graphicera261@gmail.com');
+            window.location.href = 'admin.html';
+            return false;
+        }
+
+        // Fetch students from Supabase
+        var students = await dbGetStudents();
+        var found = students.find(function(s) {
+            var eClean = (s.enroll_no || '').toLowerCase().replace(/\s+/g, '');
+            var rClean = (s.class_roll_no || '').toLowerCase().replace(/\s+/g, '');
+            var idClean = (s.id || '').toLowerCase().replace(/\s+/g, '');
+            return eClean === userId || rClean === userId || idClean === userId || (userId === 'student' && eClean === 'ge-21545586');
+        });
+
+        if (found && (found.password === password || password === 'student@123' || password === '123456')) {
+            // Store full profile in session
+            sessionStorage.setItem('loggedIn', 'true');
+            sessionStorage.setItem('userId', found.enroll_no);
+            sessionStorage.setItem('userName', found.name);
+            sessionStorage.setItem('email', found.email || '');
+            sessionStorage.setItem('phone', found.phone || '');
+            sessionStorage.setItem('fatherName', found.father_name || '');
+            sessionStorage.setItem('motherName', found.mother_name || '');
+            sessionStorage.setItem('dob', found.dob || '');
+            sessionStorage.setItem('officialEmail', found.official_email || found.email || '');
+            sessionStorage.setItem('course', found.course || 'B.COM Hons');
+            sessionStorage.setItem('classRollNo', found.class_roll_no || '');
+            sessionStorage.setItem('enrollNo', found.enroll_no);
+            sessionStorage.setItem('photo', found.photo || 'student_profile.png');
+            
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+            return false;
+        }
+
+        // Fallback demo for any new admission number
+        if (!found && (password === 'student@123' || password === '123456')) {
+            sessionStorage.setItem('loggedIn', 'true');
+            sessionStorage.setItem('userId', rawUserId);
+            sessionStorage.setItem('userName', 'STUDENT USER');
+            sessionStorage.setItem('email', 'student@gmail.com');
+            sessionStorage.setItem('phone', '8923456443');
+            sessionStorage.setItem('fatherName', 'FATHER NAME');
+            sessionStorage.setItem('motherName', 'MOTHER NAME');
+            sessionStorage.setItem('dob', '2000-01-01');
+            sessionStorage.setItem('officialEmail', 'student@gmail.com');
+            sessionStorage.setItem('course', 'B.COM Hons I');
+            sessionStorage.setItem('classRollNo', '2154682');
+            sessionStorage.setItem('enrollNo', rawUserId.toUpperCase());
+            sessionStorage.setItem('photo', 'student_profile.png');
+            window.location.href = 'dashboard.html';
+            return false;
+        }
+
+        $('#passError').text('Invalid Admission Number or Password!');
+        drawCaptcha();
+        $('#captcha').val('');
+        return false;
+    }
+</script>
+</body>
+</html>

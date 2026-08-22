@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University | Online Document Verification</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .verify-container {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+
+        .verify-header {
+            background: #0090e3;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .verify-logo {
+            background: #ffffff;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+        .verify-logo img {
+            height: 38px;
+            width: auto;
+        }
+        .verify-header h1 {
+            font-size: 17px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .verify-header p {
+            font-size: 12px;
+            margin: 4px 0 0;
+            color: #e0f2fe;
+        }
+
+        .verify-body {
+            padding: 24px;
+        }
+
+        .verified-badge-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .verified-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #16a34a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .verified-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #166534;
+        }
+        .verified-desc {
+            font-size: 11.5px;
+            color: #15803d;
+            margin-top: 2px;
+        }
+
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .details-table tr {
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .details-table td {
+            padding: 10px 12px;
+        }
+        .details-table td.lbl {
+            width: 40%;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .details-table td.val {
+            width: 60%;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .security-stamp {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border: 1px dashed #94a3b8;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #475569;
+        }
+
+        .verify-footer {
+            background: #f8fafc;
+            padding: 14px 20px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            font-size: 11.5px;
+            color: #64748b;
+        }
+        .btn-view-doc {
+            background: #0090e3;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 5px;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .btn-view-doc:hover {
+            background: #0077c2;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="verify-container">
+        <div class="verify-header">
+            <div class="verify-logo">
+                <img src="logo.png" alt="Graphic Era Hill University">
+            </div>
+            <h1>Document Verification Portal</h1>
+            <p>Office of the Controller of Examinations | Graphic Era Hill University</p>
+        </div>
+
+        <div class="verify-body">
+            <div class="verified-badge-box">
+                <div class="verified-icon"><i class="fa fa-check"></i></div>
+                <div>
+                    <div class="verified-title" id="verDocTitle">OFFICIALLY VERIFIED GRADE CARD</div>
+                    <div class="verified-desc">Digital Authentication Signature Valid &bull; Record Matched in University Database</div>
+                </div>
+            </div>
+
+            <table class="details-table">
+                <tr>
+                    <td class="lbl">Student Full Name:</td>
+                    <td class="val" id="verName">MOHD HASHIM</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Enrollment / Admission No:</td>
+                    <td class="val" id="verEnroll">GE-21545586</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Class Roll No:</td>
+                    <td class="val" id="verRoll">2154682</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Programme / Course:</td>
+                    <td class="val" id="verCourse">B.COM (Honours)</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Semester / Exam:</td>
+                    <td class="val" id="verSem">Semester I (2020-21)</td>
+                </tr>
+                <tr id="rowSgpa">
+                    <td class="lbl">Calculated SGPA:</td>
+                    <td class="val" style="color:#0284c7; font-size:15px;" id="verSgpa">7.88</td>
+                </tr>
+                <tr id="rowStatus">
+                    <td class="lbl">Result Status:</td>
+                    <td class="val" style="color:#16a34a;" id="verStatus">PASS</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Verification Timestamp:</td>
+                    <td class="val" id="verTime">Live Verified</td>
+                </tr>
+            </table>
+
+            <div class="security-stamp">
+                <div>
+                    <strong>Verification Ref ID:</strong> <span id="verRef">GEHU-AUTH-92841029</span><br>
+                    <span>Issuer: Graphic Era Hill University, Clement Town, Dehradun</span>
+                </div>
+                <div style="text-align:right; font-weight:700; color:#16a34a;">
+                    <i class="fa fa-shield fa-2x"></i>
+                </div>
+            </div>
+
+            <div style="text-align:center;">
+                <a href="grade_card.html?sem=1" id="verDocLink" class="btn-view-doc">
+                    <i class="fa fa-file-text-o"></i> View Complete Document
+                </a>
+            </div>
+        </div>
+
+        <div class="verify-footer">
+            &copy; 2026 Graphic Era Hill University. All Rights Reserved.<br>
+            Powered by Cyborg-ERP Examination Verification Service.
+        </div>
+    </div>
+
+    <script>
+        var params = new URLSearchParams(window.location.search);
+        var type = params.get('type') || 'grade_card';
+        var name = params.get('name') || sessionStorage.getItem('userName') || 'MOHD HASHIM';
+        var enroll = params.get('id') || params.get('enroll') || sessionStorage.getItem('enrollNo') || 'GE-21545586';
+        var roll = params.get('roll') || sessionStorage.getItem('classRollNo') || '2154682';
+        var course = params.get('course') || sessionStorage.getItem('course') || 'B.COM (Honours)';
+        var sem = params.get('sem') || '1';
+        var sgpa = params.get('sgpa') || '7.88';
+        var status = params.get('status') || params.get('res') || 'PASS';
+
+        document.getElementById('verName').textContent = name.toUpperCase();
+        document.getElementById('verEnroll').textContent = enroll;
+        document.getElementById('verRoll').textContent = roll;
+        document.getElementById('verCourse').textContent = course;
+        document.getElementById('verSem').textContent = 'Semester ' + sem + ' (Academic Session)';
+        document.getElementById('verSgpa').textContent = sgpa;
+        document.getElementById('verStatus').textContent = status.toUpperCase();
+        document.getElementById('verTime').textContent = new Date().toLocaleString();
+        document.getElementById('verRef').textContent = 'GEHU-AUTH-' + Math.floor(10000000 + Math.random() * 90000000);
+
+        if (type === 'fee_receipt') {
+            document.getElementById('verDocTitle').textContent = 'OFFICIALLY VERIFIED FEE RECEIPT';
+            document.getElementById('rowSgpa').innerHTML = '<td class="lbl">Amount Paid:</td><td class="val" style="color:#16a34a; font-size:15px;">₹ 68,500.00</td>';
+            document.getElementById('rowStatus').innerHTML = '<td class="lbl">Payment Status:</td><td class="val" style="color:#16a34a;">PAID (SUCCESS)</td>';
+            document.getElementById('verDocLink').href = 'fee_receipt.html';
+            document.getElementById('verDocLink').textContent = 'View Official Fee Receipt';
+        } else if (type === 'admit_card') {
+            document.getElementById('verDocTitle').textContent = 'OFFICIALLY VERIFIED ADMIT CARD';
+            document.getElementById('rowSgpa').innerHTML = '<td class="lbl">Attendance:</td><td class="val" style="color:#16a34a;">88.5% (Eligible)</td>';
+            document.getElementById('rowStatus').innerHTML = '<td class="lbl">Exam Center:</td><td class="val">Main Campus Dehradun</td>';
+            document.getElementById('verDocLink').href = 'admit_card.html';
+            document.getElementById('verDocLink').textContent = 'View Official Admit Card';
+        } else {
+            document.getElementById('verDocLink').href = 'grade_card.html?sem=' + sem + '&id=' + enroll;
+        }
+    </script>
+</body>
+</html>

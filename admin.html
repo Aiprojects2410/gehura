@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era ERP - Admin Controller</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* Top Navbar */
+        .admin-navbar {
+            background: #0090e3;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        .navbar-brand-box {
+            background: #ffffff;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 25px 0 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+        .navbar-brand-box img {
+            height: 40px;
+            width: auto;
+        }
+
+        .admin-title-badge {
+            background: rgba(255,255,255,0.2);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-left: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-right: 20px;
+        }
+
+        .btn-portal-switch {
+            background: #ffffff;
+            color: #0090e3;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+        .btn-portal-switch:hover {
+            background: #e2e8f0;
+            color: #0077c2;
+            text-decoration: none;
+        }
+
+        /* Layout */
+        .admin-layout {
+            margin-top: 56px;
+            display: flex;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 240px;
+            background: #1e293b;
+            color: #cbd5e1;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #94a3b8;
+            font-size: 13.5px;
+            font-weight: 600;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .menu-link:hover, .menu-link.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-left-color: #0090e3;
+            text-decoration: none;
+        }
+        .menu-link i {
+            width: 18px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 15px 20px;
+            background: #0f172a;
+            font-size: 11px;
+            color: #64748b;
+            border-top: 1px solid #334155;
+        }
+        .db-status-badge {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            margin-right: 4px;
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            padding: 24px 30px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .page-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .page-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 18px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .stat-val {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .stat-lbl {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .stat-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .stat-icon-box.blue { background: #e0f2fe; color: #0284c7; }
+        .stat-icon-box.green { background: #dcfce7; color: #16a34a; }
+        .stat-icon-box.purple { background: #f3e8ff; color: #9333ea; }
+        .stat-icon-box.orange { background: #ffedd5; color: #ea580c; }
+
+        /* Card Section */
+        .content-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 22px 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+        .card-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .card-heading {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .form-control-custom {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .form-control-custom:focus {
+            border-color: #0090e3;
+        }
+        .form-control-custom[readonly] {
+            background: #f8fafc;
+            color: #0284c7;
+            font-weight: 700;
+        }
+
+        .btn-primary-custom {
+            background: #0090e3;
+            color: #ffffff;
+            border: none;
+            padding: 9px 22px;
+            font-size: 13.5px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .btn-primary-custom:hover {
+            background: #0077c2;
+        }
+
+        .btn-success-custom {
+            background: #16a34a;
+            color: #ffffff;
+            border: none;
+            padding: 9px 22px;
+            font-size: 13.5px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .btn-success-custom:hover {
+            background: #15803d;
+        }
+
+        /* Tables */
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .table-custom th {
+            background: #f8fafc;
+            padding: 10px 14px;
+            font-weight: 700;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: left;
+        }
+        .table-custom td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            vertical-align: middle;
+        }
+        .table-custom tr:hover {
+            background: #f8fafc;
+        }
+
+        .btn-action-sm {
+            padding: 5px 10px;
+            font-size: 11.5px;
+            font-weight: 600;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-right: 4px;
+        }
+        .btn-action-sm.blue { background: #0284c7; color: #fff; }
+        .btn-action-sm.green { background: #16a34a; color: #fff; }
+        .btn-action-sm.amber { background: #f59e0b; color: #fff; }
+        .btn-action-sm.red { background: #dc2626; color: #fff; }
+        .btn-action-sm:hover { opacity: 0.9; text-decoration: none; color: #fff; }
+
+        /* Subjects entry table */
+        .subjects-entry-table {
+            width: 100%;
+            margin: 15px 0;
+        }
+        .subjects-entry-table th {
+            background: #f1f5f9;
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+        }
+        .subjects-entry-table td {
+            padding: 6px 8px;
+        }
+        .subjects-entry-table input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 12.5px;
+        }
+
+        /* Alert Box */
+        .alert-custom {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            display: none;
+        }
+        .alert-custom.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-custom.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        /* Tab Views */
+        .tab-content-view {
+            display: none;
+        }
+        .tab-content-view.active {
+            display: block;
+        }
+
+        /* Edit Modal */
+        .modal-edit-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(2px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-edit-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 750px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-edit-header {
+            background: #0090e3;
+            color: #ffffff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .modal-edit-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP NAVBAR ===== -->
+    <div class="admin-navbar">
+        <div style="display:flex; align-items:center;">
+            <div class="navbar-brand-box">
+                <img src="logo.png" alt="Graphic Era">
+            </div>
+            <div class="admin-title-badge">ADMIN ERP CONTROLLER</div>
+        </div>
+
+        <div class="navbar-right">
+            <span style="color:#ffffff; font-size:12.5px; font-weight:600; margin-right:8px;">
+                <i class="fa fa-user-circle"></i> graphicera261@gmail.com
+            </span>
+            <a href="index.html" class="btn-portal-switch" target="_blank">
+                <i class="fa fa-external-link"></i> Student Portal
+            </a>
+            <a href="index.html" class="btn-portal-switch" style="background:#fee2e2; color:#dc2626;" onclick="sessionStorage.removeItem('adminLoggedIn');">
+                <i class="fa fa-sign-out"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== MAIN LAYOUT ===== -->
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="sidebar-menu">
+                <a class="menu-link active" onclick="switchTab('tab-dashboard')">
+                    <i class="fa fa-tachometer"></i> Dashboard
+                </a>
+                <a class="menu-link" onclick="switchTab('tab-students')">
+                    <i class="fa fa-users"></i> Student Management
+                </a>
+                <a class="menu-link" onclick="switchTab('tab-results')">
+                    <i class="fa fa-graduation-cap"></i> Marksheet Generator
+                </a>
+                <a class="menu-link" onclick="switchTab('tab-fees')">
+                    <i class="fa fa-credit-card"></i> Fee Receipts
+                </a>
+                <a class="menu-link" onclick="switchTab('tab-admit')">
+                    <i class="fa fa-id-card-o"></i> Admit Cards
+                </a>
+                <a class="menu-link" onclick="switchTab('tab-published')">
+                    <i class="fa fa-file-text-o"></i> Published Marksheets
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <div><span class="db-status-badge"></span> Supabase Cloud: <strong>Live</strong></div>
+                <div style="margin-top:3px; font-size:10px;">PostgreSQL Database Sync Active</div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="admin-main">
+
+            <!-- Global Alert -->
+            <div id="globalAlert" class="alert-custom"></div>
+
+            <!-- ============================================== -->
+            <!-- TAB 1: DASHBOARD OVERVIEW -->
+            <!-- ============================================== -->
+            <div id="tab-dashboard" class="tab-content-view active">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Admin Controller Dashboard</div>
+                        <div class="page-subtitle">Manage all students, marksheets, fee receipts, and admit cards</div>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-action-sm red" style="padding:8px 14px; font-size:12.5px;" onclick="handleResetDatabase()" title="Clean all test entries and keep Hashim record only">
+                            <i class="fa fa-trash-o"></i> Clean & Reset Database
+                        </button>
+                        <button class="btn-primary-custom" onclick="switchTab('tab-students')">
+                            <i class="fa fa-plus"></i> Add New Student
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-val" id="statTotalStudents">1</div>
+                            <div class="stat-lbl">Total Students</div>
+                        </div>
+                        <div class="stat-icon-box blue"><i class="fa fa-user"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-val" id="statTotalResults">1</div>
+                            <div class="stat-lbl">Published Results</div>
+                        </div>
+                        <div class="stat-icon-box green"><i class="fa fa-graduation-cap"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-val">₹ 68,500</div>
+                            <div class="stat-lbl">Fee Collected</div>
+                        </div>
+                        <div class="stat-icon-box orange"><i class="fa fa-money"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-val">100% Valid</div>
+                            <div class="stat-lbl">QR Code Status</div>
+                        </div>
+                        <div class="stat-icon-box purple"><i class="fa fa-qrcode"></i></div>
+                    </div>
+                </div>
+
+                <!-- Recent Students List -->
+                <div class="content-card">
+                    <div class="card-title-bar">
+                        <div class="card-heading">Registered Students Directory</div>
+                        <button class="btn-action-sm blue" onclick="loadStudentsTable()"><i class="fa fa-refresh"></i> Refresh</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Admission No</th>
+                                    <th>Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Course</th>
+                                    <th>Phone / Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardStudentsTbody">
+                                <tr><td colspan="6" style="text-align:center;">Loading students...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TAB 2: STUDENT MANAGEMENT -->
+            <!-- ============================================== -->
+            <div id="tab-students" class="tab-content-view">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Student Registration & Management</div>
+                        <div class="page-subtitle">Add new students or edit existing student details easily</div>
+                    </div>
+                </div>
+
+                <!-- Add Student Card -->
+                <div class="content-card">
+                    <div class="card-title-bar">
+                        <div class="card-heading"><i class="fa fa-user-plus"></i> Add New Student</div>
+                        <span style="font-size:12px; color:#64748b;">Admission & Roll Numbers auto-increment</span>
+                    </div>
+
+                    <form id="addStudentForm" onsubmit="handleSaveStudent(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Admission / Enroll No (Auto)</label>
+                                <input type="text" id="inpEnrollNo" class="form-control-custom" readonly placeholder="Auto-generating...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Class Roll No (Auto)</label>
+                                <input type="text" id="inpRollNo" class="form-control-custom" readonly placeholder="Auto-generating...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Student Login Password *</label>
+                                <div style="display:flex; gap:6px;">
+                                    <input type="text" id="inpPassword" class="form-control-custom" value="student@123" required>
+                                    <button type="button" class="btn-action-sm blue" onclick="generateRandomPassword()" title="Generate Random Password">
+                                        🎲 Auto
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Student Full Name *</label>
+                                <input type="text" id="inpName" class="form-control-custom" placeholder="e.g. MOHD HASHIM" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Father's Name *</label>
+                                <input type="text" id="inpFather" class="form-control-custom" placeholder="e.g. SAEED" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Mother's Name *</label>
+                                <input type="text" id="inpMother" class="form-control-custom" placeholder="e.g. SHAHANA" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Course / Programme *</label>
+                                <select id="inpCourse" class="form-control-custom" required>
+                                    <option value="B.COM Hons I">B.COM Hons I</option>
+                                    <option value="B.COM Hons II">B.COM Hons II</option>
+                                    <option value="B.COM Hons III">B.COM Hons III</option>
+                                    <option value="B.Tech Computer Science">B.Tech Computer Science</option>
+                                    <option value="BBA">BBA</option>
+                                    <option value="BCA">BCA</option>
+                                    <option value="MBA">MBA</option>
+                                    <option value="MCA">MCA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date of Birth *</label>
+                                <input type="date" id="inpDob" class="form-control-custom" value="2002-05-15" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number *</label>
+                                <input type="text" id="inpPhone" class="form-control-custom" placeholder="e.g. 8923456443" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address *</label>
+                                <input type="email" id="inpEmail" class="form-control-custom" placeholder="e.g. student@gmail.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Official Email</label>
+                                <input type="email" id="inpOfficialEmail" class="form-control-custom" placeholder="e.g. student@geu.ac.in">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Profile Photo File</label>
+                                <input type="text" id="inpPhoto" class="form-control-custom" value="candidate_photo.png">
+                            </div>
+                        </div>
+
+                        <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+                            <button type="button" class="btn-action-sm blue" onclick="generateNextNumbers()"><i class="fa fa-refresh"></i> Refresh Auto Numbers</button>
+                            <button type="submit" class="btn-primary-custom"><i class="fa fa-save"></i> Save Student to Database</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- All Students Table -->
+                <div class="content-card">
+                    <div class="card-title-bar">
+                        <div class="card-heading">All Registered Students</div>
+                        <input type="text" id="searchStudentInput" onkeyup="filterStudentsTable()" placeholder="Search by name or admission no..." style="padding:6px 12px; border:1px solid #cbd5e1; border-radius:4px; font-size:12px; width:250px;">
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="table-custom" id="allStudentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Admission No</th>
+                                    <th>Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Course</th>
+                                    <th>Contact</th>
+                                    <th>Password</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allStudentsTbody">
+                                <tr><td colspan="7" style="text-align:center;">Loading students...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TAB 3: RESULT MANAGEMENT (MARKSHEET GENERATOR) -->
+            <!-- ============================================== -->
+            <div id="tab-results" class="tab-content-view">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Marksheet & Result Generator</div>
+                        <div class="page-subtitle">Enter marks to auto-calculate grades, credits, SGPA, and scannable QR Code</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-title-bar">
+                        <div class="card-heading"><i class="fa fa-pencil-square-o"></i> Enter Semester Marks</div>
+                        <span style="font-size:12px; color:#16a34a; font-weight:700;"><i class="fa fa-bolt"></i> Live Calculation Active</span>
+                    </div>
+
+                    <form id="marksheetForm" onsubmit="handlePublishResult(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Select Student *</label>
+                                <select id="resSelectStudent" class="form-control-custom" required onchange="handleStudentSelectChange()">
+                                    <option value="">-- Choose Student --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Semester *</label>
+                                <select id="resSelectSemester" class="form-control-custom" required onchange="handleSemesterChange()">
+                                    <option value="1">Semester 1 (I)</option>
+                                    <option value="2">Semester 2 (II)</option>
+                                    <option value="3">Semester 3 (III)</option>
+                                    <option value="4">Semester 4 (IV)</option>
+                                    <option value="5">Semester 5 (V)</option>
+                                    <option value="6">Semester 6 (VI)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Examination Session / Year *</label>
+                                <input type="text" id="resExamYear" class="form-control-custom" value="2020-21" required>
+                            </div>
+                        </div>
+
+                        <!-- Subjects Entry Table -->
+                        <div style="margin-top:16px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <label class="form-label" style="margin:0; font-size:13.5px;"><i class="fa fa-book"></i> Subjects & Marks (out of 100)</label>
+                                <button type="button" class="btn-action-sm blue" onclick="addSubjectRow()"><i class="fa fa-plus"></i> Add Subject</button>
+                            </div>
+
+                            <table class="subjects-entry-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:18%;">Subject Code</th>
+                                        <th style="width:38%;">Subject Title</th>
+                                        <th style="width:12%;">Credits</th>
+                                        <th style="width:14%;">Marks (100)</th>
+                                        <th style="width:10%;">Grade</th>
+                                        <th style="width:8%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subjectsTbody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Live Calculation Summary Card -->
+                        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:15px 20px; margin:16px 0; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <div style="font-size:12px; color:#64748b; font-weight:600;">Total Credits: <span id="summaryCredits" style="color:#0f172a; font-weight:800;">23</span> | Credits Earned: <span id="summaryEarned" style="color:#0f172a; font-weight:800;">23</span></div>
+                                <div style="font-size:12px; color:#64748b; font-weight:600; margin-top:2px;">Result Status: <span id="summaryStatus" style="color:#16a34a; font-weight:800;">PASS</span></div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:11px; color:#64748b; font-weight:700; text-transform:uppercase;">Calculated SGPA</div>
+                                <div id="summarySGPA" style="font-size:28px; font-weight:800; color:#0284c7;">7.88</div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; justify-content:flex-end; gap:10px;">
+                            <button type="submit" class="btn-success-custom"><i class="fa fa-cloud-upload"></i> Publish Result & Generate Grade Card</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TAB 4: FEE RECEIPTS -->
+            <!-- ============================================== -->
+            <div id="tab-fees" class="tab-content-view">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Student Fee Receipts Management</div>
+                        <div class="page-subtitle">Track fee payments and view printable official receipts</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div style="overflow-x:auto;">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Admission No</th>
+                                    <th>Student Name</th>
+                                    <th>Course</th>
+                                    <th>Receipt No</th>
+                                    <th>Amount Paid</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feeTableTbody">
+                                <tr><td colspan="7" style="text-align:center;">Loading fee records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TAB 5: ADMIT CARDS -->
+            <!-- ============================================== -->
+            <div id="tab-admit" class="tab-content-view">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Examination Admit Cards & Attendance</div>
+                        <div class="page-subtitle">Generate and verify student hall tickets</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div style="overflow-x:auto;">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Admission No</th>
+                                    <th>Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Course</th>
+                                    <th>Attendance</th>
+                                    <th>Exam Center</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admitTableTbody">
+                                <tr><td colspan="7" style="text-align:center;">Loading admit cards...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TAB 6: PUBLISHED MARKSHEETS -->
+            <!-- ============================================== -->
+            <div id="tab-published" class="tab-content-view">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Published Marksheets Directory</div>
+                        <div class="page-subtitle">View and verify all generated student grade cards</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div style="overflow-x:auto;">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Admission No</th>
+                                    <th>Semester</th>
+                                    <th>Programme</th>
+                                    <th>Exam Year</th>
+                                    <th>Credits</th>
+                                    <th>SGPA</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="publishedResultsTbody">
+                                <tr><td colspan="8" style="text-align:center;">Loading published marksheets...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== EDIT STUDENT MODAL ===== -->
+    <div id="modalEditStudent" class="modal-edit-backdrop">
+        <div class="modal-edit-box">
+            <div class="modal-edit-header">
+                <span><i class="fa fa-pencil"></i> Edit Student Details</span>
+                <button style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-edit-body">
+                <form id="editStudentForm" onsubmit="handleUpdateStudent(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Admission No (Locked)</label>
+                            <input type="text" id="editEnrollNo" class="form-control-custom" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Class Roll No *</label>
+                            <input type="text" id="editRollNo" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Student Password *</label>
+                            <input type="text" id="editPassword" class="form-control-custom" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" id="editName" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Father's Name *</label>
+                            <input type="text" id="editFather" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mother's Name *</label>
+                            <input type="text" id="editMother" class="form-control-custom" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Course *</label>
+                            <input type="text" id="editCourse" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth *</label>
+                            <input type="date" id="editDob" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="text" id="editPhone" class="form-control-custom" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email *</label>
+                            <input type="email" id="editEmail" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Official Email</label>
+                            <input type="email" id="editOfficialEmail" class="form-control-custom">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Photo File / URL</label>
+                            <input type="text" id="editPhoto" class="form-control-custom">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+                        <button type="button" class="btn-action-sm red" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="btn-primary-custom"><i class="fa fa-save"></i> Update Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN LOGIC JAVASCRIPT ===== -->
+    <script>
+        const SEM_SUBJECTS = {
+            '1': [
+                { code: "BCH101", name: "Business Organisation", credit: 4, marks: 85 },
+                { code: "BCH102", name: "Financial Accounting", credit: 4, marks: 72 },
+                { code: "BCH103", name: "Micro Economics", credit: 3, marks: 74 },
+                { code: "BCH104", name: "Business Communication", credit: 3, marks: 68 },
+                { code: "BCH105", name: "Fundamentals Of Computer", credit: 3, marks: 76 },
+                { code: "BCH106", name: "Business Mathematics", credit: 4, marks: 81 },
+                { code: "BCH107", name: "Seminar", credit: 1, marks: 80 },
+                { code: "BCH108", name: "General Proficiency", credit: 1, marks: 88 }
+            ],
+            '2': [
+                { code: "BCH201", name: "Corporate Accounting", credit: 4, marks: 80 },
+                { code: "BCH202", name: "Macro Economics", credit: 4, marks: 75 },
+                { code: "BCH203", name: "Business Law", credit: 4, marks: 78 },
+                { code: "BCH204", name: "Banking & Insurance", credit: 3, marks: 82 },
+                { code: "BCH205", name: "Environmental Studies", credit: 3, marks: 85 },
+                { code: "BCH206", name: "General Proficiency", credit: 1, marks: 90 }
+            ]
+        };
+
+        let cachedStudents = [];
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content-view').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+            
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+
+            const links = document.querySelectorAll('.menu-link');
+            if (tabId === 'tab-dashboard') links[0].classList.add('active');
+            if (tabId === 'tab-students') links[1].classList.add('active');
+            if (tabId === 'tab-results') links[2].classList.add('active');
+            if (tabId === 'tab-fees') links[3].classList.add('active');
+            if (tabId === 'tab-admit') links[4].classList.add('active');
+            if (tabId === 'tab-published') links[5].classList.add('active');
+
+            if (tabId === 'tab-dashboard' || tabId === 'tab-students') loadStudentsTable();
+            if (tabId === 'tab-results') populateStudentSelect();
+            if (tabId === 'tab-fees') loadFeeTable();
+            if (tabId === 'tab-admit') loadAdmitTable();
+            if (tabId === 'tab-published') loadPublishedResultsTable();
+        }
+
+        function showAlert(msg, type = 'success') {
+            const alert = document.getElementById('globalAlert');
+            alert.textContent = msg;
+            alert.className = 'alert-custom ' + type;
+            alert.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { alert.style.display = 'none'; }, 4000);
+        }
+
+        async function generateNextNumbers() {
+            const students = await dbGetStudents();
+            let maxEnroll = 21545586;
+            let maxRoll = 2154682;
+
+            students.forEach(s => {
+                let numEnroll = parseInt((s.enroll_no || '').replace(/\D/g, ''));
+                let numRoll = parseInt((s.class_roll_no || '').replace(/\D/g, ''));
+                if (!isNaN(numEnroll) && numEnroll > maxEnroll) maxEnroll = numEnroll;
+                if (!isNaN(numRoll) && numRoll > maxRoll) maxRoll = numRoll;
+            });
+
+            document.getElementById('inpEnrollNo').value = "GE-" + (maxEnroll + 1);
+            document.getElementById('inpRollNo').value = "" + (maxRoll + 1);
+        }
+
+        function generateRandomPassword() {
+            const prefixes = ['GE', 'Student', 'Graphic', 'Pass'];
+            const randPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            const randNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('inpPassword').value = `${randPrefix}@${randNum}`;
+        }
+
+        async function loadStudentsTable() {
+            cachedStudents = await dbGetStudents();
+            document.getElementById('statTotalStudents').textContent = cachedStudents.length;
+
+            const dashTbody = document.getElementById('dashboardStudentsTbody');
+            const allTbody = document.getElementById('allStudentsTbody');
+
+            if (!cachedStudents || cachedStudents.length === 0) {
+                dashTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No students registered yet.</td></tr>';
+                allTbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No students registered yet.</td></tr>';
+                return;
+            }
+
+            let dashHtml = '';
+            let allHtml = '';
+
+            cachedStudents.forEach(s => {
+                dashHtml += `
+                    <tr>
+                        <td><strong>${s.enroll_no}</strong></td>
+                        <td>${s.class_roll_no}</td>
+                        <td><strong>${s.name}</strong></td>
+                        <td><span class="badge" style="background:#e0f2fe; color:#0284c7; padding:4px 8px; border-radius:4px; font-weight:700;">${s.course || 'B.COM Hons'}</span></td>
+                        <td>${s.phone || '-'}<br><small style="color:#64748b;">${s.email || ''}</small></td>
+                        <td>
+                            <button class="btn-action-sm amber" onclick="openEditStudentModal('${s.enroll_no}')"><i class="fa fa-pencil"></i> Edit</button>
+                            <button class="btn-action-sm green" onclick="openMarksheetFor('${s.enroll_no}')"><i class="fa fa-plus"></i> Result</button>
+                            <button class="btn-action-sm blue" onclick="loginAsStudent('${s.enroll_no}')"><i class="fa fa-external-link"></i> Portal</button>
+                        </td>
+                    </tr>
+                `;
+
+                allHtml += `
+                    <tr>
+                        <td><strong>${s.enroll_no}</strong></td>
+                        <td>${s.class_roll_no}</td>
+                        <td><strong>${s.name}</strong></td>
+                        <td>${s.course}</td>
+                        <td>${s.phone}<br><small style="color:#64748b;">${s.email}</small></td>
+                        <td><code style="background:#f1f5f9; padding:2px 6px; border-radius:4px; color:#c62828; font-weight:700;">${s.password || 'student@123'}</code></td>
+                        <td>
+                            <button class="btn-action-sm amber" onclick="openEditStudentModal('${s.enroll_no}')"><i class="fa fa-pencil"></i> Edit</button>
+                            <button class="btn-action-sm green" onclick="openMarksheetFor('${s.enroll_no}')"><i class="fa fa-plus"></i> Result</button>
+                            <button class="btn-action-sm blue" onclick="loginAsStudent('${s.enroll_no}')"><i class="fa fa-external-link"></i> Portal</button>
+                            <button class="btn-action-sm red" onclick="deleteStudentAction('${s.enroll_no}')"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            dashTbody.innerHTML = dashHtml;
+            allTbody.innerHTML = allHtml;
+        }
+
+        function openEditStudentModal(enrollNo) {
+            const s = cachedStudents.find(x => x.enroll_no === enrollNo);
+            if (!s) return;
+
+            document.getElementById('editEnrollNo').value = s.enroll_no;
+            document.getElementById('editRollNo').value = s.class_roll_no || '';
+            document.getElementById('editPassword').value = s.password || 'student@123';
+            document.getElementById('editName').value = s.name || '';
+            document.getElementById('editFather').value = s.father_name || '';
+            document.getElementById('editMother').value = s.mother_name || '';
+            document.getElementById('editCourse').value = s.course || '';
+            document.getElementById('editDob').value = s.dob || '2002-05-15';
+            document.getElementById('editPhone').value = s.phone || '';
+            document.getElementById('editEmail').value = s.email || '';
+            document.getElementById('editOfficialEmail').value = s.official_email || s.email || '';
+            document.getElementById('editPhoto').value = s.photo || 'candidate_photo.png';
+
+            document.getElementById('modalEditStudent').style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('modalEditStudent').style.display = 'none';
+        }
+
+        async function handleUpdateStudent(e) {
+            e.preventDefault();
+            const updated = {
+                enroll_no: document.getElementById('editEnrollNo').value,
+                class_roll_no: document.getElementById('editRollNo').value.trim(),
+                name: document.getElementById('editName').value.trim().toUpperCase(),
+                father_name: document.getElementById('editFather').value.trim().toUpperCase(),
+                mother_name: document.getElementById('editMother').value.trim().toUpperCase(),
+                course: document.getElementById('editCourse').value.trim(),
+                dob: document.getElementById('editDob').value,
+                phone: document.getElementById('editPhone').value.trim(),
+                email: document.getElementById('editEmail').value.trim(),
+                official_email: document.getElementById('editOfficialEmail').value.trim() || document.getElementById('editEmail').value.trim(),
+                password: document.getElementById('editPassword').value.trim() || 'student@123',
+                photo: document.getElementById('editPhoto').value.trim() || 'student_profile.png'
+            };
+
+            await dbAddStudent(updated);
+            closeEditModal();
+            showAlert(`Student ${updated.name} (${updated.enroll_no}) updated successfully!`, 'success');
+            loadStudentsTable();
+        }
+
+        async function handleSaveStudent(e) {
+            e.preventDefault();
+            const student = {
+                enroll_no: document.getElementById('inpEnrollNo').value,
+                class_roll_no: document.getElementById('inpRollNo').value,
+                name: document.getElementById('inpName').value.trim().toUpperCase(),
+                father_name: document.getElementById('inpFather').value.trim().toUpperCase(),
+                mother_name: document.getElementById('inpMother').value.trim().toUpperCase(),
+                course: document.getElementById('inpCourse').value,
+                dob: document.getElementById('inpDob').value,
+                phone: document.getElementById('inpPhone').value.trim(),
+                email: document.getElementById('inpEmail').value.trim(),
+                official_email: document.getElementById('inpOfficialEmail').value.trim() || document.getElementById('inpEmail').value.trim(),
+                password: document.getElementById('inpPassword').value.trim() || 'student@123',
+                photo: document.getElementById('inpPhoto').value || 'student_profile.png'
+            };
+
+            await dbAddStudent(student);
+            showAlert(`Student ${student.name} (${student.enroll_no}) successfully registered!`, 'success');
+            document.getElementById('addStudentForm').reset();
+            generateNextNumbers();
+            loadStudentsTable();
+        }
+
+        async function deleteStudentAction(enrollNo) {
+            if (confirm(`Are you sure you want to delete student ${enrollNo}?`)) {
+                await dbDeleteStudent(enrollNo);
+                showAlert(`Student ${enrollNo} deleted.`, 'success');
+                loadStudentsTable();
+            }
+        }
+
+        async function loginAsStudent(enrollNo) {
+            const students = await dbGetStudents();
+            const s = students.find(x => x.enroll_no === enrollNo);
+            if (!s) return;
+
+            sessionStorage.setItem('loggedIn', 'true');
+            sessionStorage.setItem('userId', s.enroll_no);
+            sessionStorage.setItem('userName', s.name);
+            sessionStorage.setItem('email', s.email);
+            sessionStorage.setItem('phone', s.phone);
+            sessionStorage.setItem('fatherName', s.father_name);
+            sessionStorage.setItem('motherName', s.mother_name);
+            sessionStorage.setItem('dob', s.dob);
+            sessionStorage.setItem('officialEmail', s.official_email || s.email);
+            sessionStorage.setItem('course', s.course);
+            sessionStorage.setItem('classRollNo', s.class_roll_no);
+            sessionStorage.setItem('enrollNo', s.enroll_no);
+
+            window.open('dashboard.html', '_blank');
+        }
+
+        function openMarksheetFor(enrollNo) {
+            switchTab('tab-results');
+            setTimeout(() => {
+                document.getElementById('resSelectStudent').value = enrollNo;
+                handleStudentSelectChange();
+            }, 200);
+        }
+
+        async function populateStudentSelect() {
+            const students = await dbGetStudents();
+            const sel = document.getElementById('resSelectStudent');
+            sel.innerHTML = '<option value="">-- Choose Student --</option>';
+            students.forEach(s => {
+                sel.innerHTML += `<option value="${s.enroll_no}">${s.name} (${s.enroll_no}) - ${s.course}</option>`;
+            });
+            handleSemesterChange();
+        }
+
+        function handleStudentSelectChange() {
+            handleSemesterChange();
+        }
+
+        function handleSemesterChange() {
+            const sem = document.getElementById('resSelectSemester').value;
+            const subs = SEM_SUBJECTS[sem] || SEM_SUBJECTS['1'];
+            const tbody = document.getElementById('subjectsTbody');
+            tbody.innerHTML = '';
+
+            subs.forEach(s => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="text" class="sub-code" value="${s.code}"></td>
+                        <td><input type="text" class="sub-name" value="${s.name}"></td>
+                        <td><input type="number" class="sub-credit" value="${s.credit}" oninput="recalculateSGPA()"></td>
+                        <td><input type="number" class="sub-marks" value="${s.marks}" oninput="recalculateSGPA()"></td>
+                        <td class="sub-grade-cell" style="font-weight:700; text-align:center;">A+</td>
+                        <td><button type="button" class="btn-action-sm red" onclick="this.closest('tr').remove(); recalculateSGPA();"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                `;
+            });
+
+            recalculateSGPA();
+        }
+
+        function addSubjectRow() {
+            const tbody = document.getElementById('subjectsTbody');
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="text" class="sub-code" placeholder="e.g. BCH109"></td>
+                    <td><input type="text" class="sub-name" placeholder="Subject Title"></td>
+                    <td><input type="number" class="sub-credit" value="3" oninput="recalculateSGPA()"></td>
+                    <td><input type="number" class="sub-marks" value="75" oninput="recalculateSGPA()"></td>
+                    <td class="sub-grade-cell" style="font-weight:700; text-align:center;">A</td>
+                    <td><button type="button" class="btn-action-sm red" onclick="this.closest('tr').remove(); recalculateSGPA();"><i class="fa fa-trash"></i></button></td>
+                </tr>
+            `;
+            recalculateSGPA();
+        }
+
+        function recalculateSGPA() {
+            const rows = document.querySelectorAll('#subjectsTbody tr');
+            const subjects = [];
+
+            rows.forEach(r => {
+                const code = r.querySelector('.sub-code').value.trim();
+                const name = r.querySelector('.sub-name').value.trim();
+                const credit = parseFloat(r.querySelector('.sub-credit').value) || 0;
+                const marks = parseFloat(r.querySelector('.sub-marks').value) || 0;
+
+                subjects.push({ code, name, credit, marks });
+            });
+
+            const calc = calculateGradesAndSGPA(subjects);
+
+            rows.forEach((r, idx) => {
+                if (calc.subjects[idx]) {
+                    r.querySelector('.sub-grade-cell').textContent = calc.subjects[idx].grade;
+                }
+            });
+
+            document.getElementById('summaryCredits').textContent = calc.totalCredits;
+            document.getElementById('summaryEarned').textContent = calc.creditsEarned;
+            document.getElementById('summarySGPA').textContent = calc.sgpa;
+            document.getElementById('summaryStatus').textContent = calc.resultStatus.toUpperCase();
+            document.getElementById('summaryStatus').style.color = calc.resultStatus === 'Pass' ? '#16a34a' : '#dc2626';
+
+            return calc;
+        }
+
+        async function handlePublishResult(e) {
+            e.preventDefault();
+            const studentId = document.getElementById('resSelectStudent').value;
+            if (!studentId) {
+                alert('Please select a student first!');
+                return;
+            }
+
+            const sem = document.getElementById('resSelectSemester').value;
+            const examYear = document.getElementById('resExamYear').value.trim();
+            const calc = recalculateSGPA();
+
+            const semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+            const semRoman = semRomans[parseInt(sem) - 1] || 'I';
+
+            const resultData = {
+                student_id: studentId,
+                semester: sem,
+                programme: 'B.COM Hons ' + semRoman,
+                exam_year: examYear,
+                exam_title: `BACHELOR OF COMMERCE (HONOURS)- ${semRoman} SEMESTER EXAMINATION (${examYear})`,
+                result_status: calc.resultStatus,
+                total_credits: calc.totalCredits,
+                credits_earned: calc.creditsEarned,
+                sgpa: parseFloat(calc.sgpa),
+                cgpa: "",
+                subjects: calc.subjects
+            };
+
+            await dbAddResult(resultData);
+            showAlert(`Marksheet for Semester ${sem} published successfully!`, 'success');
+            switchTab('tab-published');
+        }
+
+        async function loadFeeTable() {
+            const tbody = document.getElementById('feeTableTbody');
+            const students = await dbGetStudents();
+            let html = '';
+
+            students.forEach((s, idx) => {
+                html += `
+                    <tr>
+                        <td><strong>${s.enroll_no}</strong></td>
+                        <td><strong>${s.name}</strong></td>
+                        <td>${s.course}</td>
+                        <td><code>GEHU/2025-26/REC-9284${idx + 1}</code></td>
+                        <td><strong>₹ 68,500.00</strong></td>
+                        <td><span class="badge" style="background:#dcfce7; color:#166534; padding:4px 8px; border-radius:4px; font-weight:700;">PAID (SUCCESS)</span></td>
+                        <td>
+                            <a href="fee_receipt.html" class="btn-action-sm blue" target="_blank">
+                                <i class="fa fa-print"></i> View Receipt
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        async function loadAdmitTable() {
+            const tbody = document.getElementById('admitTableTbody');
+            const students = await dbGetStudents();
+            let html = '';
+
+            students.forEach(s => {
+                html += `
+                    <tr>
+                        <td><strong>${s.enroll_no}</strong></td>
+                        <td>${s.class_roll_no}</td>
+                        <td><strong>${s.name}</strong></td>
+                        <td>${s.course}</td>
+                        <td><strong style="color:#16a34a;">88.5% (Eligible)</strong></td>
+                        <td>Main Campus Clement Town</td>
+                        <td>
+                            <a href="admit_card.html" class="btn-action-sm blue" target="_blank">
+                                <i class="fa fa-id-card-o"></i> View Admit Card
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        async function loadPublishedResultsTable() {
+            const tbody = document.getElementById('publishedResultsTbody');
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Loading published results...</td></tr>';
+
+            const students = await dbGetStudents();
+            let allResults = [];
+
+            for (const s of students) {
+                const res = await dbGetResults(s.enroll_no);
+                if (res && res.length > 0) {
+                    res.forEach(r => allResults.push({ ...r, studentName: s.name }));
+                }
+            }
+
+            document.getElementById('statTotalResults').textContent = allResults.length;
+
+            if (allResults.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No published results found.</td></tr>';
+                return;
+            }
+
+            let html = '';
+            allResults.forEach(r => {
+                html += `
+                    <tr>
+                        <td><strong>${r.student_id}</strong><br><small>${r.studentName || ''}</small></td>
+                        <td>Semester ${r.semester}</td>
+                        <td>${r.programme}</td>
+                        <td>${r.exam_year}</td>
+                        <td>${r.total_credits}</td>
+                        <td><strong style="color:#0284c7;">${r.sgpa}</strong></td>
+                        <td><span class="badge" style="background:${r.result_status === 'Pass' ? '#dcfce7' : '#fee2e2'}; color:${r.result_status === 'Pass' ? '#166534' : '#991b1b'};">${r.result_status}</span></td>
+                        <td>
+                            <a href="grade_card.html?sem=${r.semester}&id=${r.student_id}" class="btn-action-sm blue" target="_blank">
+                                <i class="fa fa-file-text-o"></i> View PDF
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        function filterStudentsTable() {
+            const q = document.getElementById('searchStudentInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#allStudentsTbody tr');
+            rows.forEach(r => {
+                const text = r.textContent.toLowerCase();
+                r.style.display = text.includes(q) ? '' : 'none';
+            });
+        }
+
+        async function handleResetDatabase() {
+            if (confirm("Are you sure you want to clean all test data and reset the database to MOHD HASHIM master record only?")) {
+                await dbResetDatabaseToHashimOnly();
+                showAlert("Database successfully cleaned & reset to MOHD HASHIM master record!", "success");
+                loadStudentsTable();
+                loadPublishedResultsTable();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            generateNextNumbers();
+            loadStudentsTable();
+        });
+    </script>
+</body>
+</html>

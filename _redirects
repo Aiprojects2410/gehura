@@ -1,0 +1,7 @@
+/admin         /admin.html         200
+/dashboard     /dashboard.html     200
+/view_results  /view_results.html  200
+/grade_card    /grade_card.html    200
+/fee_receipt   /fee_receipt.html   200
+/admit_card    /admit_card.html    200
+/verify        /verify.html        200

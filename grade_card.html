@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University - Grade Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #525659;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Action bar for screen view */
+        .action-bar {
+            width: 210mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 0;
+        }
+        .action-bar a, .action-bar button {
+            background-color: #0090e3;
+            color: #ffffff;
+            border: none;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .action-bar a:hover, .action-bar button:hover {
+            background-color: #0077c2;
+        }
+
+        /* Exact A4 sheet */
+        .marksheet-page {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: #ffffff;
+            padding: 15mm 22mm 14mm 22mm;
+            position: relative;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        /* Authentic Colored Watermark */
+        .watermark-container {
+            position: absolute;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 480px;
+            height: 480px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.18;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .ms-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .ms-logo-left {
+            width: 90px;
+            flex-shrink: 0;
+        }
+        .ms-logo-left svg {
+            width: 82px;
+            height: 82px;
+        }
+
+        .ms-header-center {
+            text-align: center;
+            flex: 1;
+            padding: 0 12px;
+        }
+        .ge-title-main {
+            font-size: 38px;
+            font-weight: 800;
+            color: #c62828;
+            font-family: 'Times New Roman', Georgia, serif;
+            line-height: 0.95;
+            letter-spacing: -0.5px;
+        }
+        .ge-title-sub {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #c62828;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            font-family: Arial, sans-serif;
+        }
+        .ge-divider-line {
+            height: 1.5px;
+            background-color: #c62828;
+            width: 100%;
+            margin: 4px auto 3px;
+        }
+        .ge-legal-text {
+            font-size: 7.2px;
+            color: #222222;
+            line-height: 1.25;
+            font-weight: 500;
+        }
+
+        .ms-header-right {
+            text-align: right;
+            font-size: 7.8px;
+            color: #111111;
+            line-height: 1.35;
+            width: 140px;
+            flex-shrink: 0;
+            font-weight: 500;
+            padding-top: 4px;
+        }
+
+        /* ===== EXAMINATION TITLE ===== */
+        .exam-title-bar {
+            text-align: center;
+            font-size: 12.5px;
+            font-weight: bold;
+            margin: 22px 0 16px;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== STUDENT DETAILS ===== */
+        .student-info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+        .student-info-row .info-col-1 {
+            width: 58%;
+        }
+        .student-info-row .info-col-2 {
+            width: 42%;
+        }
+
+        /* ===== GRADES TABLE ===== */
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 24px;
+        }
+        .grades-table .th-theory {
+            text-align: left;
+            font-size: 12.5px;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
+        .grades-table td {
+            padding: 4.5px 0;
+        }
+        .grades-table td.sub-name {
+            width: 60%;
+            font-weight: bold;
+            color: #000000;
+        }
+        .grades-table td.credit-col {
+            text-align: right;
+            width: 13%;
+            font-weight: bold;
+            padding-right: 25px;
+        }
+        .grades-table td.grade-col {
+            text-align: right;
+            width: 13%;
+            font-weight: bold;
+            padding-right: 25px;
+        }
+        .grades-table td.point-col {
+            text-align: right;
+            width: 14%;
+            font-weight: bold;
+            padding-right: 15px;
+        }
+
+        /* ===== SUMMARY & BARCODE ===== */
+        .summary-barcode-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 10px;
+            margin-bottom: 18px;
+            font-size: 12px;
+        }
+
+        .summary-left {
+            line-height: 1.6;
+            font-weight: bold;
+        }
+        .summary-left .result-pass {
+            margin-bottom: 2px;
+        }
+
+        .barcode-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+        .qr-code-svg {
+            width: 60px;
+            height: 60px;
+        }
+        .barcode-svg {
+            height: 32px;
+            width: 140px;
+        }
+
+        /* ===== INSTRUCTIONS ===== */
+        .instructions-section {
+            margin-top: 10px;
+            font-size: 7.2px;
+            line-height: 1.35;
+            color: #111111;
+        }
+        .instructions-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 7.8px;
+            letter-spacing: 0.5px;
+        }
+        .instructions-list {
+            list-style: none;
+            padding: 0;
+        }
+        .instructions-list li {
+            margin-bottom: 2px;
+        }
+
+        /* ===== FOOTER SIGNATURES ===== */
+        .signatures-section {
+            margin-top: 24px;
+        }
+        .signatures-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 0 4px 4px;
+        }
+        .bottom-solid-line {
+            width: 100%;
+            height: 2px;
+            background-color: #000000;
+            margin-top: 4px;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .action-bar {
+                display: none;
+            }
+            .marksheet-page {
+                box-shadow: none;
+                padding: 12mm 18mm 10mm 18mm;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Action Bar for Screen View -->
+    <div class="action-bar">
+        <a href="view_results.html">&larr; Back to Results</a>
+        <button onclick="window.print()">Print / Download PDF</button>
+    </div>
+
+    <!-- Printable A4 Marksheet Page -->
+    <div class="marksheet-page">
+
+        <!-- Authentic Watermark with colored flame & silver gear -->
+        <svg class="watermark-container" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="wmFlameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#d32f2f"/>
+                    <stop offset="60%" stop-color="#e65100"/>
+                    <stop offset="100%" stop-color="#ff9800"/>
+                </linearGradient>
+            </defs>
+            <!-- Gear Ring -->
+            <circle cx="250" cy="250" r="235" stroke="#718096" stroke-width="12" fill="none" stroke-dasharray="16, 8"/>
+            <circle cx="250" cy="250" r="210" stroke="#718096" stroke-width="5" fill="none"/>
+            <circle cx="250" cy="250" r="145" stroke="#718096" stroke-width="3.5" fill="none"/>
+            
+            <!-- Flame Center -->
+            <path d="M250 135 C295 215 315 260 250 310 C190 260 215 210 250 135 Z" fill="url(#wmFlameGrad)"/>
+            <path d="M250 195 C280 245 285 275 250 310 C225 280 230 245 250 195 Z" fill="#ffffff"/>
+            <path d="M250 235 C268 262 268 285 250 310 C238 288 240 265 250 235 Z" fill="url(#wmFlameGrad)"/>
+
+            <!-- Top Curved Text -->
+            <path id="topCurveWM" d="M 65 250 A 185 185 0 0 1 435 250" fill="none"/>
+            <text font-size="20" font-weight="900" letter-spacing="3.5" fill="#4a5568">
+                <textPath href="#topCurveWM" startOffset="50%" text-anchor="middle">
+                    TRANSFORMING DREAMS INTO REALITY
+                </textPath>
+            </text>
+
+            <!-- Bottom Curved Text -->
+            <path id="bottomCurveWM" d="M 65 250 A 185 185 0 0 0 435 250" fill="none"/>
+            <text font-size="22" font-weight="900" letter-spacing="3" fill="#4a5568">
+                <textPath href="#bottomCurveWM" startOffset="50%" text-anchor="middle">
+                    GRAPHIC ERA HILL UNIVERSITY
+                </textPath>
+            </text>
+        </svg>
+
+        <div class="content-layer">
+            <div>
+                <!-- Authentic Ultra-Crisp Graphic Era Header -->
+                <div class="ms-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:6px; border-bottom:2px solid #ea580c;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="gehu_emblem_hd.png" style="width:72px; height:72px; object-fit:contain;" alt="GEHU Emblem">
+                        <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                            <img src="graphic_era_brand.png" style="height:35px; width:auto;" alt="Graphic Era">
+                            <div style="display:inline-block; background:#ea580c; color:#ffffff; font-family:'Arial Black', sans-serif; font-size:10px; font-weight:900; letter-spacing:1.5px; padding:1px 7px; border-radius:2px; margin-top:2px; margin-bottom:2px;">
+                                HILL UNIVERSITY
+                            </div>
+                            <div style="font-size:7.5px; color:#334155; line-height:1.2; font-weight:600;">
+                                Established by an Act of the State Legislature of Uttarakhand (Adhiniyam Sankhya 12 of 2011)<br>
+                                University under section 2(f) of UGC Act, 1956
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align:right; font-size:8.5px; line-height:1.35; color:#334155; font-weight:600;">
+                        <strong style="color:#0f172a;">H.O. & Main Campus</strong><br>
+                        510, Society Area, Clement Town<br>
+                        Dehradun - 248002<br>
+                        Uttarakhand (INDIA)
+                    </div>
+                </div>
+
+                <!-- Examination Title -->
+                <div class="exam-title-bar" id="examTitleBar">
+                    BACHELOR OF COMMERCE (HONOURS)- I SEMESTER EXAMINATION (2020-21)
+                </div>
+
+                <!-- Student Info -->
+                <div class="student-info-row">
+                    <div class="info-col-1">
+                        <div>Name of Student: <span id="msStudentName">MOHD HASHIM</span></div>
+                        <div>Father's Name : <span id="msFatherName">SAEED</span></div>
+                    </div>
+                    <div class="info-col-2">
+                        <div>Enrolment No: <span id="msEnrollNo">GE-21545586</span></div>
+                        <div>Roll No: <span id="msRollNo">2154682</span></div>
+                    </div>
+                </div>
+
+                <!-- Grades Table -->
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th colspan="4" class="th-theory">Theory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="sub-name">BCH101 Business Organisation</td>
+                            <td class="credit-col">4</td>
+                            <td class="grade-col">A+</td>
+                            <td class="point-col">9</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH102 Financial Accounting</td>
+                            <td class="credit-col">4</td>
+                            <td class="grade-col">B+</td>
+                            <td class="point-col">7</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH103 Micro Economics</td>
+                            <td class="credit-col">3</td>
+                            <td class="grade-col">B+</td>
+                            <td class="point-col">7</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH104 Business Communication</td>
+                            <td class="credit-col">3</td>
+                            <td class="grade-col">B</td>
+                            <td class="point-col">7</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH105 Fundamentals Of Computer</td>
+                            <td class="credit-col">3</td>
+                            <td class="grade-col">B+</td>
+                            <td class="point-col">8</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH106 Business Mathematics</td>
+                            <td class="credit-col">4</td>
+                            <td class="grade-col">A</td>
+                            <td class="point-col">8</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH107 Seminar</td>
+                            <td class="credit-col">1</td>
+                            <td class="grade-col">A</td>
+                            <td class="point-col">8</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-name">BCH108 General Proficiency</td>
+                            <td class="credit-col">1</td>
+                            <td class="grade-col">A</td>
+                            <td class="point-col">9</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Summary & Barcode -->
+                <div class="summary-barcode-row">
+                    <div class="summary-left">
+                        <div class="result-pass">Result: Pass</div>
+                        <div>Total No. of Credits registered: 23</div>
+                        <div>Total No. of Credits earned: 23</div>
+                        <div>SGPA: 7.88</div>
+                        <div>CGPA:</div>
+                    </div>
+
+                    <div class="barcode-right">
+                        <!-- Real Scannable QR Code -->
+                        <div id="gradeCardQRCode" style="width:75px; height:75px; margin:0 auto 4px; display:flex; align-items:center; justify-content:center;"></div>
+
+                        <!-- Barcode -->
+                        <svg class="barcode-svg" viewBox="0 0 220 40">
+                            <rect x="0" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="5" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="9" y="0" width="5" height="40" fill="#000"/>
+                            <rect x="16" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="21" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="28" y="0" width="7" height="40" fill="#000"/>
+                            <rect x="38" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="43" y="0" width="5" height="40" fill="#000"/>
+                            <rect x="51" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="57" y="0" width="8" height="40" fill="#000"/>
+                            <rect x="68" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="73" y="0" width="5" height="40" fill="#000"/>
+                            <rect x="81" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="88" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="93" y="0" width="7" height="40" fill="#000"/>
+                            <rect x="103" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="109" y="0" width="5" height="40" fill="#000"/>
+                            <rect x="117" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="122" y="0" width="7" height="40" fill="#000"/>
+                            <rect x="132" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="139" y="0" width="5" height="40" fill="#000"/>
+                            <rect x="147" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="152" y="0" width="6" height="40" fill="#000"/>
+                            <rect x="161" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="167" y="0" width="7" height="40" fill="#000"/>
+                            <rect x="177" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="182" y="0" width="5" height="40" fill="#000"/>
+                            <rect x="190" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="197" y="0" width="6" height="40" fill="#000"/>
+                            <rect x="206" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="211" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="218" y="0" width="2" height="40" fill="#000"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="instructions-section">
+                    <div class="instructions-title">INSTRUCTIONS</div>
+                    <ol class="instructions-list">
+                        <li>1. This is internet generated document and cannot be used for any legal purpose.</li>
+                        <li>2. Original Marks Sheet will be issued only once.For issue of Duplicate marks sheet, the University office may be contacted.</li>
+                        <li>3. The Candidate will be declared pass by securing at least 40 % marks by taking into account Mid Term Exam along with Sessional &End Term Marks in aggregate of each theory paper.However in practical, it is mandatory to obtain at least 40 % marks in Mid Term &End Term exam separately.</li>
+                        <li>4. Candidate will be declared pass in a semester if he / she passes in all theory and practical subjects.</li>
+                        <li>5. (i) A candidate may be awarded grace marks upto a maximum of 10 marks without any restriction.</li>
+                        <li>(ii)Grace marks will be applicable only to the candidates who can be declared pass in a semester after the award of the grace marks.</li>
+                        <li>6. For 2019 batch onwards mandatory to obtain 30 % marks in end term theory subjects, and 40 % in mid & end sem Practical subjects separately. Grace marks will be applicable only in theory subjects if the student pass in end semester exam.</li>
+                        <li>7. NC=Non Credit</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Footer Signatures -->
+            <div class="signatures-section">
+                <div class="signatures-row">
+                    <div style="font-size:10.5px; font-weight:bold;">Date: <span id="msDateStamp">12-Feb-2021</span></div>
+                    <div style="text-align:center;">
+                        <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#1e40af; transform:rotate(-4deg); font-weight:bold; line-height:1; margin-bottom:2px;">
+                            Sandeep Kumar
+                        </div>
+                        <div style="font-size:10.5px; font-weight:bold;">Checked By: Sandeep Kumar</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#0f172a; transform:rotate(-4deg); line-height:1; margin-bottom:2px;">
+                            Registrar
+                        </div>
+                        <div style="font-size:10.5px; font-weight:bold;">Registrar / Controller</div>
+                    </div>
+                </div>
+                <div class="bottom-solid-line"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script>
+        async function loadGradeCardData() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var sem = urlParams.get('sem') || '1';
+            var studentId = urlParams.get('id') || sessionStorage.getItem('enrollNo') || 'GE-21545586';
+
+            // Fetch student info
+            var students = await dbGetStudents();
+            var student = students.find(s => s.enroll_no === studentId) || {
+                name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
+                father_name: sessionStorage.getItem('fatherName') || 'SAEED',
+                enroll_no: studentId,
+                class_roll_no: sessionStorage.getItem('classRollNo') || '2154682',
+                course: sessionStorage.getItem('course') || 'B.COM Hons'
+            };
+
+            document.getElementById('msStudentName').textContent = (student.name || '').toUpperCase();
+            document.getElementById('msFatherName').textContent = (student.father_name || '').toUpperCase();
+            document.getElementById('msEnrollNo').textContent = student.enroll_no || studentId;
+            document.getElementById('msRollNo').textContent = student.class_roll_no || '';
+
+            // Fetch results for this student
+            var results = await dbGetResults(studentId);
+            var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+            var semYears = ['2020-21', '2020-21', '2021-22', '2021-22', '2022-23', '2020-23'];
+            var idx = parseInt(sem) - 1;
+            var semRoman = idx >= 0 && idx < semRomans.length ? semRomans[idx] : 'I';
+            var semYear = idx >= 0 && idx < semYears.length ? semYears[idx] : '2020-21';
+
+            var result = (results || []).find(r => ("" + r.semester) === ("" + sem)) || (typeof ALL_DEFAULT_RESULTS !== 'undefined' && idx >= 0 && idx < ALL_DEFAULT_RESULTS.length ? ALL_DEFAULT_RESULTS[idx] : null);
+
+            var sgpaVal = '7.88';
+            var resultStatusVal = 'Pass';
+
+            if (result) {
+                if (result.exam_title) {
+                    document.getElementById('examTitleBar').textContent = result.exam_title;
+                } else {
+                    document.getElementById('examTitleBar').textContent = 
+                        `BACHELOR OF COMMERCE (HONOURS)- ${semRoman} SEMESTER EXAMINATION (${result.exam_year || semYear})`;
+                }
+
+                sgpaVal = result.sgpa || '7.88';
+                resultStatusVal = result.result_status || 'Pass';
+
+                // Render dynamic subjects
+                if (result.subjects && result.subjects.length > 0) {
+                    var tbody = document.querySelector('.grades-table tbody');
+                    var html = '';
+                    result.subjects.forEach(sub => {
+                        html += `
+                            <tr>
+                                <td class="sub-name">${sub.code} ${sub.name}</td>
+                                <td class="credit-col">${sub.credit}</td>
+                                <td class="grade-col">${sub.grade}</td>
+                                <td class="point-col">${sub.gradePoint}</td>
+                            </tr>
+                        `;
+                    });
+                    tbody.innerHTML = html;
+                }
+
+                // Render dynamic summary
+                var summaryHtml = `
+                    <div class="result-pass">Result: ${resultStatusVal}</div>
+                    <div>Total No. of Credits registered: ${result.total_credits || 23}</div>
+                    <div>Total No. of Credits earned: ${result.credits_earned || 23}</div>
+                    <div>SGPA: ${sgpaVal}</div>
+                    <div>CGPA: ${result.cgpa || ''}</div>
+                `;
+                document.querySelector('.summary-left').innerHTML = summaryHtml;
+
+                // If Semester 6, render the official 6-semester consolidation table
+                var existingSem6Box = document.getElementById('sem6ConsolidatedBox');
+                if (existingSem6Box) existingSem6Box.remove();
+
+                if (("" + sem) === "6" || result.has_summary_grid) {
+                    var sem6Box = document.createElement('div');
+                    sem6Box.id = 'sem6ConsolidatedBox';
+                    sem6Box.style.cssText = "margin-top:14px; margin-bottom:12px; font-size:10px; font-weight:700; color:#1e293b; line-height:1.8;";
+                    sem6Box.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; border-top:1px solid #cbd5e1; padding-top:6px;">
+                            <span>SGPA 1 SEM:7.88</span><span>Credit :23/23</span>
+                            <span>SGPA 2 SEM:7.38</span><span>Credit :24/24</span>
+                            <span>SGPA 3 SEM:7.38</span><span>Credit :21/21</span>
+                            <span style="color:#0284c7;">CGPA: 7.82</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+                            <span>SGPA 4 SEM:7.50</span><span>Credit :24/24</span>
+                            <span>SGPA 5 SEM:8.75</span><span>Credit :25/25</span>
+                            <span>SGPA 6 SEM:8</span><span>Credit :24/24</span>
+                            <span style="color:#16a34a;">Overall Result: Pass</span>
+                        </div>
+                    `;
+                    document.querySelector('.summary-barcode-row').insertAdjacentElement('afterend', sem6Box);
+                }
+
+                // Dynamic dates
+                var semDates = ['12-Feb-2021', '18-Aug-2021', '15-Feb-2022', '22-Aug-2022', '10-Feb-2023', '28-Jul-2023'];
+                var dStamp = semDates[idx] || '12-Feb-2021';
+                var dElem = document.getElementById('msDateStamp');
+                if (dElem) dElem.textContent = dStamp;
+            } else {
+                document.getElementById('examTitleBar').textContent = 
+                    `BACHELOR OF COMMERCE (HONOURS)- ${semRoman} SEMESTER EXAMINATION (${semYear})`;
+            }
+
+            // Generate Real Scannable QR Code
+            try {
+                var qrContainer = document.getElementById('gradeCardQRCode');
+                qrContainer.innerHTML = '';
+                
+                var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                    ? (window.location.protocol + '//172.20.10.8:8080')
+                    : window.location.origin;
+                var verifyUrl = baseUrl + '/verify.html?type=grade_card&id=' + encodeURIComponent(student.enroll_no || studentId) + '&sem=' + sem + '&name=' + encodeURIComponent(student.name || '') + '&roll=' + encodeURIComponent(student.class_roll_no || '') + '&course=' + encodeURIComponent(student.course || 'B.COM (Honours)') + '&sgpa=' + encodeURIComponent(sgpaVal) + '&status=' + encodeURIComponent(resultStatusVal);
+                
+                new QRCode(qrContainer, {
+                    text: verifyUrl,
+                    width: 76,
+                    height: 76,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } catch(e) {
+                console.error("QR Code Error:", e);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadGradeCardData);
+    </script>
+</body>
+</html>

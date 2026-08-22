@@ -1,0 +1,46 @@
+{
+  "students": [
+    {
+      "id": "GE-21545586",
+      "enrollNo": "GE-21545586",
+      "classRollNo": "2154682",
+      "name": "MOHD HASHIM",
+      "fatherName": "SAEED",
+      "motherName": "SHAHANA",
+      "dob": "1999-10-12",
+      "email": "Babaansari07896@gmail.com",
+      "officialEmail": "Babaansari07896@gmail.com",
+      "phone": "8923456443",
+      "course": "B.COM Hons I",
+      "password": "student@123",
+      "photo": "student_profile.png",
+      "createdAt": "2026-08-20T10:00:00.000Z"
+    }
+  ],
+  "results": [
+    {
+      "studentId": "GE-21545586",
+      "semester": "1",
+      "programme": "B.COM Hons I",
+      "examYear": "2020-21",
+      "examYearShort": "2020",
+      "examTitle": "BACHELOR OF COMMERCE (HONOURS)- I SEMESTER EXAMINATION (2020-21)",
+      "resultStatus": "Pass",
+      "totalCredits": 23,
+      "creditsEarned": 23,
+      "sgpa": "7.88",
+      "cgpa": "",
+      "subjects": [
+        { "code": "BCH101", "name": "Business Organisation", "credit": 4, "grade": "A+", "gradePoint": 9, "marks": 85 },
+        { "code": "BCH102", "name": "Financial Accounting", "credit": 4, "grade": "B+", "gradePoint": 7, "marks": 72 },
+        { "code": "BCH103", "name": "Micro Economics", "credit": 3, "grade": "B+", "gradePoint": 7, "marks": 74 },
+        { "code": "BCH104", "name": "Business Communication", "credit": 3, "grade": "B", "gradePoint": 7, "marks": 68 },
+        { "code": "BCH105", "name": "Fundamentals Of Computer", "credit": 3, "grade": "B+", "gradePoint": 8, "marks": 76 },
+        { "code": "BCH106", "name": "Business Mathematics", "credit": 4, "grade": "A", "gradePoint": 8, "marks": 81 },
+        { "code": "BCH107", "name": "Seminar", "credit": 1, "grade": "A", "gradePoint": 8, "marks": 80 },
+        { "code": "BCH108", "name": "General Proficiency", "credit": 1, "grade": "A", "gradePoint": 9, "marks": 88 }
+      ],
+      "publishedAt": "2026-08-20T10:00:00.000Z"
+    }
+  ]
+}

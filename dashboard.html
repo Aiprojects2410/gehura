@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University | ERP</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f7f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP NAVBAR ===== */
+        .top-navbar {
+            background: #0090e3;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        /* White box for logo on top left */
+        .navbar-brand-box {
+            background: #ffffff;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            padding: 0 25px 0 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+        .navbar-brand-box img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Right controls */
+        .navbar-right-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-right: 20px;
+        }
+
+        .btn-circle-nav {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s ease;
+        }
+        .btn-circle-nav:hover {
+            transform: scale(1.06);
+            color: #fff;
+            text-decoration: none;
+        }
+        .btn-circle-nav.orange-logout {
+            background: #f57c00;
+        }
+        .btn-circle-nav.dark-chart {
+            background: #37474f;
+            border-radius: 6px;
+            width: 34px;
+            height: 30px;
+        }
+        .btn-circle-nav.orange-home {
+            background: #ff6d00;
+        }
+
+        .nav-user-label {
+            color: #ffffff;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-left: 6px;
+            white-space: nowrap;
+        }
+
+        .nav-user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            object-fit: cover;
+            background: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .nav-caret {
+            color: #ffffff;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 2px;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .dashboard-container {
+            margin-top: 52px;
+            padding: 16px 20px;
+            display: flex;
+            gap: 18px;
+            min-height: calc(100vh - 52px);
+        }
+
+        /* ===== LEFT PROFILE COLUMN ===== */
+        .profile-column {
+            width: 275px;
+            flex-shrink: 0;
+        }
+
+        .profile-top-card {
+            background: #0090e3;
+            border-radius: 6px 6px 0 0;
+            padding: 22px 15px 16px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .profile-photo-wrapper {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            border: 3.5px solid #ffffff;
+            margin: 0 auto 10px;
+            overflow: hidden;
+            background: #cfe8fc;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .student-full-name {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .student-contact-line {
+            font-size: 11.5px;
+            font-weight: 500;
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            word-break: break-all;
+        }
+
+        /* Bottom details table */
+        .profile-details-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .profile-info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .profile-info-table tr {
+            border-bottom: 1px solid #f0f3f6;
+        }
+        .profile-info-table tr:last-child {
+            border-bottom: none;
+        }
+        .profile-info-table td {
+            padding: 9px 12px;
+            font-size: 12px;
+        }
+        .profile-info-table td.lbl {
+            text-align: right;
+            color: #64748b;
+            font-weight: 600;
+            width: 44%;
+            white-space: nowrap;
+            padding-right: 8px;
+        }
+        .profile-info-table td.val {
+            text-align: left;
+            color: #1e293b;
+            font-weight: 600;
+            padding-left: 8px;
+            word-break: break-all;
+        }
+
+        /* ===== RIGHT MAIN CONTENT ===== */
+        .main-content-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Modules banner */
+        .modules-banner {
+            background: #0090e3;
+            border-radius: 4px;
+            padding: 12px 16px 18px;
+            color: #ffffff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .modules-banner-top {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .search-modules-input {
+            background: #ffffff;
+            border: none;
+            border-radius: 14px;
+            padding: 5px 16px;
+            font-size: 12px;
+            width: 220px;
+            color: #333;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .search-modules-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .modules-menu-icon {
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 2px 4px;
+        }
+
+        /* Modules grid/row */
+        .modules-grid {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .module-tile {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 4px 6px;
+            border-right: 1px solid rgba(255,255,255,0.22);
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            cursor: pointer;
+        }
+        .module-tile:last-child {
+            border-right: none;
+        }
+        .module-tile:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .module-icon-box {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .module-icon-box svg {
+            width: 42px;
+            height: 42px;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+        }
+
+        .module-tile-title {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.2px;
+        }
+
+        /* Grievance row below */
+        .modules-row-2 {
+            display: flex;
+            margin-top: 12px;
+            padding-top: 10px;
+        }
+        .modules-row-2 .module-tile {
+            flex: 0 0 120px;
+            border-right: none;
+        }
+
+        /* ===== 10 PANELS GRID ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .dashboard-panel-card {
+            background: #ffffff;
+            border: 1px solid #0090e3;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            height: 165px;
+            transition: transform 0.15s ease;
+        }
+        .dashboard-panel-card:hover {
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        .dashboard-panel-header {
+            background: #0090e3;
+            color: #ffffff;
+            padding: 8px 12px;
+            font-size: 12.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dashboard-panel-body {
+            flex: 1;
+            background: #ffffff;
+            position: relative;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #475569;
+            overflow-y: auto;
+        }
+
+        .panel-more-link {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            color: #0090e3;
+            font-size: 11.5px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .panel-more-link:hover {
+            text-decoration: underline;
+            color: #0077c2;
+        }
+
+        /* ===== MODAL DIALOGS ===== */
+        .modal-custom-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(2px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-custom-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            animation: modalFadeIn 0.2s ease;
+        }
+        @keyframes modalFadeIn {
+            from { transform: scale(0.96); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-custom-header {
+            background: #0090e3;
+            color: #ffffff;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .btn-modal-close {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-custom-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+            font-size: 13px;
+        }
+
+        /* Nav tabs inside modal */
+        .modal-nav-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 16px;
+            gap: 8px;
+        }
+        .modal-tab-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+        }
+        .modal-tab-btn.active {
+            color: #0090e3;
+            border-bottom-color: #0090e3;
+        }
+
+        /* Table styles inside modals */
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+        .modal-table th {
+            background: #f8fafc;
+            color: #334155;
+            padding: 9px 12px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            text-align: left;
+        }
+        .modal-table td {
+            padding: 9px 12px;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+        .modal-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-badge-green { background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; }
+        .status-badge-yellow { background: #fef9c3; color: #854d0e; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; }
+        .status-badge-blue { background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .profile-column {
+                width: 100%;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="cropCanvas" style="display:none;"></canvas>
+
+<!-- ===== TOP NAVBAR ===== -->
+<div class="top-navbar">
+    <div class="navbar-brand-box">
+        <img src="logo.png" alt="Graphic Era (Deemed to be University)">
+    </div>
+
+    <div class="navbar-right-controls">
+        <a href="index.html" class="btn-circle-nav orange-logout" title="Logout" onclick="logout(event)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </a>
+        <button class="btn-circle-nav dark-chart" title="Reports" onclick="openAcademicModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polyline points="6 11 10 7 14 11 18 7"/></svg>
+        </button>
+        <a href="dashboard.html" class="btn-circle-nav orange-home" title="Home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </a>
+
+        <span class="nav-user-label" id="navStudentName">MOHD HASHIM</span>
+        <img src="student_profile.png" id="navAvatarImg" class="nav-user-avatar" alt="Avatar">
+        <span class="nav-caret">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="#ffffff"><path d="M7 10l5 5 5-5z"/></svg>
+        </span>
+    </div>
+</div>
+
+<!-- ===== DASHBOARD CONTAINER ===== -->
+<div class="dashboard-container">
+
+    <!-- ===== LEFT PROFILE SIDEBAR ===== -->
+    <div class="profile-column">
+        <div class="profile-top-card">
+            <div class="profile-photo-wrapper">
+                <img src="student_profile.png" id="mainProfilePic" alt="Student Photo">
+            </div>
+            <div class="student-full-name" id="cardStudentName">MOHD HASHIM</div>
+            <div class="student-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#ffffff"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span id="cardStudentEmail">Babaansari07896@gmail.com</span>
+            </div>
+            <div class="student-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#ffffff"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span id="cardStudentPhone">8923456443</span>
+            </div>
+        </div>
+
+        <div class="profile-details-card">
+            <table class="profile-info-table">
+                <tr>
+                    <td class="lbl">Father Name :</td>
+                    <td class="val" id="valFather">SAEED</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Mother Name :</td>
+                    <td class="val" id="valMother">SHAHANA</td>
+                </tr>
+                <tr>
+                    <td class="lbl">D.O.B. :</td>
+                    <td class="val" id="valDob">1999-10-12</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Official Email :</td>
+                    <td class="val" id="valOfficialEmail">Babaansari07896@gmail.com</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Course :</td>
+                    <td class="val" id="valCourse">B.COM Hons I</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Class Roll No. :</td>
+                    <td class="val" id="valRollNo">2154682</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Enroll No. :</td>
+                    <td class="val" id="valEnrollNo">GE-21545586</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== RIGHT MAIN CONTENT COLUMN ===== -->
+    <div class="main-content-column">
+
+        <!-- Top Modules Banner -->
+        <div class="modules-banner">
+            <div class="modules-banner-top">
+                <input type="text" class="search-modules-input" placeholder="Search Modules..">
+                <span class="modules-menu-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </span>
+            </div>
+
+            <!-- Modules Row 1 -->
+            <div class="modules-grid">
+                <!-- Academic -->
+                <a class="module-tile" onclick="openAcademicModal()">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="24" width="44" height="28" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+                            <path d="M14 24 L32 36 L50 24" stroke="#9c27b0" stroke-width="2" fill="none"/>
+                            <path d="M32 10 L54 20 L32 30 L10 20 Z" fill="#ab47bc"/>
+                            <path d="M50 22 V36 C50 36 44 40 32 40 C20 40 14 36 14 36 V22" fill="#7b1fa2"/>
+                            <circle cx="52" cy="24" r="3" fill="#ffca28"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Academic</div>
+                </a>
+
+                <!-- Fee -->
+                <a class="module-tile" onclick="openFeeModal()">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="22" width="48" height="30" rx="4" fill="#26c6da"/>
+                            <rect x="8" y="28" width="48" height="6" fill="#00838f"/>
+                            <circle cx="20" cy="42" r="5" fill="#ffd54f"/>
+                            <text x="18" y="45" font-size="8" font-weight="bold" fill="#37474f">$</text>
+                            <path d="M42 12 L56 18 L42 24 L28 18 Z" fill="#37474f"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Fee</div>
+                </a>
+
+                <!-- Circular -->
+                <a class="module-tile" onclick="openCircularModal()">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 26 H22 L38 14 V50 L22 38 H12 Z" fill="#ffb300"/>
+                            <path d="M38 20 C46 24 46 40 38 44" stroke="#29b6f6" stroke-width="3" stroke-linecap="round" fill="none"/>
+                            <path d="M44 14 C54 20 54 44 44 50" stroke="#29b6f6" stroke-width="3" stroke-linecap="round" fill="none"/>
+                            <rect x="18" y="38" width="8" height="14" rx="2" fill="#d32f2f"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Circular</div>
+                </a>
+
+                <!-- Result -->
+                <a href="view_results.html" class="module-tile">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="14" y="14" width="36" height="42" rx="3" fill="#ffffff"/>
+                            <rect x="24" y="10" width="16" height="6" rx="2" fill="#ffb74d"/>
+                            <line x1="20" y1="24" x2="44" y2="24" stroke="#42a5f5" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="20" y1="32" x2="44" y2="32" stroke="#42a5f5" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="20" y1="40" x2="36" y2="40" stroke="#42a5f5" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="44" cy="44" r="7" fill="#66bb6a"/>
+                            <path d="M41 44 L43 46 L47 42" stroke="#ffffff" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Result</div>
+                </a>
+
+                <!-- Placement -->
+                <a class="module-tile" onclick="openPlacementModal()">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="18" r="7" fill="#42a5f5"/>
+                            <path d="M22 34 C22 28 42 28 42 34 V36 H22 Z" fill="#1e88e5"/>
+                            <circle cx="16" cy="34" r="5" fill="#90caf9"/>
+                            <path d="M8 46 C8 42 24 42 24 46 V48 H8 Z" fill="#64b5f6"/>
+                            <circle cx="48" cy="34" r="5" fill="#90caf9"/>
+                            <path d="M40 46 C40 42 56 42 56 46 V48 H40 Z" fill="#64b5f6"/>
+                            <line x1="32" y1="36" x2="32" y2="42" stroke="#ffffff" stroke-width="2"/>
+                            <line x1="16" y1="42" x2="48" y2="42" stroke="#ffffff" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Placement</div>
+                </a>
+
+                <!-- Hostel -->
+                <a class="module-tile" onclick="openHostelModal()">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="12" y="14" width="4" height="42" fill="#ffb74d"/>
+                            <rect x="48" y="14" width="4" height="42" fill="#ffb74d"/>
+                            <rect x="16" y="24" width="32" height="6" fill="#29b6f6"/>
+                            <rect x="16" y="44" width="32" height="6" fill="#29b6f6"/>
+                            <rect x="18" y="20" width="8" height="4" rx="1" fill="#ffffff"/>
+                            <rect x="18" y="40" width="8" height="4" rx="1" fill="#ffffff"/>
+                            <line x1="42" y1="18" x2="42" y2="52" stroke="#ff9800" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Hostel</div>
+                </a>
+            </div>
+
+            <!-- Grievance Row 2 -->
+            <div class="modules-row-2">
+                <a class="module-tile" onclick="openGrievanceModal()">
+                    <div class="module-icon-box">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="20" r="7" fill="#ff7043"/>
+                            <path d="M14 36 C14 30 34 30 34 36 V38 H14 Z" fill="#f4511e"/>
+                            <circle cx="42" cy="24" r="6" fill="#42a5f5"/>
+                            <path d="M32 40 C32 34 52 34 52 40 V42 H32 Z" fill="#1e88e5"/>
+                            <rect x="18" y="42" width="28" height="8" rx="2" fill="#ffffff"/>
+                        </svg>
+                    </div>
+                    <div class="module-tile-title">Grievance</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- All 10 Panels Grid -->
+        <div class="cards-grid">
+            <!-- 1. Other Services -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    <span>Other Services</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>• Digital Identity Card</div>
+                    <div style="margin-top:4px;">• Bonafide Certificate Apply</div>
+                    <div style="margin-top:4px;">• Character Certificate</div>
+                    <a class="panel-more-link" onclick="openOtherServicesModal()">More..</a>
+                </div>
+            </div>
+
+            <!-- 2. Circular Notices -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z"/></svg>
+                    <span>Circular Notices</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>📢 Mid-Term Exam Datesheet Released</div>
+                    <div style="margin-top:4px; font-size:11px; color:#64748b;">📢 Grafest 2026 Participation Notice</div>
+                    <a class="panel-more-link" onclick="openCircularModal()">More..</a>
+                </div>
+            </div>
+
+            <!-- 3. Manual -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <span>Manual</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>📘 ERP Student User Manual v2.4</div>
+                    <div style="margin-top:4px;">📘 Academic Rules & Ordinances</div>
+                    <a class="panel-more-link" onclick="alert('Student User Manual v2.4 (PDF) downloaded.')">More..</a>
+                </div>
+            </div>
+
+            <!-- 4. News -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                    <span>News</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>🏆 Graphic Era ranked Top 55 in NIRF India!</div>
+                    <div style="margin-top:4px;">🎉 Microsoft offers 47.88 LPA to GEHU students.</div>
+                    <a class="panel-more-link" onclick="openNewsModal()">More..</a>
+                </div>
+            </div>
+
+            <!-- 5. Results -->
+            <div class="dashboard-panel-card" style="cursor:pointer;" onclick="window.location.href='view_results.html'">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                    <span>Results</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>🎓 Semester I Grade Card Available</div>
+                    <div style="margin-top:4px; font-weight:700; color:#16a34a;">Status: PASS (SGPA: 7.88)</div>
+                    <a href="view_results.html" class="panel-more-link">More..</a>
+                </div>
+            </div>
+
+            <!-- 6. Today's Substitution -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                    <span>Today's Substitution</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>No faculty on leave today. Regular lectures scheduled.</div>
+                    <a class="panel-more-link" onclick="openSubstitutionModal()">More..</a>
+                </div>
+            </div>
+
+            <!-- 7. Notifications -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+                    <span>Notifications</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>🔔 Fee receipt for Semester I generated.</div>
+                    <div style="margin-top:4px;">🔔 Admit card for End-Term Exam is ready.</div>
+                    <a class="panel-more-link" onclick="openCircularModal()">More..</a>
+                </div>
+            </div>
+
+            <!-- 8. Corporate Resource Centre (T & P) -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <span>Corporate Resource Centre (T & P)</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>🏢 Amazon Campus Drive (Registration Open)</div>
+                    <div style="margin-top:4px;">🏢 TCS National Qualifier Test 2026</div>
+                    <a class="panel-more-link" onclick="openPlacementModal()">More..</a>
+                </div>
+            </div>
+
+            <!-- 9. Exam -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <span>Exam</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>📝 <strong>Admit Card (Hall Ticket) Released</strong></div>
+                    <div style="margin-top:6px;">
+                        <a href="admit_card.html" target="_blank" class="status-badge-blue" style="text-decoration:none; display:inline-block;">Download Admit Card</a>
+                    </div>
+                    <a href="admit_card.html" target="_blank" class="panel-more-link">More..</a>
+                </div>
+            </div>
+
+            <!-- 10. Events -->
+            <div class="dashboard-panel-card">
+                <div class="dashboard-panel-header">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    <span>Events</span>
+                </div>
+                <div class="dashboard-panel-body">
+                    <div>🎪 Grafest Annual Mega Cultural Festival</div>
+                    <div style="margin-top:4px;">⚽ Inter-University Football Cup 2026</div>
+                    <a class="panel-more-link" onclick="openNewsModal()">More..</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 1. ACADEMIC MODAL (ATTENDANCE & TIMETABLE) -->
+<!-- ============================================== -->
+<div id="modalAcademic" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-graduation-cap"></i> Academic Management System</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <div class="modal-nav-tabs">
+                <button class="modal-tab-btn active" onclick="switchAcademicTab(event, 'tabAttendance')">📊 Attendance Status</button>
+                <button class="modal-tab-btn" onclick="switchAcademicTab(event, 'tabTimetable')">📅 Weekly Time Table</button>
+                <button class="modal-tab-btn" onclick="switchAcademicTab(event, 'tabSyllabus')">📘 Course Syllabus</button>
+            </div>
+
+            <!-- Attendance Tab -->
+            <div id="tabAttendance" class="academic-subtab">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; background:#f8fafc; padding:10px 14px; border:1px solid #e2e8f0; border-radius:4px;">
+                    <div><strong>Overall Attendance:</strong> <span style="color:#16a34a; font-size:16px; font-weight:800;">86.4%</span></div>
+                    <div>Eligibility Status: <span class="status-badge-green">ELIGIBLE FOR EXAMS</span></div>
+                </div>
+                <table class="modal-table">
+                    <thead>
+                        <tr>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Lectures Held</th>
+                            <th>Attended</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>BCH101</strong></td><td>Business Organisation</td><td>45</td><td>40</td><td><strong>88.8%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                        <tr><td><strong>BCH102</strong></td><td>Financial Accounting</td><td>48</td><td>42</td><td><strong>87.5%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                        <tr><td><strong>BCH103</strong></td><td>Micro Economics</td><td>36</td><td>31</td><td><strong>86.1%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                        <tr><td><strong>BCH104</strong></td><td>Business Communication</td><td>36</td><td>30</td><td><strong>83.3%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                        <tr><td><strong>BCH105</strong></td><td>Fundamentals Of Computer</td><td>36</td><td>32</td><td><strong>88.8%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                        <tr><td><strong>BCH106</strong></td><td>Business Mathematics</td><td>48</td><td>40</td><td><strong>83.3%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Timetable Tab -->
+            <div id="tabTimetable" class="academic-subtab" style="display:none;">
+                <table class="modal-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>09:30 - 10:30 AM</th>
+                            <th>10:30 - 11:30 AM</th>
+                            <th>11:45 - 12:45 PM</th>
+                            <th>01:30 - 02:30 PM</th>
+                            <th>02:30 - 03:30 PM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Monday</strong></td><td>BCH101 (CR-104)</td><td>BCH102 (CR-104)</td><td>BCH106 (CR-104)</td><td>BCH105 (Lab-2)</td><td>BCH104 (CR-104)</td></tr>
+                        <tr><td><strong>Tuesday</strong></td><td>BCH102 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH101 (CR-104)</td><td>BCH106 (CR-104)</td><td>Library</td></tr>
+                        <tr><td><strong>Wednesday</strong></td><td>BCH106 (CR-104)</td><td>BCH105 (Lab-2)</td><td>BCH102 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH101 (CR-104)</td></tr>
+                        <tr><td><strong>Thursday</strong></td><td>BCH104 (CR-104)</td><td>BCH101 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH102 (CR-104)</td><td>Sports</td></tr>
+                        <tr><td><strong>Friday</strong></td><td>BCH103 (CR-104)</td><td>BCH106 (CR-104)</td><td>BCH104 (CR-104)</td><td>BCH105 (Lab-2)</td><td>Seminar</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Syllabus Tab -->
+            <div id="tabSyllabus" class="academic-subtab" style="display:none;">
+                <div style="line-height:1.6;">
+                    <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">B.COM (Honours) - Semester I Syllabus Structure:</div>
+                    <div>• <strong>BCH101 Business Organisation:</strong> Forms of business organizations, company management, business ethics. (4 Credits)</div>
+                    <div>• <strong>BCH102 Financial Accounting:</strong> Accounting principles, depreciation, final accounts preparation. (4 Credits)</div>
+                    <div>• <strong>BCH103 Micro Economics:</strong> Demand & supply analysis, consumer behavior, production functions. (3 Credits)</div>
+                    <div>• <strong>BCH104 Business Communication:</strong> Corporate correspondence, presentation skills, business letters. (3 Credits)</div>
+                    <div>• <strong>BCH105 Fundamentals Of Computer:</strong> MS Office, database management, internet protocols. (3 Credits)</div>
+                    <div>• <strong>BCH106 Business Mathematics:</strong> Matrices, calculus, financial mathematics. (4 Credits)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 2. FEE MODAL -->
+<!-- ============================================== -->
+<div id="modalFee" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-credit-card"></i> Student Fee & Payment Account</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-size:12px; color:#166534; font-weight:700;">SEMESTER I FEE STATUS:</div>
+                    <div style="font-size:22px; font-weight:800; color:#15803d; margin-top:2px;">₹ 68,500.00 PAID</div>
+                    <div style="font-size:11.5px; color:#64748b; margin-top:2px;">Receipt No: <strong>GEHU/2025-26/REC-92841</strong></div>
+                </div>
+                <div>
+                    <a href="fee_receipt.html" target="_blank" class="btn btn-primary" style="font-size:12.5px; font-weight:700;">
+                        <i class="fa fa-print"></i> View / Print Official Receipt
+                    </a>
+                </div>
+            </div>
+
+            <table class="modal-table">
+                <thead>
+                    <tr><th>Fee Head</th><th>Total Dues</th><th>Paid Amount</th><th>Balance</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Tuition Fee (Sem I)</td><td>₹ 52,000</td><td>₹ 52,000</td><td><span class="status-badge-green">NIL</span></td></tr>
+                    <tr><td>University Exam Fee</td><td>₹ 4,500</td><td>₹ 4,500</td><td><span class="status-badge-green">NIL</span></td></tr>
+                    <tr><td>Academic Development & Lab</td><td>₹ 6,000</td><td>₹ 6,000</td><td><span class="status-badge-green">NIL</span></td></tr>
+                    <tr><td>Library Resource Deposit</td><td>₹ 3,000</td><td>₹ 3,000</td><td><span class="status-badge-green">NIL</span></td></tr>
+                    <tr><td>Student Council & Sports</td><td>₹ 3,000</td><td>₹ 3,000</td><td><span class="status-badge-green">NIL</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 3. CIRCULAR MODAL -->
+<!-- ============================================== -->
+<div id="modalCircular" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-bullhorn"></i> Official University Circulars & Notices</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <table class="modal-table">
+                <thead>
+                    <tr><th>Date</th><th>Category</th><th>Circular Subject</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>18-Aug-2026</strong></td>
+                        <td><span class="status-badge-blue">Exam</span></td>
+                        <td>End Semester Examination Date Sheet & Admit Card Released</td>
+                        <td><a href="admit_card.html" target="_blank" class="btn btn-xs btn-success">View</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>12-Aug-2026</strong></td>
+                        <td><span class="status-badge-green">Academic</span></td>
+                        <td>Grafest 2026 Annual Cultural Fest Student Auditions</td>
+                        <td><button class="btn btn-xs btn-primary" onclick="alert('Notice: Grafest auditions start from 25th Aug at Main Auditorium.')">View</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>05-Aug-2026</strong></td>
+                        <td><span class="status-badge-yellow">Hostel</span></td>
+                        <td>Hostel Mess Committee Election & Advisory Notice</td>
+                        <td><button class="btn btn-xs btn-primary" onclick="alert('Mess committee election notice acknowledged.')">View</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>01-Aug-2026</strong></td>
+                        <td><span class="status-badge-blue">Holiday</span></td>
+                        <td>University Holiday on Account of Independence Day</td>
+                        <td><button class="btn btn-xs btn-primary" onclick="alert('University will remain closed on 15th August.')">View</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 4. PLACEMENT MODAL (CRC) -->
+<!-- ============================================== -->
+<div id="modalPlacement" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-briefcase"></i> Corporate Resource Centre (T & P)</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <div style="background:#e0f2fe; border:1px solid #bae6fd; border-radius:6px; padding:12px 16px; margin-bottom:14px;">
+                <strong>Highest Campus Package:</strong> <span style="color:#0284c7; font-weight:800; font-size:15px;">47.88 LPA (Microsoft)</span> | Over 450+ Companies Visited
+            </div>
+            <table class="modal-table">
+                <thead>
+                    <tr><th>Company</th><th>Role</th><th>CTC Package</th><th>Drive Date</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Microsoft</strong></td><td>Software Engineer</td><td>47.88 LPA</td><td>15-Sep-2026</td><td><span class="status-badge-green">Eligible</span></td></tr>
+                    <tr><td><strong>Amazon</strong></td><td>Financial Analyst</td><td>44.00 LPA</td><td>22-Sep-2026</td><td><span class="status-badge-green">Eligible</span></td></tr>
+                    <tr><td><strong>Google</strong></td><td>Associate Specialist</td><td>38.50 LPA</td><td>05-Oct-2026</td><td><span class="status-badge-green">Eligible</span></td></tr>
+                    <tr><td><strong>Deloitte</strong></td><td>Audit & Tax Analyst</td><td>8.50 LPA</td><td>12-Oct-2026</td><td><span class="status-badge-blue">Applied</span></td></tr>
+                    <tr><td><strong>TCS Digital</strong></td><td>System Engineer</td><td>7.50 LPA</td><td>20-Oct-2026</td><td><span class="status-badge-blue">Registered</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 5. HOSTEL & OUTPASS MODAL -->
+<!-- ============================================== -->
+<div id="modalHostel" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-building"></i> Hostel Management & Gate Pass</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:14px; margin-bottom:16px;">
+                <div style="font-weight:700; color:#0f172a; margin-bottom:6px;">Current Allocation:</div>
+                <div>Hostel: <strong>Subhash Chandra Bose Hostel (Block-B)</strong> | Room No: <strong>B-204</strong> | Bed: <strong>A</strong></div>
+                <div style="margin-top:2px;">Warden: <strong>Dr. R. K. Sharma (Ph: 9837182948)</strong></div>
+            </div>
+
+            <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">Apply for Online Gate Pass (Outpass):</div>
+            <form onsubmit="handleGatePassSubmit(event)">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+                    <div>
+                        <label style="font-size:11.5px; font-weight:600;">Out Date & Time:</label>
+                        <input type="datetime-local" id="gpOutDate" class="form-control" required style="font-size:12px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11.5px; font-weight:600;">Return Date & Time:</label>
+                        <input type="datetime-local" id="gpInDate" class="form-control" required style="font-size:12px;">
+                    </div>
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:11.5px; font-weight:600;">Reason for Leave:</label>
+                    <input type="text" id="gpReason" class="form-control" placeholder="e.g. Home Visit / Family Emergency" required style="font-size:12px;">
+                </div>
+                <div style="display:flex; justify-content:flex-end;">
+                    <button type="submit" class="btn btn-success" style="font-size:12px; font-weight:700;">Generate Gate Pass</button>
+                </div>
+            </form>
+            <div id="gpSuccess" style="display:none; background:#f0fdf4; border:1px solid #86efac; color:#166534; padding:15px; border-radius:6px; margin-top:14px; text-align:center;">
+                <div style="font-weight:800; font-size:14px; margin-bottom:8px;">✅ HOSTEL GATE PASS #GP-84920 APPROVED</div>
+                <div id="gatePassQRCode" style="width:90px; height:90px; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;"></div>
+                <div style="font-size:11.5px; color:#15803d;">Scan at Main Security Gate Clement Town Campus</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 6. GRIEVANCE MODAL -->
+<!-- ============================================== -->
+<div id="modalGrievance" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-shield"></i> Student Grievance Redressal Cell</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <form onsubmit="handleGrievanceSubmit(event)">
+                <div style="margin-bottom:10px;">
+                    <label style="font-size:12px; font-weight:600;">Grievance Category:</label>
+                    <select class="form-control" id="grvCategory" required style="font-size:12px;">
+                        <option value="Academic">Academic & Lectures</option>
+                        <option value="Hostel">Hostel & Facilities</option>
+                        <option value="Examination">Examination & Evaluation</option>
+                        <option value="Anti-Ragging">Anti-Ragging Helpdesk</option>
+                        <option value="Other">Other Issues</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:12px; font-weight:600;">Detailed Complaint Description:</label>
+                    <textarea class="form-control" id="grvDesc" rows="3" placeholder="Describe your grievance in detail..." required style="font-size:12px;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="font-size:12px; font-weight:700;">Submit Grievance Ticket</button>
+            </form>
+            <div id="grvSuccess" style="display:none; background:#dcfce7; color:#166534; padding:10px; border-radius:4px; margin-top:10px; font-weight:700; text-align:center;">
+                ✅ Grievance Ticket #GRV-2026-1049 Registered. University Cell will resolve within 48 hours.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 7. OTHER SERVICES MODAL -->
+<!-- ============================================== -->
+<div id="modalOtherServices" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-cogs"></i> Student Services Portal</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <table class="modal-table">
+                <thead>
+                    <tr><th>Service Name</th><th>Processing Time</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Digital Student Identity Card</td><td>Instant</td><td><button class="btn btn-xs btn-primary" onclick="alert('Digital ID Card downloaded.')">Download ID Card</button></td></tr>
+                    <tr><td>Bonafide Student Certificate</td><td>24 Hours</td><td><button class="btn btn-xs btn-success" onclick="alert('Bonafide Certificate request submitted.')">Apply Online</button></td></tr>
+                    <tr><td>Character Certificate</td><td>48 Hours</td><td><button class="btn btn-xs btn-success" onclick="alert('Character Certificate request submitted.')">Apply Online</button></td></tr>
+                    <tr><td>Bus / Transport Pass Renewal</td><td>Instant</td><td><button class="btn btn-xs btn-primary" onclick="alert('Transport pass renewed for current semester.')">Renew Pass</button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 8. NEWS & EVENTS MODAL -->
+<!-- ============================================== -->
+<div id="modalNews" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-newspaper-o"></i> University News & Events</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <div style="margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                <div style="font-weight:700; color:#0f172a; font-size:14px;">🏆 Graphic Era Ranks Among Top 55 Universities in India (NIRF 2025)</div>
+                <div style="font-size:12px; color:#64748b; margin-top:3px;">Graphic Era Hill University continues its legacy of academic brilliance, research, and top placements in India.</div>
+            </div>
+            <div style="margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                <div style="font-weight:700; color:#0f172a; font-size:14px;">🎉 Grafest 2026 - Annual Mega Fest Announced</div>
+                <div style="font-size:12px; color:#64748b; margin-top:3px;">Celebrity performances, EDM nights, technical hackathons, and cultural competitions scheduled for October 2026.</div>
+            </div>
+            <div>
+                <div style="font-weight:700; color:#0f172a; font-size:14px;">🚀 Inter-College Hackathon 2026 Cash Prize Winners</div>
+                <div style="font-size:12px; color:#64748b; margin-top:3px;">Computer Science students won first prize worth ₹ 1,00,000 at National Level Hackathon.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 9. SUBSTITUTION MODAL -->
+<!-- ============================================== -->
+<div id="modalSubstitution" class="modal-custom-backdrop">
+    <div class="modal-custom-box">
+        <div class="modal-custom-header">
+            <span><i class="fa fa-exchange"></i> Today's Faculty Substitution Table</span>
+            <button class="btn-modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-custom-body">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:12px; border-radius:4px; font-size:12.5px; color:#166534; margin-bottom:12px;">
+                ✅ All regular department faculties are on campus today. No substitutions required for B.COM Hons.
+            </div>
+            <table class="modal-table">
+                <thead>
+                    <tr><th>Period</th><th>Subject</th><th>Original Faculty</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Period 1 (09:30 AM)</td><td>BCH101 Business Organisation</td><td>Dr. S. K. Verma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>
+                    <tr><td>Period 2 (10:30 AM)</td><td>BCH102 Financial Accounting</td><td>Prof. Anita Rawat</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>
+                    <tr><td>Period 3 (11:45 AM)</td><td>BCH106 Business Mathematics</td><td>Dr. Manoj Sharma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ===== DASHBOARD JAVASCRIPT ===== -->
+<script src="qrcode.min.js"></script>
+<script>
+    // Set clean passport photo for avatar
+    window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('mainProfilePic').src = 'candidate_photo.png';
+        document.getElementById('navAvatarImg').src = 'candidate_photo.png';
+    });
+
+    // Populate data from sessionStorage
+    var studentData = {
+        name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
+        email: sessionStorage.getItem('email') || 'Babaansari07896@gmail.com',
+        phone: sessionStorage.getItem('phone') || '8923456443',
+        father: sessionStorage.getItem('fatherName') || 'SAEED',
+        mother: sessionStorage.getItem('motherName') || 'SHAHANA',
+        dob: sessionStorage.getItem('dob') || '1999-10-12',
+        officialEmail: sessionStorage.getItem('officialEmail') || 'Babaansari07896@gmail.com',
+        course: sessionStorage.getItem('course') || 'B.COM Hons I',
+        rollNo: sessionStorage.getItem('classRollNo') || '2154682',
+        enrollNo: sessionStorage.getItem('enrollNo') || 'GE-21545586'
+    };
+
+    document.getElementById('navStudentName').textContent = studentData.name.toUpperCase();
+    document.getElementById('cardStudentName').textContent = studentData.name.toUpperCase();
+    document.getElementById('cardStudentEmail').textContent = studentData.email;
+    document.getElementById('cardStudentPhone').textContent = studentData.phone;
+
+    document.getElementById('valFather').textContent = studentData.father;
+    document.getElementById('valMother').textContent = studentData.mother;
+    document.getElementById('valDob').textContent = studentData.dob;
+    document.getElementById('valOfficialEmail').textContent = studentData.officialEmail;
+    document.getElementById('valCourse').textContent = studentData.course;
+    document.getElementById('valRollNo').textContent = studentData.rollNo;
+    document.getElementById('valEnrollNo').textContent = studentData.enrollNo;
+
+    function logout(e) {
+        if (e) e.preventDefault();
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+
+    // Modal Triggers
+    function closeAllModals() {
+        document.querySelectorAll('.modal-custom-backdrop').forEach(m => m.style.display = 'none');
+    }
+
+    function openAcademicModal() { closeAllModals(); document.getElementById('modalAcademic').style.display = 'flex'; }
+    function openFeeModal() { closeAllModals(); document.getElementById('modalFee').style.display = 'flex'; }
+    function openCircularModal() { closeAllModals(); document.getElementById('modalCircular').style.display = 'flex'; }
+    function openPlacementModal() { closeAllModals(); document.getElementById('modalPlacement').style.display = 'flex'; }
+    function openHostelModal() { closeAllModals(); document.getElementById('modalHostel').style.display = 'flex'; }
+    function openGrievanceModal() { closeAllModals(); document.getElementById('modalGrievance').style.display = 'flex'; }
+    function openOtherServicesModal() { closeAllModals(); document.getElementById('modalOtherServices').style.display = 'flex'; }
+    function openNewsModal() { closeAllModals(); document.getElementById('modalNews').style.display = 'flex'; }
+    function openSubstitutionModal() { closeAllModals(); document.getElementById('modalSubstitution').style.display = 'flex'; }
+
+    function switchAcademicTab(e, tabId) {
+        document.querySelectorAll('.academic-subtab').forEach(t => t.style.display = 'none');
+        document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).style.display = 'block';
+        e.target.classList.add('active');
+    }
+
+    function handleGatePassSubmit(e) {
+        e.preventDefault();
+        var successBox = document.getElementById('gpSuccess');
+        successBox.style.display = 'block';
+        
+        try {
+            var qrCont = document.getElementById('gatePassQRCode');
+            qrCont.innerHTML = '';
+            var reason = document.getElementById('gpReason').value || 'Home Visit';
+            var qrPayload = `GRAPHIC ERA HOSTEL GATE PASS\n--------------------------\nPass ID: GP-84920\nStudent: ${studentData.name.toUpperCase()}\nEnroll: ${studentData.enrollNo}\nRoom: B-204 (SC Bose Hostel)\nReason: ${reason}\nStatus: APPROVED - VALID FOR EXIT`;
+            
+            new QRCode(qrCont, {
+                text: qrPayload,
+                width: 80,
+                height: 80,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        } catch(err) {
+            console.error("Gatepass QR error:", err);
+        }
+    }
+
+    function handleGrievanceSubmit(e) {
+        e.preventDefault();
+        document.getElementById('grvSuccess').style.display = 'block';
+        setTimeout(function() { closeAllModals(); }, 3000);
+    }
+</script>
+
+</body>
+</html>

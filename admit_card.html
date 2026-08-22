@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University | Examination Admit Card</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background-color: #525659;
+            color: #111111;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .action-bar {
+            width: 210mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .action-bar a, .action-bar button {
+            background-color: #0090e3;
+            color: #ffffff;
+            border: none;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .action-bar a:hover, .action-bar button:hover {
+            background-color: #0077c2;
+        }
+
+        .admit-page {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: #ffffff;
+            padding: 14mm 18mm 12mm 18mm;
+            position: relative;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .admit-header-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .admit-title-box {
+            text-align: center;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 6px 0;
+            margin-bottom: 14px;
+            border-radius: 3px;
+        }
+        .admit-title {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .admit-subtitle {
+            font-size: 11px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        /* Candidate info & photo row */
+        .candidate-box {
+            display: grid;
+            grid-template-columns: 1fr 130px;
+            gap: 16px;
+            border: 1.5px solid #0f172a;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+        }
+
+        .cand-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+            font-size: 12px;
+        }
+        .cand-row {
+            display: flex;
+        }
+        .cand-lbl {
+            width: 125px;
+            color: #475569;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .cand-val {
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        .cand-photo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .cand-photo-img {
+            width: 105px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #334155;
+            padding: 2px;
+            background: #ffffff;
+        }
+
+        /* Schedule Table */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+        .schedule-table th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+            padding: 8px 10px;
+            border: 1px solid #94a3b8;
+            text-align: left;
+        }
+        .schedule-table td {
+            padding: 7px 10px;
+            border: 1px solid #cbd5e1;
+            color: #1e293b;
+        }
+
+        /* Instructions */
+        .rules-box {
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 4px;
+            padding: 10px 14px;
+            font-size: 10.5px;
+            color: #334155;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        .rules-title {
+            font-weight: 800;
+            color: #c62828;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Signatures */
+        .admit-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1.5px solid #0f172a;
+        }
+        .sig-col {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .action-bar {
+                display: none;
+            }
+            .admit-page {
+                box-shadow: none;
+                padding: 10mm 15mm;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="action-bar">
+        <a href="dashboard.html">&larr; Back to Dashboard</a>
+        <button onclick="window.print()"><i class="fa fa-print"></i> Print / Download Admit Card</button>
+    </div>
+
+    <div class="admit-page">
+        <div>
+            <!-- Authentic Header Image -->
+            <img src="marksheet_header.png" class="admit-header-img" alt="Graphic Era Hill University">
+
+            <!-- Title -->
+            <div class="admit-title-box">
+                <div class="admit-title">End Semester University Examination (2025-26)</div>
+                <div class="admit-subtitle">ADMIT CARD / PROVISIONAL HALL TICKET</div>
+            </div>
+
+            <!-- Candidate Info & Photo Box -->
+            <div class="candidate-box">
+                <div class="cand-info-grid">
+                    <div class="cand-row">
+                        <span class="cand-lbl">Student Name:</span>
+                        <span class="cand-val" id="admName">MOHD HASHIM</span>
+                    </div>
+                    <div class="cand-row">
+                        <span class="cand-lbl">Enrollment No:</span>
+                        <span class="cand-val" id="admEnroll">GE-21545586</span>
+                    </div>
+                    <div class="cand-row">
+                        <span class="cand-lbl">Father's Name:</span>
+                        <span class="cand-val" id="admFather">SAEED</span>
+                    </div>
+                    <div class="cand-row">
+                        <span class="cand-lbl">Class Roll No:</span>
+                        <span class="cand-val" id="admRoll">2154682</span>
+                    </div>
+                    <div class="cand-row">
+                        <span class="cand-lbl">Programme / Course:</span>
+                        <span class="cand-val" id="admCourse">B.COM Hons I</span>
+                    </div>
+                    <div class="cand-row">
+                        <span class="cand-lbl">Semester:</span>
+                        <span class="cand-val">Semester I</span>
+                    </div>
+                    <div class="cand-row" style="grid-column: span 2;">
+                        <span class="cand-lbl">Exam Center:</span>
+                        <span class="cand-val">Main Campus, 510 Society Area, Clement Town, Dehradun - 248002</span>
+                    </div>
+                </div>
+
+                <div class="cand-photo-box">
+                    <img src="candidate_photo.png" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">
+                    <div style="font-size:9.5px; color:#475569; font-weight:700; margin-top:4px;">Candidate Photo</div>
+                </div>
+            </div>
+
+            <!-- Exam Schedule Table -->
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Date</th>
+                        <th style="width: 18%;">Time Slot</th>
+                        <th style="width: 16%;">Paper Code</th>
+                        <th style="width: 33%;">Course Title</th>
+                        <th style="width: 18%;">Invigilator Sign</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>02-Dec-2025</strong></td>
+                        <td>09:30 AM - 12:30 PM</td>
+                        <td><strong>BCH101</strong></td>
+                        <td>Business Organisation</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>05-Dec-2025</strong></td>
+                        <td>09:30 AM - 12:30 PM</td>
+                        <td><strong>BCH102</strong></td>
+                        <td>Financial Accounting</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>08-Dec-2025</strong></td>
+                        <td>09:30 AM - 12:30 PM</td>
+                        <td><strong>BCH103</strong></td>
+                        <td>Micro Economics</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>11-Dec-2025</strong></td>
+                        <td>09:30 AM - 12:30 PM</td>
+                        <td><strong>BCH104</strong></td>
+                        <td>Business Communication</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>15-Dec-2025</strong></td>
+                        <td>09:30 AM - 12:30 PM</td>
+                        <td><strong>BCH105</strong></td>
+                        <td>Fundamentals Of Computer</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>18-Dec-2025</strong></td>
+                        <td>09:30 AM - 12:30 PM</td>
+                        <td><strong>BCH106</strong></td>
+                        <td>Business Mathematics</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Rules -->
+            <div class="rules-box">
+                <div class="rules-title"><i class="fa fa-exclamation-triangle"></i> Important Examination Instructions:</div>
+                1. Candidate must bring this printed Admit Card along with their official University Identity Card to the examination hall.<br>
+                2. Entry to the examination hall will strictly close 15 minutes prior to the commencement of the examination.<br>
+                3. Electronic gadgets including mobile phones, smart watches, and programmable calculators are strictly prohibited inside the hall.<br>
+                4. Any candidate found indulging in unfair means (UFM) will be debarred from the examination as per university disciplinary ordinances.
+            </div>
+        </div>
+
+        <!-- Footer Signatures -->
+        <div class="admit-footer" style="display:grid; grid-template-columns: 1.1fr 1.3fr 1.5fr 1.3fr; gap:10px; align-items:flex-end;">
+            <div class="sig-col">
+                <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#0f172a; transform:rotate(-3deg); margin-bottom:2px;">
+                    Mohd Hashim
+                </div>
+                <div style="border-top:1px solid #334155; padding-top:4px;">
+                    Candidate's Signature
+                </div>
+            </div>
+
+            <div class="sig-col">
+                <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#1e40af; transform:rotate(-4deg); font-weight:bold; margin-bottom:2px;">
+                    Sandeep Kumar
+                </div>
+                <div style="border-top:1px solid #334155; padding-top:4px;">
+                    Invigilator's Signature<br>
+                    <span style="font-size:9px; color:#64748b;">(Prof. Sandeep Kumar)</span>
+                </div>
+            </div>
+
+            <div class="sig-col" style="display:flex; align-items:center; gap:8px; justify-content:center;">
+                <!-- Real Scannable QR Code -->
+                <div id="admitCardQRCode" style="width:55px; height:55px; display:flex; align-items:center; justify-content:center;"></div>
+                
+                <div>
+                    <!-- Barcode SVG -->
+                    <svg width="120" height="26" viewBox="0 0 220 40">
+                        <rect x="0" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="5" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="10" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="18" y="0" width="1" height="36" fill="#000"/>
+                        <rect x="22" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="28" y="0" width="5" height="36" fill="#000"/>
+                        <rect x="36" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="42" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="50" y="0" width="1" height="36" fill="#000"/>
+                        <rect x="54" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="60" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="66" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="74" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="80" y="0" width="1" height="36" fill="#000"/>
+                        <rect x="85" y="0" width="5" height="36" fill="#000"/>
+                        <rect x="94" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="100" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="106" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="114" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="120" y="0" width="1" height="36" fill="#000"/>
+                        <rect x="125" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="132" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="138" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="144" y="0" width="5" height="36" fill="#000"/>
+                        <rect x="152" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="158" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="165" y="0" width="1" height="36" fill="#000"/>
+                        <rect x="170" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="178" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="185" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="190" y="0" width="4" height="36" fill="#000"/>
+                        <rect x="198" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="204" y="0" width="3" height="36" fill="#000"/>
+                        <rect x="210" y="0" width="2" height="36" fill="#000"/>
+                        <rect x="215" y="0" width="4" height="36" fill="#000"/>
+                    </svg>
+                    <div style="font-size:8.5px; color:#64748b; margin-top:1px;">GEHU-SECURE-2025</div>
+                </div>
+            </div>
+
+            <div class="sig-col" style="text-align:right;">
+                <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#0f172a; transform:rotate(-4deg); margin-bottom:2px;">
+                    Controller of Exams
+                </div>
+                <div style="border-top:1px solid #334155; padding-top:4px;">
+                    Controller of Examinations<br>
+                    <span style="font-size:9px; color:#64748b;">Graphic Era Hill University</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="qrcode.min.js"></script>
+    <script>
+        var sName = sessionStorage.getItem('userName') || 'MOHD HASHIM';
+        var sFather = sessionStorage.getItem('fatherName') || 'SAEED';
+        var sEnroll = sessionStorage.getItem('enrollNo') || 'GE-21545586';
+        var sRoll = sessionStorage.getItem('classRollNo') || '2154682';
+        var sCourse = sessionStorage.getItem('course') || 'B.COM Hons I';
+        var sPhoto = sessionStorage.getItem('photo') || 'candidate_photo.png';
+        if (sPhoto === 'student_profile.png') sPhoto = 'candidate_photo.png';
+
+        document.getElementById('admName').textContent = sName.toUpperCase();
+        document.getElementById('admFather').textContent = sFather.toUpperCase();
+        document.getElementById('admEnroll').textContent = sEnroll;
+        document.getElementById('admRoll').textContent = sRoll;
+        document.getElementById('admCourse').textContent = sCourse;
+        document.getElementById('admPhoto').src = sPhoto;
+
+        // Generate Real Scannable QR Code
+        try {
+            var qrCont = document.getElementById('admitCardQRCode');
+            qrCont.innerHTML = '';
+            
+            var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                ? (window.location.protocol + '//172.20.10.8:8080')
+                : window.location.origin;
+            var verifyUrl = baseUrl + '/verify.html?type=admit_card&id=' + encodeURIComponent(sEnroll) + '&name=' + encodeURIComponent(sName) + '&roll=' + encodeURIComponent(sRoll) + '&course=' + encodeURIComponent(sCourse) + '&status=VALID';
+            
+            new QRCode(qrCont, {
+                text: verifyUrl,
+                width: 60,
+                height: 60,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        } catch(e) {
+            console.error("Admit QR error:", e);
+        }
+    </script>
+</body>
+</html>
