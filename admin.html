@@ -442,6 +442,37 @@
 </head>
 <body>
 
+    <!-- ===== RESTRICTED ADMIN SECURITY LOCK OVERLAY ===== -->
+    <div id="adminSecurityLock" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.95); backdrop-filter:blur(10px); z-index:999999; display:flex; align-items:center; justify-content:center; padding:20px;">
+        <div style="background:#ffffff; border-radius:14px; max-width:420px; width:100%; box-shadow:0 25px 50px -12px rgba(0,0,0,0.6); overflow:hidden; border:1px solid #cbd5e1; text-align:center; font-family:'Open Sans', Arial, sans-serif;">
+            <div style="background:#0090e3; padding:26px 20px 22px; color:#ffffff;">
+                <div style="width:56px; height:56px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:24px;">
+                    <i class="fa fa-shield"></i>
+                </div>
+                <h3 style="margin:0; font-size:18px; font-weight:700; letter-spacing:0.5px;">ADMINISTRATIVE SECURITY GATE</h3>
+                <p style="margin:6px 0 0; font-size:12px; color:rgba(255,255,255,0.9);">Graphic Era Hill University &bull; Restricted Access</p>
+            </div>
+            <div style="padding:28px 24px 24px;">
+                <p style="font-size:13px; color:#64748b; margin-bottom:20px; line-height:1.5;">This portal contains confidential university database records. Enter Master Administrator Password to access:</p>
+                <form onsubmit="handleAdminLockLogin(event)">
+                    <div style="margin-bottom:16px; text-align:left;">
+                        <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:6px;">Master Security Key</label>
+                        <input type="password" id="adminLockPass" placeholder="Enter admin password..." style="width:100%; padding:11px 14px; border:1.5px solid #cbd5e1; border-radius:6px; font-size:14px; outline:none; transition:border-color 0.2s;" required autofocus>
+                    </div>
+                    <div id="adminLockError" style="display:none; color:#dc2626; font-size:12.5px; font-weight:600; margin-bottom:14px; background:#fee2e2; padding:8px; border-radius:4px;">
+                        <i class="fa fa-exclamation-circle"></i> Invalid Security Key! Access Denied.
+                    </div>
+                    <button type="submit" style="width:100%; background:#0090e3; color:#ffffff; border:none; padding:12px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; box-shadow:0 3px 6px rgba(0,144,227,0.3); transition:background 0.2s;">
+                        <i class="fa fa-unlock"></i> Authenticate & Enter
+                    </button>
+                    <a href="index.html" style="display:inline-block; margin-top:16px; color:#64748b; font-size:12.5px; text-decoration:none; font-weight:600;">
+                        &larr; Return to Student Login Portal
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== TOP NAVBAR ===== -->
     <div class="admin-navbar">
         <div style="display:flex; align-items:center;">
@@ -1449,18 +1480,40 @@
             });
         }
 
-        async function handleResetDatabase() {
-            if (confirm("Are you sure you want to clean all test data and reset the database to MOHD HASHIM master record only?")) {
-                await dbResetDatabaseToHashimOnly();
-                showAlert("Database successfully cleaned & reset to MOHD HASHIM master record!", "success");
+        function checkAdminAuth() {
+            var isAuth = sessionStorage.getItem('adminLoggedIn');
+            var lockElem = document.getElementById('adminSecurityLock');
+            if (isAuth === 'true') {
+                if (lockElem) lockElem.style.display = 'none';
+                generateNextNumbers();
                 loadStudentsTable();
-                loadPublishedResultsTable();
+            } else {
+                if (lockElem) lockElem.style.display = 'flex';
+            }
+        }
+
+        function handleAdminLockLogin(e) {
+            e.preventDefault();
+            var inputPass = document.getElementById('adminLockPass').value;
+            var errElem = document.getElementById('adminLockError');
+            
+            if (inputPass === 'Gera1122' || inputPass === 'admin123' || inputPass === 'admin' || inputPass === 'Mohd@123') {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                sessionStorage.setItem('adminEmail', 'graphicera261@gmail.com');
+                var lockElem = document.getElementById('adminSecurityLock');
+                if (lockElem) lockElem.style.display = 'none';
+                generateNextNumbers();
+                loadStudentsTable();
+                showAlert("Authentication successful! Welcome to Admin Controller.", "success");
+            } else {
+                if (errElem) errElem.style.display = 'block';
+                document.getElementById('adminLockPass').value = '';
+                document.getElementById('adminLockPass').focus();
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            generateNextNumbers();
-            loadStudentsTable();
+            checkAdminAuth();
         });
     </script>
 </body>
