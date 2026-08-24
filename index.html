@@ -43,13 +43,11 @@
     </style>
 </head>
 
-<style>
     html, body {
         margin: 0 !important;
         padding: 0 !important;
         width: 100% !important;
-        height: 100% !important;
-        overflow: hidden !important;
+        min-height: 100vh !important;
         background-color: #000 !important;
     }
     body.theme-blue-gradient {
@@ -57,12 +55,45 @@
         background-size: cover !important;
         background-color: #000 !important;
         width: 100% !important;
-        height: 100vh !important;
         min-height: 100vh !important;
-        position: absolute !important;
     }
     #login-full-wrapper {
         min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+        body.theme-blue-gradient {
+            padding: 10px !important;
+        }
+        #login-box {
+            zoom: 100% !important;
+            margin: 0 auto !important;
+            float: none !important;
+            max-width: 100% !important;
+        }
+        #login-box-holder {
+            float: none !important;
+            margin: 0 auto !important;
+            max-width: 360px !important;
+            width: 100% !important;
+        }
+        #login-header {
+            text-align: center !important;
+            margin-bottom: 12px !important;
+        }
+        #imgclient {
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: 55px !important;
+        }
+        #captcha {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
     }
 </style>
 
@@ -73,19 +104,18 @@
             <iframe src="#"></iframe>
         </div>
         <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
+            <div class="col-md-8 col-sm-6 hidden-xs"></div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
                 <div id="login-box" style="zoom:90%;">
-                    <div id="login-box-holder" style="float:right;">
+                    <div id="login-box-holder">
                         <div class="row">
                             <div class="col-xs-12">
-                                <header id="login-header">
-                                    <div id="login-logo">
-                                        <img id="imgclient" src="logo.png" alt="" style="height:65px; width:245px;"/>
+                                <header id="login-header" style="text-align:center; margin-bottom:12px;">
+                                    <div id="login-logo" style="display:inline-block; background:#ffffff; padding:6px 14px; border-radius:6px; box-shadow:0 3px 10px rgba(0,0,0,0.3);">
+                                        <img id="imgclient" src="logo.png" alt="Graphic Era" style="max-height:60px; max-width:100%; height:auto; display:block;"/>
                                     </div>
                                 </header>
-                                <div id="login-box-inner" style="background-color: rgba(128, 128, 128, 0.35)">
+                                <div id="login-box-inner" style="background-color: rgba(128, 128, 128, 0.45); border-radius:8px;">
                                     <form id="login-form" method="post" name="login" onsubmit="return handleLogin(event)">
                                         <p hidden="hidden">Cyborg-ERP | Best University ERP</p>
                                         <b style="font-size:12px;"></b>
@@ -330,7 +360,7 @@
             sessionStorage.setItem('course', found.course || 'B.COM Hons');
             sessionStorage.setItem('classRollNo', found.class_roll_no || '');
             sessionStorage.setItem('enrollNo', found.enroll_no);
-            sessionStorage.setItem('photo', found.photo || 'student_profile.png');
+            sessionStorage.setItem('photo', found.photo || 'candidate_photo.png');
             
             // Redirect to dashboard
             window.location.href = 'dashboard.html';
@@ -351,7 +381,7 @@
             sessionStorage.setItem('course', 'B.COM Hons I');
             sessionStorage.setItem('classRollNo', '2154682');
             sessionStorage.setItem('enrollNo', rawUserId.toUpperCase());
-            sessionStorage.setItem('photo', 'student_profile.png');
+            sessionStorage.setItem('photo', 'candidate_photo.png');
             window.location.href = 'dashboard.html';
             return false;
         }
