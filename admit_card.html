@@ -264,7 +264,7 @@
                 </div>
 
                 <div class="cand-photo-box">
-                    <img src="candidate_photo.png" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">
+                    <img src="candidate_photo_hd.png?v=20260824" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">
                     <div style="font-size:9.5px; color:#475569; font-weight:700; margin-top:4px;">Candidate Photo</div>
                 </div>
             </div>
@@ -423,8 +423,10 @@
         var sEnroll = sessionStorage.getItem('enrollNo') || 'GE-21545586';
         var sRoll = sessionStorage.getItem('classRollNo') || '2154682';
         var sCourse = sessionStorage.getItem('course') || 'B.COM Hons I';
-        var sPhoto = sessionStorage.getItem('photo') || 'candidate_photo.png';
-        if (sPhoto === 'student_profile.png') sPhoto = 'candidate_photo.png';
+        var sPhoto = sessionStorage.getItem('photo');
+        if (!sPhoto || sPhoto === 'student_profile.png' || sPhoto === 'candidate_photo.png') {
+            sPhoto = 'candidate_photo_hd.png?v=20260824';
+        }
 
         document.getElementById('admName').textContent = sName.toUpperCase();
         document.getElementById('admFather').textContent = sFather.toUpperCase();

@@ -1109,6 +1109,7 @@
                         <td><span class="badge" style="background:#e0f2fe; color:#0284c7; padding:4px 8px; border-radius:4px; font-weight:700;">${s.course || 'B.COM Hons'}</span></td>
                         <td>${s.phone || '-'}<br><small style="color:#64748b;">${s.email || ''}</small></td>
                         <td>
+                            <a href="id_card.html?id=${s.enroll_no}" class="btn-action-sm purple" target="_blank" style="text-decoration:none;"><i class="fa fa-id-card-o"></i> ID Card</a>
                             <button class="btn-action-sm amber" onclick="openEditStudentModal('${s.enroll_no}')"><i class="fa fa-pencil"></i> Edit</button>
                             <button class="btn-action-sm green" onclick="openMarksheetFor('${s.enroll_no}')"><i class="fa fa-plus"></i> Result</button>
                             <button class="btn-action-sm blue" onclick="loginAsStudent('${s.enroll_no}')"><i class="fa fa-external-link"></i> Portal</button>
@@ -1125,6 +1126,7 @@
                         <td>${s.phone}<br><small style="color:#64748b;">${s.email}</small></td>
                         <td><code style="background:#f1f5f9; padding:2px 6px; border-radius:4px; color:#c62828; font-weight:700;">${s.password || 'student@123'}</code></td>
                         <td>
+                            <a href="id_card.html?id=${s.enroll_no}" class="btn-action-sm purple" target="_blank" style="text-decoration:none;"><i class="fa fa-id-card-o"></i> ID Card</a>
                             <button class="btn-action-sm amber" onclick="openEditStudentModal('${s.enroll_no}')"><i class="fa fa-pencil"></i> Edit</button>
                             <button class="btn-action-sm green" onclick="openMarksheetFor('${s.enroll_no}')"><i class="fa fa-plus"></i> Result</button>
                             <button class="btn-action-sm blue" onclick="loginAsStudent('${s.enroll_no}')"><i class="fa fa-external-link"></i> Portal</button>

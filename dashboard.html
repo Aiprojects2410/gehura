@@ -540,7 +540,7 @@
         </a>
 
         <span class="nav-user-label" id="navStudentName">MOHD HASHIM</span>
-        <img src="candidate_photo.png" id="navAvatarImg" class="nav-user-avatar" alt="Avatar">
+        <img src="candidate_photo_hd.png?v=20260824" id="navAvatarImg" class="nav-user-avatar" alt="Avatar">
         <span class="nav-caret">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="#ffffff"><path d="M7 10l5 5 5-5z"/></svg>
         </span>
@@ -554,7 +554,7 @@
     <div class="profile-column">
         <div class="profile-top-card">
             <div class="profile-photo-wrapper">
-                <img src="candidate_photo.png" id="mainProfilePic" alt="Student Photo">
+                <img src="candidate_photo_hd.png?v=20260824" id="mainProfilePic" alt="Student Photo">
             </div>
             <div class="student-full-name" id="cardStudentName">MOHD HASHIM</div>
             <div class="student-contact-line">
@@ -590,14 +590,20 @@
                     <td class="val" id="valCourse">B.COM Hons I</td>
                 </tr>
                 <tr>
-                    <td class="lbl">Class Roll No. :</td>
+                    <td class="lbl">Class Roll No :</td>
                     <td class="val" id="valRollNo">2154682</td>
                 </tr>
                 <tr>
-                    <td class="lbl">Enroll No. :</td>
+                    <td class="lbl">Admission No :</td>
                     <td class="val" id="valEnrollNo">GE-21545586</td>
                 </tr>
             </table>
+
+            <div style="margin-top:14px; text-align:center;">
+                <a href="id_card.html" target="_blank" class="btn btn-primary" style="background:#0090e3; border:none; padding:9px 18px; border-radius:6px; font-size:12.5px; font-weight:700; display:inline-flex; align-items:center; gap:8px; box-shadow:0 3px 8px rgba(0,144,227,0.35); text-decoration:none; color:#fff;">
+                    <i class="fa fa-id-card-o"></i> View Digital ID Card
+                </a>
+            </div>
         </div>
     </div>
 
@@ -1151,7 +1157,7 @@
                     <tr><th>Service Name</th><th>Processing Time</th><th>Action</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>Digital Student Identity Card</td><td>Instant</td><td><button class="btn btn-xs btn-primary" onclick="alert('Digital ID Card downloaded.')">Download ID Card</button></td></tr>
+                    <tr><td>Digital Student Identity Card</td><td>Instant</td><td><button class="btn btn-xs btn-primary" onclick="window.open('id_card.html', '_blank')"><i class="fa fa-download"></i> Download ID Card</button></td></tr>
                     <tr><td>Bonafide Student Certificate</td><td>24 Hours</td><td><button class="btn btn-xs btn-success" onclick="alert('Bonafide Certificate request submitted.')">Apply Online</button></td></tr>
                     <tr><td>Character Certificate</td><td>48 Hours</td><td><button class="btn btn-xs btn-success" onclick="alert('Character Certificate request submitted.')">Apply Online</button></td></tr>
                     <tr><td>Bus / Transport Pass Renewal</td><td>Instant</td><td><button class="btn btn-xs btn-primary" onclick="alert('Transport pass renewed for current semester.')">Renew Pass</button></td></tr>
@@ -1219,8 +1225,13 @@
 <script>
     // Set clean passport photo for avatar
     window.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('mainProfilePic').src = 'candidate_photo.png';
-        document.getElementById('navAvatarImg').src = 'candidate_photo.png';
+        var sPhoto = sessionStorage.getItem('photo');
+        if (!sPhoto || sPhoto === 'student_profile.png' || sPhoto === 'candidate_photo.png' || sPhoto.indexOf('candidate_photo_hd.png') === -1) {
+            sPhoto = 'candidate_photo_hd.png?v=20260824';
+            sessionStorage.setItem('photo', sPhoto);
+        }
+        document.getElementById('mainProfilePic').src = sPhoto;
+        document.getElementById('navAvatarImg').src = sPhoto;
     });
 
     // Populate data from sessionStorage

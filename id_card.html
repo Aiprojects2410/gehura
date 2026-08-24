@@ -1,0 +1,464 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University - Student Identity Card</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+        }
+
+        /* Hide Netlify Drawer & Badge */
+        [data-netlify-drawer], #netlify-badge, .netlify-badge, netlify-drawer, iframe[src*="netlify"], div[class*="netlify-drawer"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .action-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .btn-action {
+            background: #0090e3;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 144, 227, 0.4);
+            text-decoration: none;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .btn-action:hover {
+            background: #0077c2;
+            color: #fff;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .btn-action.btn-back {
+            background: #334155;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .btn-action.btn-back:hover {
+            background: #1e293b;
+        }
+
+        /* ===== ID CARD CONTAINER (CR-80 PORTRAIT STANDARD) ===== */
+        .id-card-wrapper {
+            width: 360px;
+            min-height: 560px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Card Top Lanyard Punch Simulation */
+        .lanyard-hole {
+            width: 50px;
+            height: 10px;
+            background: #0f172a;
+            border-radius: 10px;
+            margin: 10px auto 0;
+            border: 1.5px solid #cbd5e1;
+        }
+
+        /* Header */
+        .id-header {
+            background: linear-gradient(135deg, #0090e3 0%, #0066b2 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 12px 14px 10px;
+            position: relative;
+            border-top: 3px solid #ea580c;
+            margin-top: 8px;
+        }
+
+        .id-logo-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .id-logo-box img.emblem {
+            height: 38px;
+            width: auto;
+            background: #fff;
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .id-univ-name {
+            font-size: 13.5px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        .id-univ-sub {
+            font-size: 8.5px;
+            color: #e0f2fe;
+            letter-spacing: 0.3px;
+        }
+
+        .id-badge-ribbon {
+            background: #ea580c;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            text-align: center;
+            padding: 3px 0;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Card Body */
+        .id-body {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            background: radial-gradient(circle at 50% 30%, #ffffff 60%, #f8fafc 100%);
+        }
+
+        .id-photo-container {
+            width: 120px;
+            height: 145px;
+            border: 3px solid #0090e3;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: #ffffff;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .id-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .id-student-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0f172a;
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .id-course-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0284c7;
+            background: #e0f2fe;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            display: inline-block;
+        }
+
+        /* Details Grid */
+        .id-details-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .id-details-table td {
+            padding: 3px 0;
+            vertical-align: top;
+        }
+
+        .id-details-table td.lbl {
+            width: 42%;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .id-details-table td.colon {
+            width: 5%;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .id-details-table td.val {
+            width: 53%;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* Bottom Section: QR Code + Authorized Signatory */
+        .id-footer-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        .id-qr-box {
+            width: 55px;
+            height: 55px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 2px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .id-sign-box {
+            text-align: center;
+        }
+
+        .id-sign-img {
+            height: 26px;
+            width: auto;
+            margin-bottom: 2px;
+        }
+
+        .id-sign-lbl {
+            font-size: 8.5px;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            border-top: 1px solid #64748b;
+            padding-top: 2px;
+        }
+
+        /* Bottom Strip */
+        .id-bottom-strip {
+            background: #0f172a;
+            color: #94a3b8;
+            font-size: 8px;
+            text-align: center;
+            padding: 6px 10px;
+            line-height: 1.3;
+        }
+
+        .id-bottom-strip strong {
+            color: #e2e8f0;
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+            .action-bar {
+                display: none !important;
+            }
+            .id-card-wrapper {
+                box-shadow: none !important;
+                border: 1px solid #94a3b8 !important;
+                margin: 0 auto !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Actions -->
+    <div class="action-bar">
+        <a href="dashboard.html" class="btn-action btn-back">
+            <i class="fa fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <button class="btn-action" onclick="window.print()">
+            <i class="fa fa-print"></i> Print / Download ID Card
+        </button>
+    </div>
+
+    <!-- Student Smart ID Card -->
+    <div class="id-card-wrapper" id="idCardNode">
+        <div class="lanyard-hole"></div>
+
+        <!-- Header -->
+        <div class="id-header">
+            <div class="id-logo-box">
+                <img src="logo.png" class="emblem" alt="GEHU Logo">
+                <div style="text-align:left;">
+                    <div class="id-univ-name">Graphic Era</div>
+                    <div class="id-univ-sub">Hill University &bull; Dehradun Campus</div>
+                </div>
+            </div>
+        </div>
+        <div class="id-badge-ribbon">
+            STUDENT IDENTITY CARD
+        </div>
+
+        <!-- Body -->
+        <div class="id-body">
+            <div class="id-photo-container">
+                <img id="idStudentPhoto" src="candidate_photo.png?v=3" alt="Student Photo">
+            </div>
+
+            <div class="id-student-name" id="idStudentName">MOHD HASHIM</div>
+            <div class="id-course-title" id="idCourse">B.COM (Hons)</div>
+
+            <table class="id-details-table">
+                <tr>
+                    <td class="lbl">Enrollment No</td>
+                    <td class="colon">:</td>
+                    <td class="val" id="idEnrollNo">GE-21545586</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Class Roll No</td>
+                    <td class="colon">:</td>
+                    <td class="val" id="idRollNo">2154682</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Father's Name</td>
+                    <td class="colon">:</td>
+                    <td class="val" id="idFatherName">SAEED</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Date of Birth</td>
+                    <td class="colon">:</td>
+                    <td class="val" id="idDob">12-10-1999</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Contact No</td>
+                    <td class="colon">:</td>
+                    <td class="val" id="idPhone">8923456443</td>
+                </tr>
+                <tr>
+                    <td class="lbl">Valid Upto</td>
+                    <td class="colon">:</td>
+                    <td class="val" id="idValidity">JUNE 2023 / REGULAR</td>
+                </tr>
+            </table>
+
+            <!-- Bottom Row: QR Code + Sign -->
+            <div class="id-footer-row">
+                <div id="idQrContainer" class="id-qr-box"></div>
+                <div class="id-sign-box">
+                    <svg class="id-sign-img" viewBox="0 0 120 30" fill="none" stroke="#003366" stroke-width="1.8">
+                        <path d="M 5 22 Q 25 5 45 18 T 80 10 T 115 15" />
+                        <path d="M 30 25 Q 50 20 70 24" />
+                    </svg>
+                    <div class="id-sign-lbl">Registrar / Issuing Authority</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Strip -->
+        <div class="id-bottom-strip">
+            510, Society Area, Clement Town, Dehradun, Uttarakhand - 248002<br>
+            <strong>Toll Free: 1800 270 1280 &bull; www.gehu.ac.in</strong>
+        </div>
+    </div>
+
+    <!-- Script to dynamically load student details and generate QR Code -->
+    <script>
+        async function loadIdCard() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id');
+
+            var student = null;
+
+            if (queryId) {
+                var allStudents = await dbGetStudents();
+                student = allStudents.find(s => (s.enroll_no || '').toLowerCase() === queryId.toLowerCase() || (s.id || '').toLowerCase() === queryId.toLowerCase());
+            }
+
+            if (!student) {
+                // Fallback to active session
+                student = {
+                    name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
+                    enroll_no: sessionStorage.getItem('enrollNo') || 'GE-21545586',
+                    class_roll_no: sessionStorage.getItem('classRollNo') || '2154682',
+                    father_name: sessionStorage.getItem('fatherName') || 'SAEED',
+                    course: sessionStorage.getItem('course') || 'B.COM Hons I',
+                    dob: sessionStorage.getItem('dob') || '1999-10-12',
+                    phone: sessionStorage.getItem('phone') || '8923456443',
+                    photo: sessionStorage.getItem('photo') || 'candidate_photo.png'
+                };
+            }
+
+            document.getElementById('idStudentName').textContent = (student.name || 'MOHD HASHIM').toUpperCase();
+            document.getElementById('idEnrollNo').textContent = (student.enroll_no || 'GE-21545586').toUpperCase();
+            document.getElementById('idRollNo').textContent = student.class_roll_no || '2154682';
+            document.getElementById('idFatherName').textContent = (student.father_name || 'SAEED').toUpperCase();
+            document.getElementById('idCourse').textContent = student.course || 'B.COM (Hons)';
+            document.getElementById('idDob').textContent = student.dob || '1999-10-12';
+            document.getElementById('idPhone').textContent = student.phone || '8923456443';
+
+            var photoSrc = student.photo || 'candidate_photo.png';
+            if (!photoSrc.includes('data:') && !photoSrc.includes('?')) {
+                photoSrc = photoSrc + '?v=3';
+            }
+            document.getElementById('idStudentPhoto').src = photoSrc;
+
+            // Generate Scannable QR Code
+            var qrCont = document.getElementById('idQrContainer');
+            qrCont.innerHTML = '';
+            var origin = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://172.20.10.8:8080' : window.location.origin;
+            var verifyUrl = origin + '/verify.html?id=' + encodeURIComponent(student.enroll_no || 'GE-21545586');
+
+            new QRCode(qrCont, {
+                text: verifyUrl,
+                width: 50,
+                height: 50,
+                colorDark: "#0f172a",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadIdCard);
+    </script>
+</body>
+</html>

@@ -22,7 +22,7 @@ const DEFAULT_STUDENT = {
     phone: "8923456443",
     course: "B.COM Hons I",
     password: "student@123",
-    photo: "candidate_photo.png"
+    photo: "candidate_photo_hd.png?v=20260824"
 };
 
 // Master All 6 Semesters Results for MOHD HASHIM
