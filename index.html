@@ -3,6 +3,9 @@
 <script src="https://student.gehu.ac.in/Scripts/jquery-1.12.4.js"></script>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link id="lnkmanifest" rel="manifest">
     <title>Graphic Era Hill University | ERP | Cyborg-ERP</title>
     <meta name="keywords" content="">
@@ -296,7 +299,7 @@
 
     // ========== ASYNC SUPABASE & ROBUST LOGIN HANDLER ==========
     async function handleLogin(e) {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         var rawUserId = ($('#loginform-username').val() || '').trim();
         var password = ($('#loginform-password').val() || '').trim();
         var captchaInput = ($('#captcha').val() || '').trim();
@@ -308,24 +311,6 @@
 
         if (!rawUserId) {
             $('#userError').text('Admission / User ID cannot be blank.');
-            return false;
-        }
-        if (!password) {
-            $('#passError').text('Password cannot be blank.');
-            return false;
-        }
-        if (!captchaInput) {
-            $('#captchaError').text('Captcha cannot be blank.');
-            return false;
-        }
-
-        var cleanCaptchaInput = captchaInput.toUpperCase().replace(/[\s\-_]/g, '');
-        var cleanTargetCaptcha = (currentCaptcha || '').toUpperCase().replace(/[\s\-_]/g, '');
-
-        if (cleanCaptchaInput !== cleanTargetCaptcha) {
-            $('#captchaError').text('❌ Captcha Incorrect! Try again.');
-            drawCaptcha();
-            $('#captcha').val('');
             return false;
         }
 
@@ -380,76 +365,27 @@
             );
         });
 
-        // 4. Validate password (supports student's configured password, student@123, Mohd@123, Hashim@123, 123456, Gera1122)
-        var passLower = password.toLowerCase();
-        var isValidPass = false;
-
-        if (found) {
-            var sPassLower = (found.password || '').toLowerCase();
-            if (
-                password === found.password ||
-                passLower === sPassLower ||
-                passLower === 'student@123' ||
-                passLower === 'mohd@123' ||
-                passLower === 'mohd#123' ||
-                passLower === 'hashim@123' ||
-                passLower === 'hashim123' ||
-                passLower === 'gera1122' ||
-                passLower === 'student' ||
-                passLower === '123456'
-            ) {
-                isValidPass = true;
-            }
+        if (!found) {
+            found = DEFAULT_STUDENT;
         }
 
-        if (found && isValidPass) {
-            // Set student profile in session
-            sessionStorage.setItem('loggedIn', 'true');
-            sessionStorage.setItem('userId', found.enroll_no || 'GE-21545586');
-            sessionStorage.setItem('userName', found.name || 'MOHD HASHIM');
-            sessionStorage.setItem('email', found.email || 'Babaansari07896@gmail.com');
-            sessionStorage.setItem('phone', found.phone || '8923456443');
-            sessionStorage.setItem('fatherName', found.father_name || 'SAEED');
-            sessionStorage.setItem('motherName', found.mother_name || 'SHAHANA');
-            sessionStorage.setItem('dob', found.dob || '1999-10-12');
-            sessionStorage.setItem('officialEmail', found.official_email || found.email || 'Babaansari07896@gmail.com');
-            sessionStorage.setItem('course', found.course || 'B.COM Hons I');
-            sessionStorage.setItem('classRollNo', found.class_roll_no || '2154682');
-            sessionStorage.setItem('enrollNo', found.enroll_no || 'GE-21545586');
-            
-            var photoPath = found.photo || 'candidate_photo_hd.png?v=20260824';
-            if (!photoPath.includes('candidate_photo_hd.png')) {
-                photoPath = 'candidate_photo_hd.png?v=20260824';
-            }
-            sessionStorage.setItem('photo', photoPath);
-            
-            // Redirect to dashboard
-            window.location.href = 'dashboard.html';
-            return false;
-        }
-
-        // 5. Universal Fallback for any other test student
-        if (!found && (passLower === 'student@123' || passLower === 'mohd@123' || passLower === '123456' || passLower === 'gera1122')) {
-            sessionStorage.setItem('loggedIn', 'true');
-            sessionStorage.setItem('userId', rawUserId);
-            sessionStorage.setItem('userName', 'MOHD HASHIM');
-            sessionStorage.setItem('email', 'Babaansari07896@gmail.com');
-            sessionStorage.setItem('phone', '8923456443');
-            sessionStorage.setItem('fatherName', 'SAEED');
-            sessionStorage.setItem('motherName', 'SHAHANA');
-            sessionStorage.setItem('dob', '1999-10-12');
-            sessionStorage.setItem('officialEmail', 'Babaansari07896@gmail.com');
-            sessionStorage.setItem('course', 'B.COM Hons I');
-            sessionStorage.setItem('classRollNo', '2154682');
-            sessionStorage.setItem('enrollNo', 'GE-21545586');
-            sessionStorage.setItem('photo', 'candidate_photo_hd.png?v=20260824');
-            window.location.href = 'dashboard.html';
-            return false;
-        }
-
-        $('#passError').text('Invalid User ID or Password! Please check and try again.');
-        drawCaptcha();
-        $('#captcha').val('');
+        // 4. Instant successful login as student
+        sessionStorage.setItem('loggedIn', 'true');
+        sessionStorage.setItem('userId', found.enroll_no || 'GE-21545586');
+        sessionStorage.setItem('userName', found.name || 'MOHD HASHIM');
+        sessionStorage.setItem('email', found.email || 'Babaansari07896@gmail.com');
+        sessionStorage.setItem('phone', found.phone || '8923456443');
+        sessionStorage.setItem('fatherName', found.father_name || 'SAEED');
+        sessionStorage.setItem('motherName', found.mother_name || 'SHAHANA');
+        sessionStorage.setItem('dob', found.dob || '1999-10-12');
+        sessionStorage.setItem('officialEmail', found.official_email || found.email || 'Babaansari07896@gmail.com');
+        sessionStorage.setItem('course', found.course || 'B.COM Hons I');
+        sessionStorage.setItem('classRollNo', found.class_roll_no || '2154682');
+        sessionStorage.setItem('enrollNo', found.enroll_no || 'GE-21545586');
+        sessionStorage.setItem('photo', 'candidate_photo_hd.png?v=20260824');
+        
+        // Redirect to dashboard
+        window.location.href = 'dashboard.html';
         return false;
     }
 </script>
