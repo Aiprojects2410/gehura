@@ -294,13 +294,12 @@
         $('#captcha').on('input', function() { $('#captchaError').text(''); });
     });
 
-    // ========== ASYNC SUPABASE LOGIN HANDLER ==========
+    // ========== ASYNC SUPABASE & ROBUST LOGIN HANDLER ==========
     async function handleLogin(e) {
         e.preventDefault();
-        var rawUserId = $('#loginform-username').val().trim();
-        var userId = rawUserId.toLowerCase().replace(/\s+/g, '');
-        var password = $('#loginform-password').val();
-        var captchaInput = $('#captcha').val().trim();
+        var rawUserId = ($('#loginform-username').val() || '').trim();
+        var password = ($('#loginform-password').val() || '').trim();
+        var captchaInput = ($('#captcha').val() || '').trim();
 
         // Clear previous errors
         $('#userError').text('');
@@ -319,16 +318,28 @@
             $('#captchaError').text('Captcha cannot be blank.');
             return false;
         }
-        if (captchaInput.toUpperCase() !== currentCaptcha.toUpperCase()) {
-            $('#captchaError').text('❌ Captcha Failed! Try again.');
+
+        var cleanCaptchaInput = captchaInput.toUpperCase().replace(/[\s\-_]/g, '');
+        var cleanTargetCaptcha = (currentCaptcha || '').toUpperCase().replace(/[\s\-_]/g, '');
+
+        if (cleanCaptchaInput !== cleanTargetCaptcha) {
+            $('#captchaError').text('❌ Captcha Incorrect! Try again.');
             drawCaptcha();
             $('#captcha').val('');
             return false;
         }
 
-        // Admin login check
-        var isAdminUser = (userId === 'admin' || userId === 'graphicera261@gmail.com' || userId === 'graphicera261' || userId === 'graphicera');
-        var isAdminPass = (password === 'Gera1122' || password === 'admin@123' || password === 'admin');
+        // Helper to normalize strings for comparison
+        function normalize(str) {
+            return (str || '').toString().toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+
+        var userIdNorm = normalize(rawUserId);
+        var rawUserLower = rawUserId.toLowerCase();
+
+        // 1. Admin Login Check
+        var isAdminUser = (userIdNorm === 'admin' || rawUserLower === 'graphicera261@gmail.com' || userIdNorm === 'graphicera261' || userIdNorm === 'graphicera');
+        var isAdminPass = (password === 'Gera1122' || password === 'admin@123' || password === 'admin' || password === 'admin123');
 
         if (isAdminUser && isAdminPass) {
             sessionStorage.setItem('adminLoggedIn', 'true');
@@ -337,56 +348,106 @@
             return false;
         }
 
-        // Fetch students from Supabase
-        var students = await dbGetStudents();
+        // 2. Fetch students from Database or local fallback
+        var students = [DEFAULT_STUDENT];
+        try {
+            var dbList = await dbGetStudents();
+            if (dbList && dbList.length > 0) {
+                students = dbList;
+            }
+        } catch(err) {
+            console.warn("Using default student fallback:", err);
+        }
+
+        // 3. Find matching student (supports GE-21545586, 21545586, 2154682, Babaansari07896@gmail.com, Hashim, student, etc.)
         var found = students.find(function(s) {
-            var eClean = (s.enroll_no || '').toLowerCase().replace(/\s+/g, '');
-            var rClean = (s.class_roll_no || '').toLowerCase().replace(/\s+/g, '');
-            var idClean = (s.id || '').toLowerCase().replace(/\s+/g, '');
-            return eClean === userId || rClean === userId || idClean === userId || (userId === 'student' && eClean === 'ge-21545586');
+            var sEnrollNorm = normalize(s.enroll_no);
+            var sEnrollDigits = (s.enroll_no || '').replace(/\D/g, '');
+            var sRollNorm = normalize(s.class_roll_no);
+            var sEmailLower = (s.email || '').toLowerCase().trim();
+            var sNameNorm = normalize(s.name);
+
+            return (
+                userIdNorm === sEnrollNorm ||
+                userIdNorm === sEnrollDigits ||
+                userIdNorm === sRollNorm ||
+                userIdNorm === 'student' ||
+                userIdNorm === 'hashim' ||
+                userIdNorm === 'mohdhashim' ||
+                rawUserLower === sEmailLower ||
+                (userIdNorm.length >= 4 && sEnrollNorm.includes(userIdNorm)) ||
+                (userIdNorm.length >= 4 && sNameNorm.includes(userIdNorm))
+            );
         });
 
-        if (found && (found.password === password || password === 'student@123' || password === '123456')) {
-            // Store full profile in session
+        // 4. Validate password (supports student's configured password, student@123, Mohd@123, Hashim@123, 123456, Gera1122)
+        var passLower = password.toLowerCase();
+        var isValidPass = false;
+
+        if (found) {
+            var sPassLower = (found.password || '').toLowerCase();
+            if (
+                password === found.password ||
+                passLower === sPassLower ||
+                passLower === 'student@123' ||
+                passLower === 'mohd@123' ||
+                passLower === 'mohd#123' ||
+                passLower === 'hashim@123' ||
+                passLower === 'hashim123' ||
+                passLower === 'gera1122' ||
+                passLower === 'student' ||
+                passLower === '123456'
+            ) {
+                isValidPass = true;
+            }
+        }
+
+        if (found && isValidPass) {
+            // Set student profile in session
             sessionStorage.setItem('loggedIn', 'true');
-            sessionStorage.setItem('userId', found.enroll_no);
-            sessionStorage.setItem('userName', found.name);
-            sessionStorage.setItem('email', found.email || '');
-            sessionStorage.setItem('phone', found.phone || '');
-            sessionStorage.setItem('fatherName', found.father_name || '');
-            sessionStorage.setItem('motherName', found.mother_name || '');
-            sessionStorage.setItem('dob', found.dob || '');
-            sessionStorage.setItem('officialEmail', found.official_email || found.email || '');
-            sessionStorage.setItem('course', found.course || 'B.COM Hons');
-            sessionStorage.setItem('classRollNo', found.class_roll_no || '');
-            sessionStorage.setItem('enrollNo', found.enroll_no);
-            sessionStorage.setItem('photo', found.photo || 'candidate_photo.png');
+            sessionStorage.setItem('userId', found.enroll_no || 'GE-21545586');
+            sessionStorage.setItem('userName', found.name || 'MOHD HASHIM');
+            sessionStorage.setItem('email', found.email || 'Babaansari07896@gmail.com');
+            sessionStorage.setItem('phone', found.phone || '8923456443');
+            sessionStorage.setItem('fatherName', found.father_name || 'SAEED');
+            sessionStorage.setItem('motherName', found.mother_name || 'SHAHANA');
+            sessionStorage.setItem('dob', found.dob || '1999-10-12');
+            sessionStorage.setItem('officialEmail', found.official_email || found.email || 'Babaansari07896@gmail.com');
+            sessionStorage.setItem('course', found.course || 'B.COM Hons I');
+            sessionStorage.setItem('classRollNo', found.class_roll_no || '2154682');
+            sessionStorage.setItem('enrollNo', found.enroll_no || 'GE-21545586');
+            
+            var photoPath = found.photo || 'candidate_photo_hd.png?v=20260824';
+            if (!photoPath.includes('candidate_photo_hd.png')) {
+                photoPath = 'candidate_photo_hd.png?v=20260824';
+            }
+            sessionStorage.setItem('photo', photoPath);
             
             // Redirect to dashboard
             window.location.href = 'dashboard.html';
             return false;
         }
 
-        // Fallback demo for any new admission number
-        if (!found && (password === 'student@123' || password === '123456')) {
+        // 5. Universal Fallback for any other test student
+        if (!found && (passLower === 'student@123' || passLower === 'mohd@123' || passLower === '123456' || passLower === 'gera1122')) {
             sessionStorage.setItem('loggedIn', 'true');
             sessionStorage.setItem('userId', rawUserId);
-            sessionStorage.setItem('userName', 'STUDENT USER');
-            sessionStorage.setItem('email', 'student@gmail.com');
+            sessionStorage.setItem('userName', 'MOHD HASHIM');
+            sessionStorage.setItem('email', 'Babaansari07896@gmail.com');
             sessionStorage.setItem('phone', '8923456443');
-            sessionStorage.setItem('fatherName', 'FATHER NAME');
-            sessionStorage.setItem('motherName', 'MOTHER NAME');
-            sessionStorage.setItem('dob', '2000-01-01');
-            sessionStorage.setItem('officialEmail', 'student@gmail.com');
+            sessionStorage.setItem('fatherName', 'SAEED');
+            sessionStorage.setItem('motherName', 'SHAHANA');
+            sessionStorage.setItem('dob', '1999-10-12');
+            sessionStorage.setItem('officialEmail', 'Babaansari07896@gmail.com');
             sessionStorage.setItem('course', 'B.COM Hons I');
             sessionStorage.setItem('classRollNo', '2154682');
-            sessionStorage.setItem('enrollNo', rawUserId.toUpperCase());
-            sessionStorage.setItem('photo', 'candidate_photo.png');
+            sessionStorage.setItem('enrollNo', 'GE-21545586');
+            sessionStorage.setItem('photo', 'candidate_photo_hd.png?v=20260824');
             window.location.href = 'dashboard.html';
             return false;
         }
 
-        $('#passError').text('Invalid Admission Number or Password!');
+        $('#passError').text('Invalid User ID or Password! Please check and try again.');
         drawCaptcha();
         $('#captcha').val('');
         return false;
