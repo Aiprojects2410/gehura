@@ -181,6 +181,7 @@
                     : (course + ' Hons ' + semRomans[i]);
                 var term = termTypes[i];
                 var yr = found ? found.exam_year : (2021 + Math.floor(i/2));
+                var pdfFile = isSohil ? `sohil_sem${semNum}.pdf` : `grade_card.html?sem=${semNum}&id=${encodeURIComponent(enrollNo)}`;
 
                 html += `
                     <tr>
@@ -188,7 +189,7 @@
                         <td>${prog}</td>
                         <td>${term}</td>
                         <td>${yr}</td>
-                        <td><a href="grade_card.html?sem=${semNum}&id=${encodeURIComponent(enrollNo)}" class="btn-view-result" target="_blank">View</a></td>
+                        <td><a href="${pdfFile}" class="btn-view-result" target="_blank">View</a></td>
                     </tr>
                 `;
             }
