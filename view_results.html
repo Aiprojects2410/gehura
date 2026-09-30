@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edu Authorities Student Management | Results</title>
-    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
@@ -164,12 +164,10 @@
 
     <script>
         async function loadStudentResults() {
-            var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21545586';
+            var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21538540';
             var course = sessionStorage.getItem('course') || 'B.COM (Hons)';
-            var results = await dbGetResults(enrollNo);
-
-            const tbody = document.getElementById('resultsTableBody');
-            var defaultSet = (enrollNo === SOHIL_STUDENT.enroll_no) ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
+            var isSohil = (enrollNo === 'GE-21538540' || enrollNo.includes('21538540') || enrollNo === '2187530');
+            var defaultSet = isSohil ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
 
             var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
             var termTypes = ['ODD', 'EVEN', 'ODD', 'EVEN', 'ODD', 'EVEN'];
@@ -177,8 +175,10 @@
             let html = '';
             for (var i = 0; i < 6; i++) {
                 var semNum = "" + (i + 1);
-                var found = (results || []).find(r => ("" + r.semester) === semNum) || defaultSet[i];
-                var prog = found ? (found.programme || found.exam_title || (course + ' ' + semRomans[i])) : (course + ' ' + semRomans[i]);
+                var found = defaultSet[i];
+                var prog = isSohil 
+                    ? `BACHELOR OF COMMERCE (HONOURS) - SEMESTER ${semRomans[i]}`
+                    : (course + ' Hons ' + semRomans[i]);
                 var term = termTypes[i];
                 var yr = found ? found.exam_year : (2021 + Math.floor(i/2));
 
@@ -188,12 +188,12 @@
                         <td>${prog}</td>
                         <td>${term}</td>
                         <td>${yr}</td>
-                        <td><a href="grade_card.html?sem=${semNum}&id=${enrollNo}" class="btn-view-result" target="_blank">View</a></td>
+                        <td><a href="grade_card.html?sem=${semNum}&id=${encodeURIComponent(enrollNo)}" class="btn-view-result" target="_blank">View</a></td>
                     </tr>
                 `;
             }
 
-            tbody.innerHTML = html;
+            document.getElementById('resultsTableBody').innerHTML = html;
         }
 
         window.addEventListener('DOMContentLoaded', loadStudentResults);
