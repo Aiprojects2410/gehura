@@ -165,22 +165,22 @@
     <script>
         async function loadStudentResults() {
             var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21545586';
-            var course = sessionStorage.getItem('course') || 'B.COM Hons';
+            var course = sessionStorage.getItem('course') || 'B.COM (Hons)';
             var results = await dbGetResults(enrollNo);
 
             const tbody = document.getElementById('resultsTableBody');
+            var defaultSet = (enrollNo === SOHIL_STUDENT.enroll_no) ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
 
             var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
             var termTypes = ['ODD', 'EVEN', 'ODD', 'EVEN', 'ODD', 'EVEN'];
-            var examYears = ['2020', '2021', '2021', '2022', '2022', '2023'];
 
             let html = '';
             for (var i = 0; i < 6; i++) {
                 var semNum = "" + (i + 1);
-                var found = (results || []).find(r => ("" + r.semester) === semNum) || ALL_DEFAULT_RESULTS[i];
-                var prog = found ? found.programme : (course + ' ' + semRomans[i]);
+                var found = (results || []).find(r => ("" + r.semester) === semNum) || defaultSet[i];
+                var prog = found ? (found.programme || found.exam_title || (course + ' ' + semRomans[i])) : (course + ' ' + semRomans[i]);
                 var term = termTypes[i];
-                var yr = examYears[i];
+                var yr = found ? found.exam_year : (2021 + Math.floor(i/2));
 
                 html += `
                     <tr>

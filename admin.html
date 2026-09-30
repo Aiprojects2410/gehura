@@ -1473,6 +1473,27 @@
             tbody.innerHTML = html;
         }
 
+        async function loginAsStudent(enrollNo) {
+            const students = await dbGetStudents();
+            const found = students.find(s => s.enroll_no === enrollNo) || (enrollNo === SOHIL_STUDENT.enroll_no ? SOHIL_STUDENT : DEFAULT_STUDENT);
+            if (found) {
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('userId', found.enroll_no);
+                sessionStorage.setItem('userName', found.name);
+                sessionStorage.setItem('email', found.email || '');
+                sessionStorage.setItem('phone', found.phone || '');
+                sessionStorage.setItem('fatherName', found.father_name || '');
+                sessionStorage.setItem('motherName', found.mother_name || '');
+                sessionStorage.setItem('dob', found.dob || '');
+                sessionStorage.setItem('officialEmail', found.official_email || found.email || '');
+                sessionStorage.setItem('course', found.course || 'B.COM (Hons)');
+                sessionStorage.setItem('classRollNo', found.class_roll_no || '');
+                sessionStorage.setItem('enrollNo', found.enroll_no);
+                sessionStorage.setItem('photo', found.photo || (found.enroll_no === 'GE-21538540' ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824'));
+                window.open('dashboard.html', '_blank');
+            }
+        }
+
         function filterStudentsTable() {
             const q = document.getElementById('searchStudentInput').value.toLowerCase();
             const rows = document.querySelectorAll('#allStudentsTbody tr');

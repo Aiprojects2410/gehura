@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -410,22 +410,33 @@
             var student = null;
 
             if (queryId) {
-                var allStudents = await dbGetStudents();
-                student = allStudents.find(s => (s.enroll_no || '').toLowerCase() === queryId.toLowerCase() || (s.id || '').toLowerCase() === queryId.toLowerCase());
+                var qClean = queryId.toLowerCase().replace(/[^a-z0-9]/g, '');
+                if (qClean === 'ge21538540' || qClean === '21538540' || qClean === '2187530' || qClean.includes('sohil')) {
+                    student = SOHIL_STUDENT;
+                } else {
+                    var allStudents = await dbGetStudents();
+                    student = allStudents.find(s => (s.enroll_no || '').toLowerCase() === queryId.toLowerCase() || (s.id || '').toLowerCase() === queryId.toLowerCase() || (s.class_roll_no || '').toLowerCase() === queryId.toLowerCase());
+                }
             }
 
             if (!student) {
-                // Fallback to active session
-                student = {
-                    name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
-                    enroll_no: sessionStorage.getItem('enrollNo') || 'GE-21545586',
-                    class_roll_no: sessionStorage.getItem('classRollNo') || '2154682',
-                    father_name: sessionStorage.getItem('fatherName') || 'SAEED',
-                    course: sessionStorage.getItem('course') || 'B.COM Hons I',
-                    dob: sessionStorage.getItem('dob') || '1999-10-12',
-                    phone: sessionStorage.getItem('phone') || '8923456443',
-                    photo: sessionStorage.getItem('photo') || 'candidate_photo.png'
-                };
+                // Check session
+                var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+                var sClean = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
+                if (sClean === 'ge21538540' || sClean === '21538540' || sClean === '2187530') {
+                    student = SOHIL_STUDENT;
+                } else {
+                    student = {
+                        name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
+                        enroll_no: sessionStorage.getItem('enrollNo') || 'GE-21545586',
+                        class_roll_no: sessionStorage.getItem('classRollNo') || '2154682',
+                        father_name: sessionStorage.getItem('fatherName') || 'SAEED',
+                        course: sessionStorage.getItem('course') || 'B.COM (Hons)',
+                        dob: sessionStorage.getItem('dob') || '1999-10-12',
+                        phone: sessionStorage.getItem('phone') || '8923456443',
+                        photo: sessionStorage.getItem('photo') || 'candidate_photo_hd.png?v=20260824'
+                    };
+                }
             }
 
             document.getElementById('idStudentName').textContent = (student.name || 'MOHD HASHIM').toUpperCase();
@@ -436,7 +447,13 @@
             document.getElementById('idDob').textContent = student.dob || '1999-10-12';
             document.getElementById('idPhone').textContent = student.phone || '8923456443';
 
-            var photoSrc = student.photo || 'candidate_photo.png';
+            var isSohil = (student.enroll_no === 'GE-21538540' || (student.name || '').includes('SOHIL'));
+            var validityElem = document.getElementById('idValidity');
+            if (validityElem) {
+                validityElem.textContent = isSohil ? 'JUNE 2024 / REGULAR' : 'JUNE 2023 / REGULAR';
+            }
+
+            var photoSrc = student.photo || (isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824');
             if (!photoSrc.includes('data:') && !photoSrc.includes('?')) {
                 photoSrc = photoSrc + '?v=3';
             }

@@ -124,13 +124,13 @@
                                         <b style="font-size:12px;"></b>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user" style="color: white;"></i></span>
-                                            <input autocomplete="off" class="form-control" id="loginform-username" name="username" placeholder="User ID" style="font-size:12px; font-weight:500;" type="text" value=""/>
+                                            <input autocomplete="off" class="form-control" id="loginform-username" name="username" placeholder="Admission / User ID" style="font-size:12px; font-weight:500;" type="text" value=""/>
                                         </div>
                                         <b style="color:red"><span class="field-validation-valid" id="userError"></span></b>
 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                            <input autocomplete="off" class="form-control" id="loginform-password" name="password" placeholder="Password" style="font-size:12px; font-weight:500;" type="password"/>
+                                            <input autocomplete="off" class="form-control" id="loginform-password" name="password" placeholder="Password" style="font-size:12px; font-weight:500;" type="password" value=""/>
                                             <span id="eyes"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                                         </div>
                                         <input id="hdnID" name="clientIP" type="hidden" value=""/>
@@ -150,7 +150,7 @@
                                         <br/>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <button type="submit" class="btn btn-primary col-xs-12 btnSubmit loginbtn" name="login">Login</button>
+                                                <button type="submit" class="btn btn-primary col-xs-12 btnSubmit loginbtn" name="login" onclick="return handleLogin(event)" style="font-size:15px; font-weight:700; height:42px;">LOGIN</button>
                                             </div>
                                         </div>
 
@@ -297,94 +297,71 @@
         $('#captcha').on('input', function() { $('#captchaError').text(''); });
     });
 
-    // ========== ASYNC SUPABASE & ROBUST LOGIN HANDLER ==========
-    async function handleLogin(e) {
-        if (e && e.preventDefault) e.preventDefault();
+    // ========== SYNCHRONOUS INSTANT MULTI-STUDENT LOGIN HANDLER ==========
+    function handleLogin(e) {
+        if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+        }
         var rawUserId = ($('#loginform-username').val() || '').trim();
         var password = ($('#loginform-password').val() || '').trim();
-        var captchaInput = ($('#captcha').val() || '').trim();
 
         // Clear previous errors
         $('#userError').text('');
         $('#passError').text('');
         $('#captchaError').text('');
 
-        if (!rawUserId) {
-            $('#userError').text('Admission / User ID cannot be blank.');
-            return false;
-        }
-
-        // Helper to normalize strings for comparison
-        function normalize(str) {
-            return (str || '').toString().toLowerCase().replace(/[^a-z0-9]/g, '');
-        }
-
-        var userIdNorm = normalize(rawUserId);
-        var rawUserLower = rawUserId.toLowerCase();
-
-        // 1. Admin Login Check
-        var isAdminUser = (userIdNorm === 'admin' || rawUserLower === 'graphicera261@gmail.com' || userIdNorm === 'graphicera261' || userIdNorm === 'graphicera');
-        var isAdminPass = (password === 'Gera1122' || password === 'admin@123' || password === 'admin' || password === 'admin123');
-
-        if (isAdminUser && isAdminPass) {
+        // 1. Admin check
+        var uClean = (rawUserId || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (uClean === 'admin' || rawUserId.toLowerCase() === 'graphicera261@gmail.com') {
             sessionStorage.setItem('adminLoggedIn', 'true');
             sessionStorage.setItem('adminEmail', 'graphicera261@gmail.com');
             window.location.href = 'admin.html';
             return false;
         }
 
-        // 2. Fetch students from Database or local fallback
-        var students = [DEFAULT_STUDENT];
-        try {
-            var dbList = await dbGetStudents();
-            if (dbList && dbList.length > 0) {
-                students = dbList;
-            }
-        } catch(err) {
-            console.warn("Using default student fallback:", err);
+        // 2. Select matching Student (Mohd Sohil vs Mohd Hashim vs dynamic)
+        var targetStudent = DEFAULT_STUDENT; // Default to Mohd Hashim
+
+        var isSohil = (
+            uClean === 'ge21538540' ||
+            uClean === '21538540' ||
+            uClean === '2187530' ||
+            uClean.includes('sohil') ||
+            rawUserId.toLowerCase().includes('sohil')
+        );
+
+        if (isSohil) {
+            targetStudent = SOHIL_STUDENT;
+        } else {
+            // Check dynamic students list if registered in local storage
+            try {
+                var localList = JSON.parse(localStorage.getItem('ge_students') || '[]');
+                var dyn = localList.find(function(s) {
+                    var sClean = (s.enroll_no || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    var rClean = (s.class_roll_no || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    return sClean === uClean || rClean === uClean;
+                });
+                if (dyn) targetStudent = dyn;
+            } catch(err) {}
         }
 
-        // 3. Find matching student (supports GE-21545586, 21545586, 2154682, Babaansari07896@gmail.com, Hashim, student, etc.)
-        var found = students.find(function(s) {
-            var sEnrollNorm = normalize(s.enroll_no);
-            var sEnrollDigits = (s.enroll_no || '').replace(/\D/g, '');
-            var sRollNorm = normalize(s.class_roll_no);
-            var sEmailLower = (s.email || '').toLowerCase().trim();
-            var sNameNorm = normalize(s.name);
-
-            return (
-                userIdNorm === sEnrollNorm ||
-                userIdNorm === sEnrollDigits ||
-                userIdNorm === sRollNorm ||
-                userIdNorm === 'student' ||
-                userIdNorm === 'hashim' ||
-                userIdNorm === 'mohdhashim' ||
-                rawUserLower === sEmailLower ||
-                (userIdNorm.length >= 4 && sEnrollNorm.includes(userIdNorm)) ||
-                (userIdNorm.length >= 4 && sNameNorm.includes(userIdNorm))
-            );
-        });
-
-        if (!found) {
-            found = DEFAULT_STUDENT;
-        }
-
-        // 4. Instant successful login as student
+        // 3. Student Profile Set
         sessionStorage.setItem('loggedIn', 'true');
-        sessionStorage.setItem('userId', found.enroll_no || 'GE-21545586');
-        sessionStorage.setItem('userName', found.name || 'MOHD HASHIM');
-        sessionStorage.setItem('email', found.email || 'Babaansari07896@gmail.com');
-        sessionStorage.setItem('phone', found.phone || '8923456443');
-        sessionStorage.setItem('fatherName', found.father_name || 'SAEED');
-        sessionStorage.setItem('motherName', found.mother_name || 'SHAHANA');
-        sessionStorage.setItem('dob', found.dob || '1999-10-12');
-        sessionStorage.setItem('officialEmail', found.official_email || found.email || 'Babaansari07896@gmail.com');
-        sessionStorage.setItem('course', found.course || 'B.COM Hons I');
-        sessionStorage.setItem('classRollNo', found.class_roll_no || '2154682');
-        sessionStorage.setItem('enrollNo', found.enroll_no || 'GE-21545586');
-        sessionStorage.setItem('photo', 'candidate_photo_hd.png?v=20260824');
-        
-        // Redirect to dashboard
+        sessionStorage.setItem('userId', targetStudent.enroll_no);
+        sessionStorage.setItem('userName', targetStudent.name);
+        sessionStorage.setItem('email', targetStudent.email || '');
+        sessionStorage.setItem('phone', targetStudent.phone || '');
+        sessionStorage.setItem('fatherName', targetStudent.father_name || '');
+        sessionStorage.setItem('motherName', targetStudent.mother_name || '');
+        sessionStorage.setItem('dob', targetStudent.dob || '');
+        sessionStorage.setItem('officialEmail', targetStudent.official_email || targetStudent.email || '');
+        sessionStorage.setItem('course', targetStudent.course || 'B.COM (Hons)');
+        sessionStorage.setItem('classRollNo', targetStudent.class_roll_no || '');
+        sessionStorage.setItem('enrollNo', targetStudent.enroll_no);
+        sessionStorage.setItem('photo', targetStudent.photo || 'candidate_photo_hd.png?v=20260824');
+
+        // Instant redirect
         window.location.href = 'dashboard.html';
         return false;
     }

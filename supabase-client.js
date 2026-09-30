@@ -167,37 +167,214 @@ const ALL_DEFAULT_RESULTS = [
     }
 ];
 
+// Master Student Record (MOHD SOHIL)
+const SOHIL_STUDENT = {
+    id: "GE-21538540",
+    enroll_no: "GE-21538540",
+    class_roll_no: "2187530",
+    name: "MOHD SOHIL",
+    father_name: "AHSAN",
+    mother_name: "JAMEELA",
+    dob: "2005-02-01",
+    email: "sohil21538540@gehu.ac.in",
+    official_email: "sohil21538540@gehu.ac.in",
+    phone: "9837182948",
+    course: "B.COM (Hons)",
+    password: "student@123",
+    photo: "sohil_photo.png"
+};
+
+// Master All 6 Semesters Results for MOHD SOHIL (Batch 2021-24)
+const ALL_SOHIL_RESULTS = [
+    // Semester 1
+    {
+        student_id: "GE-21538540",
+        semester: "1",
+        programme: "BACHELOR OF COMMERCE(HONOURS)",
+        serial_no: "213172",
+        issue_date: "25/01/2022",
+        exam_year: "2021-22",
+        exam_title: "BACHELOR OF COMMERCE(HONOURS) - I SEMESTER EXAMINATION (2021-22)",
+        result_status: "PASS",
+        total_credits: 25,
+        credits_earned: 25,
+        sgpa: "8.25",
+        cgpa: "",
+        subjects: [
+            { code: "BCH101", name: "Business Organisation", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH102", name: "Financial Accounting", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH103", name: "Micro Economics", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH104", name: "Business Communication", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH105", name: "Fundamentals Of Computer", credit: 3, grade: "B+", gradePoint: 7 },
+            { code: "BCH106", name: "Business Mathematics", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH107", name: "Seminar", credit: 1, grade: "O", gradePoint: 10 },
+            { code: "BCH108", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 2
+    {
+        student_id: "GE-21538540",
+        semester: "2",
+        programme: "BACHELOR OF COMMERCE(HONOURS)",
+        serial_no: "316915",
+        issue_date: "24/07/2022",
+        exam_year: "2021-22",
+        exam_title: "BACHELOR OF COMMERCE(HONOURS) - SECOND SEMESTER EXAMINATION (2021-22)",
+        result_status: "PASS",
+        total_credits: 25,
+        credits_earned: 25,
+        sgpa: "8.25",
+        cgpa: "",
+        subjects: [
+            { code: "BCH201", name: "Macro Economics", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH202", name: "Business Law", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH203", name: "Business Finance", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH204", name: "Principles of Management", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH205", name: "Business Statistics", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH206", name: "Environmental Science", credit: 2, grade: "A+", gradePoint: 9 },
+            { code: "BCH207", name: "Career Skill-I", credit: 2, grade: "B", gradePoint: 8 },
+            { code: "BCH208", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 3
+    {
+        student_id: "GE-21538540",
+        semester: "3",
+        programme: "BACHELOR OF COMMERCE(HONOURS)",
+        serial_no: "339593",
+        issue_date: "02/02/2023",
+        exam_year: "2022-23",
+        exam_title: "BACHELOR OF COMMERCE(HONOURS) - III SEMESTER EXAMINATION (2022-23)",
+        result_status: "PASS",
+        total_credits: 26,
+        credits_earned: 26,
+        sgpa: "8.75",
+        cgpa: "",
+        subjects: [
+            { code: "BCH301", name: "Corporate Accounting", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH302", name: "Human Resource Management", credit: 4, grade: "O", gradePoint: 10 },
+            { code: "BCH303", name: "Industry Law", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH304", name: "Indian Financial System", credit: 4, grade: "O", gradePoint: 10 },
+            { code: "BCH305", name: "Principles of Marketing", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "BCH306", name: "Business Environment", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH307", name: "Career Skill-II", credit: 2, grade: "B", gradePoint: 8 },
+            { code: "GP301", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 4
+    {
+        student_id: "GE-21538540",
+        semester: "4",
+        programme: "BACHELOR OF COMMERCE(Hons)",
+        serial_no: "506367",
+        issue_date: "25/07/2023",
+        exam_year: "2022-23",
+        exam_title: "BACHELOR OF COMMERCE(Hons) - IV SEM EXAMINATION (2022-23)",
+        result_status: "PASS",
+        total_credits: 23,
+        credits_earned: 23,
+        sgpa: "8.50",
+        cgpa: "",
+        subjects: [
+            { code: "BCH401", name: "Indian Economy", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "BCH402", name: "Company Law", credit: 4, grade: "O", gradePoint: 10 },
+            { code: "BCH403", name: "Cost Accounting", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH404", name: "Research Methodology", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH405", name: "Management of Financial Services", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH406", name: "Digital Marketing", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "BCH407", name: "Computerized Accounting", credit: 1, grade: "B", gradePoint: 8 },
+            { code: "GP408", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 5
+    {
+        student_id: "GE-21538540",
+        semester: "5",
+        programme: "BACHELOR OF COMMERCE(HONS)",
+        serial_no: "533505",
+        issue_date: "15/02/2024",
+        exam_year: "2023-24",
+        exam_title: "BACHELOR OF COMMERCE(HONS) - V SEM EXAMINATION (2023-24)",
+        result_status: "PASS",
+        total_credits: 25,
+        credits_earned: 25,
+        sgpa: "8.50",
+        cgpa: "",
+        subjects: [
+            { code: "BCH501", name: "Management Accounting", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH502", name: "Income Tax Law and Practice", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH503", name: "International Business", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "BCH504", name: "Auditing", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH505", name: "Entrepreneurship and Small Business", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "BCH506 F1", name: "Financial Analysis and Reporting", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "BCH507 F2", name: "Working Capital Management", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "GP501", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 6
+    {
+        student_id: "GE-21538540",
+        semester: "6",
+        programme: "BACHELOR OF COMMERCE(Hons)",
+        serial_no: "562653",
+        issue_date: "29/06/2024",
+        exam_year: "2021-24",
+        exam_title: "BACHELOR OF COMMERCE(Hons) - FINAL YEAR (BATCH 2021-24)",
+        result_status: "PASS",
+        total_credits: 25,
+        credits_earned: 25,
+        sgpa: "8.25",
+        cgpa: "8.41",
+        has_summary_grid: true,
+        summary_grid: [
+            { sem: "I Sem", sgpa: "8.25" },
+            { sem: "II Sem", sgpa: "8.25" },
+            { sem: "III Sem", sgpa: "8.75" },
+            { sem: "IV Sem", sgpa: "8.50" },
+            { sem: "V Sem", sgpa: "8.50" },
+            { sem: "VI Sem", sgpa: "8.25" }
+        ],
+        total_programme_credits: 149,
+        total_programme_earned: 149,
+        final_result: "PASS",
+        subjects: [
+            { code: "BCH601", name: "Indirect Tax Laws", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH602", name: "Corporate Governance & Business Ethics", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH603", name: "Project Management", credit: 4, grade: "A", gradePoint: 8 },
+            { code: "BCH604(F3)", name: "Investment Management", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH605(F4)", name: "Multinational Financial System", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH606", name: "Major Project & Viva-Voce", credit: 4, grade: "A+", gradePoint: 9 },
+            { code: "BCH607", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    }
+];
+
 const DEFAULT_RESULT = ALL_DEFAULT_RESULTS[0];
 
-// Clean & Reset Database to MOHD HASHIM Only
+// Clean & Reset Database to Default Records
 async function dbResetDatabaseToHashimOnly() {
     if (supabaseClient) {
         try {
-            await supabaseClient.from('students').delete().neq('enroll_no', 'GE-21545586');
-            await supabaseClient.from('results').delete().neq('student_id', 'GE-21545586');
-            
-            await supabaseClient.from('students').upsert([DEFAULT_STUDENT]);
-            await supabaseClient.from('results').upsert(ALL_DEFAULT_RESULTS);
-            console.log("Database reset to MOHD HASHIM 6 semester records successfully!");
+            await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT]);
+            await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS]);
+            console.log("Database reset to master records successfully!");
         } catch(e) {
             console.error("Reset error:", e);
         }
     }
     localStorage.clear();
-    localStorage.setItem('ge_students', JSON.stringify([DEFAULT_STUDENT]));
+    localStorage.setItem('ge_students', JSON.stringify([DEFAULT_STUDENT, SOHIL_STUDENT]));
     localStorage.setItem('ge_results_GE-21545586', JSON.stringify(ALL_DEFAULT_RESULTS));
+    localStorage.setItem('ge_results_GE-21538540', JSON.stringify(ALL_SOHIL_RESULTS));
     return true;
 }
 
-// Ensure default student exists in Supabase
+// Ensure master students exist in Supabase
 async function initDefaultData() {
     if (!supabaseClient) return;
     try {
-        const { data: students, error } = await supabaseClient.from('students').select('*').eq('enroll_no', 'GE-21545586');
-        if (!error && (!students || students.length === 0)) {
-            await supabaseClient.from('students').upsert([DEFAULT_STUDENT]);
-            await supabaseClient.from('results').upsert(ALL_DEFAULT_RESULTS);
-        }
+        await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT]);
+        await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS]);
     } catch (e) {
         console.error("Init seed error:", e);
     }
@@ -208,14 +385,19 @@ async function dbGetStudents() {
     if (supabaseClient) {
         try {
             const { data, error } = await supabaseClient.from('students').select('*').order('created_at', { ascending: false });
-            if (!error && data && data.length > 0) return data;
+            if (!error && data && data.length > 0) {
+                let list = [...data];
+                if (!list.some(x => x.enroll_no === DEFAULT_STUDENT.enroll_no)) list.unshift(DEFAULT_STUDENT);
+                if (!list.some(x => x.enroll_no === SOHIL_STUDENT.enroll_no)) list.push(SOHIL_STUDENT);
+                return list;
+            }
         } catch (e) {
             console.error("Supabase get students error:", e);
         }
     }
     // Local fallback
     var local = localStorage.getItem('ge_students');
-    return local ? JSON.parse(local) : [DEFAULT_STUDENT];
+    return local ? JSON.parse(local) : [DEFAULT_STUDENT, SOHIL_STUDENT];
 }
 
 // Add or Update a student
@@ -283,6 +465,7 @@ async function dbGetResults(studentEnrollNo) {
     // Local fallback
     var localRes = localStorage.getItem('ge_results_' + studentEnrollNo);
     if (localRes) return JSON.parse(localRes);
+    if (studentEnrollNo === SOHIL_STUDENT.enroll_no) return ALL_SOHIL_RESULTS;
     if (studentEnrollNo === DEFAULT_STUDENT.enroll_no) return ALL_DEFAULT_RESULTS;
     return [];
 }

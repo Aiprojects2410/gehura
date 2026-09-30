@@ -377,28 +377,32 @@
                         </div>
                     </div>
 
-                    <div style="text-align:right; font-size:8.5px; line-height:1.35; color:#334155; font-weight:600;">
-                        <strong style="color:#0f172a;">H.O. & Main Campus</strong><br>
-                        510, Society Area, Clement Town<br>
-                        Dehradun - 248002<br>
-                        Uttarakhand (INDIA)
+                    <div style="text-align:right;">
+                        <div style="font-size:12.5px; font-weight:bold; color:#0f172a; margin-bottom:3px;">
+                            Sl.No. GEHU <span id="msSerialNo" style="font-family:'Courier New', monospace; font-size:17px; font-weight:900; letter-spacing:1px; margin-left:4px; color:#0f172a;">213172</span>
+                        </div>
+                        <div style="font-size:8px; line-height:1.3; color:#475569; font-weight:600;">
+                            <strong>H.O. & Main Campus</strong><br>
+                            510, Society Area, Clement Town<br>
+                            Dehradun - 248002, Uttarakhand (INDIA)
+                        </div>
                     </div>
                 </div>
 
                 <!-- Examination Title -->
                 <div class="exam-title-bar" id="examTitleBar">
-                    BACHELOR OF COMMERCE (HONOURS)- I SEMESTER EXAMINATION (2020-21)
+                    BACHELOR OF COMMERCE (HONOURS)- I SEMESTER EXAMINATION (2021-22)
                 </div>
 
                 <!-- Student Info -->
                 <div class="student-info-row">
                     <div class="info-col-1">
-                        <div>Name of Student: <span id="msStudentName">MOHD HASHIM</span></div>
-                        <div>Father's Name : <span id="msFatherName">SAEED</span></div>
+                        <div>Name of Student: <span id="msStudentName">MOHD SOHIL</span></div>
+                        <div>Father's Name : <span id="msFatherName">AHSAN</span></div>
                     </div>
                     <div class="info-col-2">
-                        <div>Enrolment No: <span id="msEnrollNo">GE-21545586</span></div>
-                        <div>Roll No: <span id="msRollNo">2154682</span></div>
+                        <div>Enrolment No: <span id="msEnrollNo">GE-21538540</span></div>
+                        <div>Roll No: <span id="msRollNo">2187530</span></div>
                     </div>
                 </div>
 
@@ -416,48 +420,6 @@
                             <td class="grade-col">A+</td>
                             <td class="point-col">9</td>
                         </tr>
-                        <tr>
-                            <td class="sub-name">BCH102 Financial Accounting</td>
-                            <td class="credit-col">4</td>
-                            <td class="grade-col">B+</td>
-                            <td class="point-col">7</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-name">BCH103 Micro Economics</td>
-                            <td class="credit-col">3</td>
-                            <td class="grade-col">B+</td>
-                            <td class="point-col">7</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-name">BCH104 Business Communication</td>
-                            <td class="credit-col">3</td>
-                            <td class="grade-col">B</td>
-                            <td class="point-col">7</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-name">BCH105 Fundamentals Of Computer</td>
-                            <td class="credit-col">3</td>
-                            <td class="grade-col">B+</td>
-                            <td class="point-col">8</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-name">BCH106 Business Mathematics</td>
-                            <td class="credit-col">4</td>
-                            <td class="grade-col">A</td>
-                            <td class="point-col">8</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-name">BCH107 Seminar</td>
-                            <td class="credit-col">1</td>
-                            <td class="grade-col">A</td>
-                            <td class="point-col">8</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-name">BCH108 General Proficiency</td>
-                            <td class="credit-col">1</td>
-                            <td class="grade-col">A</td>
-                            <td class="point-col">9</td>
-                        </tr>
                     </tbody>
                 </table>
 
@@ -465,9 +427,9 @@
                 <div class="summary-barcode-row">
                     <div class="summary-left">
                         <div class="result-pass">Result: Pass</div>
-                        <div>Total No. of Credits registered: 23</div>
-                        <div>Total No. of Credits earned: 23</div>
-                        <div>SGPA: 7.88</div>
+                        <div>Total No. of Credits registered: 25</div>
+                        <div>Total No. of Credits earned: 25</div>
+                        <div>SGPA: 8.25</div>
                         <div>CGPA:</div>
                     </div>
 
@@ -532,7 +494,7 @@
             <!-- Footer Signatures -->
             <div class="signatures-section">
                 <div class="signatures-row">
-                    <div style="font-size:10.5px; font-weight:bold;">Date: <span id="msDateStamp">12-Feb-2021</span></div>
+                    <div style="font-size:10.5px; font-weight:bold;">Date: <span id="msDateStamp">25/01/2022</span></div>
                     <div style="text-align:center;">
                         <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#1e40af; transform:rotate(-4deg); font-weight:bold; line-height:1; margin-bottom:2px;">
                             Sandeep Kumar
@@ -559,17 +521,19 @@
         async function loadGradeCardData() {
             var urlParams = new URLSearchParams(window.location.search);
             var sem = urlParams.get('sem') || '1';
-            var studentId = urlParams.get('id') || sessionStorage.getItem('enrollNo') || 'GE-21545586';
+            var studentId = urlParams.get('id') || sessionStorage.getItem('enrollNo') || 'GE-21538540';
+
+            var isSohil = (studentId === 'GE-21538540' || studentId.includes('21538540') || studentId === '2187530');
+            var defaultStudent = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var defaultResults = isSohil ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
 
             // Fetch student info
-            var students = await dbGetStudents();
-            var student = students.find(s => s.enroll_no === studentId) || {
-                name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
-                father_name: sessionStorage.getItem('fatherName') || 'SAEED',
-                enroll_no: studentId,
-                class_roll_no: sessionStorage.getItem('classRollNo') || '2154682',
-                course: sessionStorage.getItem('course') || 'B.COM Hons'
-            };
+            var student = defaultStudent;
+            try {
+                var students = await dbGetStudents();
+                var sFound = students.find(s => s.enroll_no === studentId || s.class_roll_no === studentId);
+                if (sFound) student = sFound;
+            } catch(e) {}
 
             document.getElementById('msStudentName').textContent = (student.name || '').toUpperCase();
             document.getElementById('msFatherName').textContent = (student.father_name || '').toUpperCase();
@@ -577,90 +541,104 @@
             document.getElementById('msRollNo').textContent = student.class_roll_no || '';
 
             // Fetch results for this student
-            var results = await dbGetResults(studentId);
+            var results = await dbGetResults(student.enroll_no || studentId);
             var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-            var semYears = ['2020-21', '2020-21', '2021-22', '2021-22', '2022-23', '2020-23'];
             var idx = parseInt(sem) - 1;
-            var semRoman = idx >= 0 && idx < semRomans.length ? semRomans[idx] : 'I';
-            var semYear = idx >= 0 && idx < semYears.length ? semYears[idx] : '2020-21';
+            if (idx < 0 || idx > 5) idx = 0;
+            var semRoman = semRomans[idx];
 
-            var result = (results || []).find(r => ("" + r.semester) === ("" + sem)) || (typeof ALL_DEFAULT_RESULTS !== 'undefined' && idx >= 0 && idx < ALL_DEFAULT_RESULTS.length ? ALL_DEFAULT_RESULTS[idx] : null);
+            var result = (results || []).find(r => ("" + r.semester) === ("" + sem)) || (idx < defaultResults.length ? defaultResults[idx] : defaultResults[0]);
 
-            var sgpaVal = '7.88';
-            var resultStatusVal = 'Pass';
+            var sgpaVal = result ? result.sgpa : '8.25';
+            var resultStatusVal = result ? result.result_status : 'PASS';
 
-            if (result) {
-                if (result.exam_title) {
-                    document.getElementById('examTitleBar').textContent = result.exam_title;
-                } else {
-                    document.getElementById('examTitleBar').textContent = 
-                        `BACHELOR OF COMMERCE (HONOURS)- ${semRoman} SEMESTER EXAMINATION (${result.exam_year || semYear})`;
-                }
+            // Serial Number
+            var slNoElem = document.getElementById('msSerialNo');
+            if (slNoElem) {
+                slNoElem.textContent = result.serial_no || (isSohil ? ['213172', '316915', '339593', '506367', '533505', '562653'][idx] : (210000 + idx * 25000));
+            }
 
-                sgpaVal = result.sgpa || '7.88';
-                resultStatusVal = result.result_status || 'Pass';
+            // Exam Title
+            if (result && result.exam_title) {
+                document.getElementById('examTitleBar').textContent = result.exam_title;
+            } else {
+                document.getElementById('examTitleBar').textContent = 
+                    `BACHELOR OF COMMERCE (HONOURS) - ${semRoman} SEMESTER EXAMINATION (${result.exam_year || '2021-22'})`;
+            }
 
-                // Render dynamic subjects
-                if (result.subjects && result.subjects.length > 0) {
-                    var tbody = document.querySelector('.grades-table tbody');
-                    var html = '';
-                    result.subjects.forEach(sub => {
-                        html += `
-                            <tr>
-                                <td class="sub-name">${sub.code} ${sub.name}</td>
-                                <td class="credit-col">${sub.credit}</td>
-                                <td class="grade-col">${sub.grade}</td>
-                                <td class="point-col">${sub.gradePoint}</td>
-                            </tr>
-                        `;
-                    });
-                    tbody.innerHTML = html;
-                }
+            // Render dynamic subjects
+            if (result && result.subjects && result.subjects.length > 0) {
+                var tbody = document.querySelector('.grades-table tbody');
+                var html = '';
+                result.subjects.forEach(sub => {
+                    html += `
+                        <tr>
+                            <td class="sub-name">${sub.code} ${sub.name}</td>
+                            <td class="credit-col">${sub.credit}</td>
+                            <td class="grade-col">${sub.grade}</td>
+                            <td class="point-col">${sub.gradePoint}</td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            }
 
-                // Render dynamic summary
-                var summaryHtml = `
-                    <div class="result-pass">Result: ${resultStatusVal}</div>
-                    <div>Total No. of Credits registered: ${result.total_credits || 23}</div>
-                    <div>Total No. of Credits earned: ${result.credits_earned || 23}</div>
-                    <div>SGPA: ${sgpaVal}</div>
-                    <div>CGPA: ${result.cgpa || ''}</div>
-                `;
-                document.querySelector('.summary-left').innerHTML = summaryHtml;
+            // Render dynamic summary
+            var summaryHtml = `
+                <div class="result-pass">Result: ${resultStatusVal}</div>
+                <div>Total No. of Credits registered: ${result.total_credits || 25}</div>
+                <div>Total No. of Credits earned: ${result.credits_earned || 25}</div>
+                <div>SGPA: ${sgpaVal}</div>
+                <div>CGPA: ${result.cgpa || ''}</div>
+            `;
+            document.querySelector('.summary-left').innerHTML = summaryHtml;
 
-                // If Semester 6, render the official 6-semester consolidation table
-                var existingSem6Box = document.getElementById('sem6ConsolidatedBox');
-                if (existingSem6Box) existingSem6Box.remove();
+            // If Semester 6, render the official consolidation table
+            var existingSem6Box = document.getElementById('sem6ConsolidatedBox');
+            if (existingSem6Box) existingSem6Box.remove();
 
-                if (("" + sem) === "6" || result.has_summary_grid) {
-                    var sem6Box = document.createElement('div');
-                    sem6Box.id = 'sem6ConsolidatedBox';
-                    sem6Box.style.cssText = "margin-top:14px; margin-bottom:12px; font-size:10px; font-weight:700; color:#1e293b; line-height:1.8;";
+            if (("" + sem) === "6" || (result && result.has_summary_grid)) {
+                var sem6Box = document.createElement('div');
+                sem6Box.id = 'sem6ConsolidatedBox';
+                sem6Box.style.cssText = "margin-top:14px; margin-bottom:12px; font-size:10px; font-weight:700; color:#1e293b; line-height:1.8;";
+                
+                if (isSohil) {
                     sem6Box.innerHTML = `
                         <div style="display:flex; justify-content:space-between; flex-wrap:wrap; border-top:1px solid #cbd5e1; padding-top:6px;">
-                            <span>SGPA 1 SEM:7.88</span><span>Credit :23/23</span>
-                            <span>SGPA 2 SEM:7.38</span><span>Credit :24/24</span>
-                            <span>SGPA 3 SEM:7.38</span><span>Credit :21/21</span>
+                            <span>I Sem: 8.25</span><span>II Sem: 8.25</span>
+                            <span>III Sem: 8.75</span><span>IV Sem: 8.50</span>
+                            <span>V Sem: 8.50</span><span>VI Sem: 8.25</span>
+                            <span style="color:#0284c7;">CGPA (Final): 8.41</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+                            <span>Total Registered Credits: 149</span>
+                            <span>Total Earned Credits: 149</span>
+                            <span style="color:#16a34a;">Final Result: PASS</span>
+                        </div>
+                    `;
+                } else {
+                    sem6Box.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; border-top:1px solid #cbd5e1; padding-top:6px;">
+                            <span>SGPA 1 SEM: 7.88</span><span>Credit: 23/23</span>
+                            <span>SGPA 2 SEM: 7.38</span><span>Credit: 24/24</span>
+                            <span>SGPA 3 SEM: 7.38</span><span>Credit: 21/21</span>
                             <span style="color:#0284c7;">CGPA: 7.82</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-                            <span>SGPA 4 SEM:7.50</span><span>Credit :24/24</span>
-                            <span>SGPA 5 SEM:8.75</span><span>Credit :25/25</span>
-                            <span>SGPA 6 SEM:8</span><span>Credit :24/24</span>
+                            <span>SGPA 4 SEM: 7.50</span><span>Credit: 24/24</span>
+                            <span>SGPA 5 SEM: 8.75</span><span>Credit: 25/25</span>
+                            <span>SGPA 6 SEM: 8.00</span><span>Credit: 24/24</span>
                             <span style="color:#16a34a;">Overall Result: Pass</span>
                         </div>
                     `;
-                    document.querySelector('.summary-barcode-row').insertAdjacentElement('afterend', sem6Box);
                 }
-
-                // Dynamic dates
-                var semDates = ['12-Feb-2021', '18-Aug-2021', '15-Feb-2022', '22-Aug-2022', '10-Feb-2023', '28-Jul-2023'];
-                var dStamp = semDates[idx] || '12-Feb-2021';
-                var dElem = document.getElementById('msDateStamp');
-                if (dElem) dElem.textContent = dStamp;
-            } else {
-                document.getElementById('examTitleBar').textContent = 
-                    `BACHELOR OF COMMERCE (HONOURS)- ${semRoman} SEMESTER EXAMINATION (${semYear})`;
+                document.querySelector('.summary-barcode-row').insertAdjacentElement('afterend', sem6Box);
             }
+
+            // Dynamic Issue Date
+            var issueDate = result.issue_date || (isSohil ? ['25/01/2022', '24/07/2022', '02/02/2023', '25/07/2023', '15/02/2024', '29/06/2024'][idx] : ['12-Feb-2021', '18-Aug-2021', '15-Feb-2022', '22-Aug-2022', '10-Feb-2023', '28-Jul-2023'][idx]);
+            var dElem = document.getElementById('msDateStamp');
+            if (dElem) dElem.textContent = issueDate;
 
             // Generate Real Scannable QR Code
             try {

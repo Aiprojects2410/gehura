@@ -600,7 +600,7 @@
             </table>
 
             <div style="margin-top:14px; text-align:center;">
-                <a href="id_card.html" target="_blank" class="btn btn-primary" style="background:#0090e3; border:none; padding:9px 18px; border-radius:6px; font-size:12.5px; font-weight:700; display:inline-flex; align-items:center; gap:8px; box-shadow:0 3px 8px rgba(0,144,227,0.35); text-decoration:none; color:#fff;">
+                <a id="viewIdCardLink" href="id_card.html" target="_blank" class="btn btn-primary" style="background:#0090e3; border:none; padding:9px 18px; border-radius:6px; font-size:12.5px; font-weight:700; display:inline-flex; align-items:center; gap:8px; box-shadow:0 3px 8px rgba(0,144,227,0.35); text-decoration:none; color:#fff;">
                     <i class="fa fa-id-card-o"></i> View Digital ID Card
                 </a>
             </div>
@@ -1225,13 +1225,23 @@
 <script>
     // Set clean passport photo for avatar
     window.addEventListener('DOMContentLoaded', function() {
+        var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21545586';
+        var isSohil = (enrollNo === 'GE-21538540' || enrollNo.includes('21538540') || enrollNo === '2187530');
         var sPhoto = sessionStorage.getItem('photo');
-        if (!sPhoto || sPhoto === 'student_profile.png' || sPhoto === 'candidate_photo.png' || sPhoto.indexOf('candidate_photo_hd.png') === -1) {
-            sPhoto = 'candidate_photo_hd.png?v=20260824';
+
+        if (!sPhoto || sPhoto === 'student_profile.png' || sPhoto === 'candidate_photo.png') {
+            sPhoto = isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824';
+            sessionStorage.setItem('photo', sPhoto);
+        } else if (isSohil && sPhoto.indexOf('candidate_photo_hd') !== -1) {
+            sPhoto = 'sohil_photo.png';
             sessionStorage.setItem('photo', sPhoto);
         }
+
         document.getElementById('mainProfilePic').src = sPhoto;
         document.getElementById('navAvatarImg').src = sPhoto;
+
+        var idCardLink = document.getElementById('viewIdCardLink');
+        if (idCardLink) idCardLink.href = 'id_card.html?id=' + encodeURIComponent(enrollNo);
     });
 
     // Populate data from sessionStorage
@@ -1243,7 +1253,7 @@
         mother: sessionStorage.getItem('motherName') || 'SHAHANA',
         dob: sessionStorage.getItem('dob') || '1999-10-12',
         officialEmail: sessionStorage.getItem('officialEmail') || 'Babaansari07896@gmail.com',
-        course: sessionStorage.getItem('course') || 'B.COM Hons I',
+        course: sessionStorage.getItem('course') || 'B.COM (Hons)',
         rollNo: sessionStorage.getItem('classRollNo') || '2154682',
         enrollNo: sessionStorage.getItem('enrollNo') || 'GE-21545586'
     };
