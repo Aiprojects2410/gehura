@@ -176,9 +176,9 @@ const SOHIL_STUDENT = {
     father_name: "AHSAN",
     mother_name: "JAMEELA",
     dob: "2005-02-01",
-    email: "sohil21538540@gehu.ac.in",
-    official_email: "sohil21538540@gehu.ac.in",
-    phone: "9837182948",
+    email: "Mohdsohil0328@gmail.com",
+    official_email: "Mohdsohil0328@gmail.com",
+    phone: "8630003510",
     course: "B.COM (Hons)",
     password: "student@123",
     photo: "sohil_photo.png"

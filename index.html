@@ -1,41 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://student.gehu.ac.in/Scripts/jquery-1.12.4.js"></script>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <link id="lnkmanifest" rel="manifest">
     <title>Graphic Era Hill University | ERP | Cyborg-ERP</title>
-    <meta name="keywords" content="">
-    <meta property="og:title" content="Best University | College | Schools ERP in India - Cyborg-ERP">
-    <meta property="og:description" content="">
-    <meta property="og:keywords" content="">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link id="srcicon" href="#" rel="shortcut icon" type="image/x-icon"/>
-    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-    <script src="https://student.gehu.ac.in/js/demo-rtl.js"></script>
-    <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
-    <link href="https://student.gehu.ac.in/css/libs/nanoscroller.css" rel="stylesheet"/>
-    <link href="https://student.gehu.ac.in/css/compiled/theme_styles.css" rel="stylesheet"/>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
+    
+    <!-- Reliable Fast Cloudflare CDN Links -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <style type="text/css">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+            background-color: #0b1528 !important;
+        }
+
+        body.theme-blue-gradient {
+            background: url('bg.jpg') no-repeat center center fixed !important;
+            background-size: cover !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+            position: relative;
+        }
+
+        #login-full-wrapper {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 40px 60px 40px 20px;
+        }
+
+        .login-box-container {
+            width: 100%;
+            max-width: 380px;
+            margin-right: 40px;
+        }
+
+        #login-header {
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        #login-logo {
+            display: inline-block;
+            background: #ffffff;
+            padding: 8px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+        }
+
+        #imgclient {
+            max-height: 58px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        #login-box-inner {
+            background: rgba(30, 41, 59, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px 22px 18px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .input-group-addon {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: none;
+            color: #38bdf8;
+            padding: 10px 14px;
+            font-size: 14px;
+            border-radius: 6px 0 0 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0 6px 6px 0;
+            color: #0f172a;
+            font-size: 13.5px;
+            font-weight: 600;
+            height: 42px;
+            padding: 8px 12px;
+            width: 100%;
+            box-shadow: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            background: #ffffff;
+            border-color: #0090e3;
+            box-shadow: 0 0 0 3px rgba(0, 144, 227, 0.3);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+            font-weight: 500;
+        }
+
         #eyes {
             position: absolute;
-            right: 5%;
-            top: 33%;
-            z-index: 1000;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
             cursor: pointer;
+            color: #64748b;
+            padding: 4px;
         }
-        #eyes i {
+        #eyes:hover {
+            color: #0f172a;
+        }
+
+        .captcha-box-wrapper {
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 4px;
+            margin-bottom: 12px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #captchaCanvas {
+            width: 250px;
+            height: 40px;
+            display: block;
+            border-radius: 4px;
+        }
+
+        #btnRefreshCaptcha {
+            color: #16a34a;
+            cursor: pointer;
+            padding: 6px 10px;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        #btnRefreshCaptcha:hover {
+            transform: rotate(90deg);
+        }
+
+        #captcha {
+            border-radius: 6px;
+            text-align: center;
+            letter-spacing: 2px;
             font-size: 15px;
+            font-weight: 700;
         }
-        .validation-summary-errors {
-            color: red;
+
+        .btnSubmit.loginbtn {
+            background: linear-gradient(135deg, #0090e3 0%, #0284c7 100%);
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            height: 44px;
+            width: 100%;
+            margin-top: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 144, 227, 0.4);
+            transition: all 0.2s ease;
         }
+        .btnSubmit.loginbtn:hover {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            box-shadow: 0 6px 18px rgba(0, 144, 227, 0.55);
+            transform: translateY(-1px);
+        }
+
+        .err-text {
+            color: #f87171;
+            font-size: 11.5px;
+            font-weight: 600;
+            display: block;
+            margin-top: -8px;
+            margin-bottom: 8px;
+            min-height: 16px;
+        }
+
+        .forgot-links-row {
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .forgot-links-row a {
+            color: #e0f2fe;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .forgot-links-row a:hover {
+            color: #38bdf8;
+            text-decoration: underline;
+        }
+
         /* Hide Netlify Drawer & Badge */
         [data-netlify-drawer], #netlify-badge, .netlify-badge, netlify-drawer, iframe[src*="netlify"], div[class*="netlify-drawer"] {
             display: none !important;
@@ -43,154 +239,73 @@
             opacity: 0 !important;
             pointer-events: none !important;
         }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            #login-full-wrapper {
+                justify-content: center;
+                padding: 20px 15px;
+            }
+            .login-box-container {
+                margin-right: 0;
+                max-width: 360px;
+            }
+        }
     </style>
 </head>
 
-    html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-        background-color: #000 !important;
-    }
-    body.theme-blue-gradient {
-        background: url(bg.jpg) no-repeat center center fixed !important;
-        background-size: cover !important;
-        background-color: #000 !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-    }
-    #login-full-wrapper {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: 20px 0;
-    }
-
-    /* Mobile Responsive Optimizations */
-    @media (max-width: 768px) {
-        body.theme-blue-gradient {
-            padding: 10px !important;
-        }
-        #login-box {
-            zoom: 100% !important;
-            margin: 0 auto !important;
-            float: none !important;
-            max-width: 100% !important;
-        }
-        #login-box-holder {
-            float: none !important;
-            margin: 0 auto !important;
-            max-width: 360px !important;
-            width: 100% !important;
-        }
-        #login-header {
-            text-align: center !important;
-            margin-bottom: 12px !important;
-        }
-        #imgclient {
-            max-width: 100% !important;
-            height: auto !important;
-            max-height: 55px !important;
-        }
-        #captcha {
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-    }
-</style>
-
 <body class="theme-blue-gradient">
 <div id="login-full-wrapper">
-    <div class="container">
-        <div hidden="hidden">
-            <iframe src="#"></iframe>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-sm-6 hidden-xs"></div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div id="login-box" style="zoom:90%;">
-                    <div id="login-box-holder">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <header id="login-header" style="text-align:center; margin-bottom:12px;">
-                                    <div id="login-logo" style="display:inline-block; background:#ffffff; padding:6px 14px; border-radius:6px; box-shadow:0 3px 10px rgba(0,0,0,0.3);">
-                                        <img id="imgclient" src="logo.png" alt="Graphic Era" style="max-height:60px; max-width:100%; height:auto; display:block;"/>
-                                    </div>
-                                </header>
-                                <div id="login-box-inner" style="background-color: rgba(128, 128, 128, 0.45); border-radius:8px;">
-                                    <form id="login-form" method="post" name="login" onsubmit="return handleLogin(event)">
-                                        <p hidden="hidden">Cyborg-ERP | Best University ERP</p>
-                                        <b style="font-size:12px;"></b>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user" style="color: white;"></i></span>
-                                            <input autocomplete="off" class="form-control" id="loginform-username" name="username" placeholder="Admission / User ID" style="font-size:12px; font-weight:500;" type="text" value=""/>
-                                        </div>
-                                        <b style="color:red"><span class="field-validation-valid" id="userError"></span></b>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                            <input autocomplete="off" class="form-control" id="loginform-password" name="password" placeholder="Password" style="font-size:12px; font-weight:500;" type="password" value=""/>
-                                            <span id="eyes"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
-                                        </div>
-                                        <input id="hdnID" name="clientIP" type="hidden" value=""/>
-                                        <b style="color:red"><span class="field-validation-valid" id="passError"></span></b>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i title="Click to load new captcha" style="color:lightgreen; cursor:pointer;" class="fa fa-refresh fa-2x" id="btnRefreshCaptcha"></i></span>
-                                            <center>
-                                                <canvas id="captchaCanvas" width="250" height="40" style="width:250px; height:40px; border:groove thin #ccc;"></canvas>
-                                            </center>
-                                        </div>
-
-                                        <div class="input-group">
-                                            <input autocomplete="off" class="captcha form-control text-center" id="captcha" name="captcha" placeholder="Enter Captcha" style="font-size:15px;font-weight:500; height: 40px; width:300px;" type="text" value=""/>
-                                        </div>
-                                        <b style="color:red"><span id="captchaError"></span></b>
-                                        <br/>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <button type="submit" class="btn btn-primary col-xs-12 btnSubmit loginbtn" name="login" onclick="return handleLogin(event)" style="font-size:15px; font-weight:700; height:42px;">LOGIN</button>
-                                            </div>
-                                        </div>
-
-                                        <div id="remember-me-wrapper">
-                                            <div class="row text-right">
-                                                <div class="col-sm-6 text-left"></div>
-                                                <div id="dvforgotid">
-                                                    <div class="col-sm-6 text-right">
-                                                        <a href="#" id="login-forget-link" class="col-xs-12" style="font-size:12px; color:white">
-                                                            Forgot password ?
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row text-right">
-                                                <div class="col-xs-12 text-right">
-                                                    <a href="#" class="col-xs-12" style="font-size:12px; color:white">
-                                                        Forgot ID ?
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <div class="row"></div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="login-box-container">
+        <!-- Logo -->
+        <header id="login-header">
+            <div id="login-logo">
+                <img id="imgclient" src="logo.png" alt="Graphic Era (Deemed to be University)"/>
             </div>
+        </header>
+
+        <!-- Glass Form Card -->
+        <div id="login-box-inner">
+            <form id="login-form" method="post" name="login" onsubmit="return handleLogin(event)">
+                <!-- Username Input -->
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input autocomplete="off" class="form-control" id="loginform-username" name="username" placeholder="Admission / User ID" type="text" value=""/>
+                </div>
+                <span class="err-text" id="userError"></span>
+
+                <!-- Password Input -->
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                    <input autocomplete="off" class="form-control" id="loginform-password" name="password" placeholder="Password" type="password" value=""/>
+                    <span id="eyes"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                </div>
+                <span class="err-text" id="passError"></span>
+
+                <!-- Captcha Display Box -->
+                <div class="captcha-box-wrapper">
+                    <canvas id="captchaCanvas" width="250" height="40"></canvas>
+                    <i title="Click to refresh captcha" class="fa fa-refresh" id="btnRefreshCaptcha"></i>
+                </div>
+
+                <!-- Captcha Input -->
+                <div class="input-group">
+                    <input autocomplete="off" class="form-control" id="captcha" name="captcha" placeholder="Enter Captcha" type="text" value=""/>
+                </div>
+                <span class="err-text" id="captchaError"></span>
+
+                <!-- Login Button -->
+                <button type="submit" class="btnSubmit loginbtn" name="login" onclick="return handleLogin(event)">LOGIN</button>
+
+                <!-- Forgot Links -->
+                <div class="forgot-links-row">
+                    <a href="#" id="login-forget-link" onclick="alert('Please contact Examination Cell / Registrar Office for Password Reset.'); return false;">Forgot password ?</a>
+                    <a href="#" onclick="alert('Please check your Admission slip or Marksheet for Enrollment ID.'); return false;">Forgot ID ?</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-<script src="https://student.gehu.ac.in/js/demo-skin-changer.js"></script>
-<script src="https://student.gehu.ac.in/js/bootstrap.js"></script>
-<script src="https://student.gehu.ac.in/js/jquery.nanoscroller.min.js"></script>
-<script src="https://student.gehu.ac.in/js/demo.js"></script>
-<script src="https://student.gehu.ac.in/js/scripts.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-client.js"></script>
@@ -209,6 +324,7 @@
 
     function drawCaptcha() {
         var canvas = document.getElementById('captchaCanvas');
+        if (!canvas) return;
         var ctx = canvas.getContext('2d');
         currentCaptcha = generateCaptchaText();
 
@@ -217,62 +333,57 @@
 
         // Background
         var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        gradient.addColorStop(0, '#e8e8e8');
-        gradient.addColorStop(0.5, '#d0d0d0');
-        gradient.addColorStop(1, '#e8e8e8');
+        gradient.addColorStop(0, '#f1f5f9');
+        gradient.addColorStop(0.5, '#e2e8f0');
+        gradient.addColorStop(1, '#f1f5f9');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Noise lines
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 6; i++) {
             ctx.beginPath();
             ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
             ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-            ctx.strokeStyle = 'rgba(' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',0.3)';
+            ctx.strokeStyle = 'rgba(' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',0.35)';
             ctx.lineWidth = 1;
             ctx.stroke();
         }
 
         // Captcha text
-        var colors = ['#d32f2f', '#1565c0', '#2e7d32', '#6a1b9a', '#e65100', '#00838f'];
-        var fonts = ['Arial', 'Georgia', 'Verdana', 'Courier'];
-        var x = 30;
+        var colors = ['#dc2626', '#0284c7', '#16a34a', '#9333ea', '#ea580c', '#0891b2'];
+        var fonts = ['Arial', 'Verdana', 'Georgia', 'Helvetica'];
+        var x = 24;
         for (var i = 0; i < currentCaptcha.length; i++) {
             ctx.save();
-            ctx.font = 'bold ' + (20 + Math.random() * 8) + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
+            ctx.font = 'bold ' + (21 + Math.random() * 6) + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
             ctx.fillStyle = colors[i % colors.length];
-            ctx.translate(x, 25 + (Math.random() * 8 - 4));
-            ctx.rotate((Math.random() - 0.5) * 0.4);
+            ctx.translate(x, 26 + (Math.random() * 6 - 3));
+            ctx.rotate((Math.random() - 0.5) * 0.35);
             ctx.fillText(currentCaptcha[i], 0, 0);
             ctx.restore();
-            x += 33;
+            x += 35;
         }
 
         // Noise dots
-        for (var i = 0; i < 40; i++) {
+        for (var i = 0; i < 30; i++) {
             ctx.beginPath();
             ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.fillStyle = 'rgba(0,0,0,0.25)';
             ctx.fill();
         }
     }
 
-    // ========== EYE TOGGLE (from original login.js) ==========
+    // ========== EYE TOGGLE ==========
     $(function() {
         $('#eyes').click(function() {
             if ($('#eyes i').hasClass('fa-eye-slash')) {
                 $('#loginform-password').attr('type', 'text');
-                $('#eyes i').addClass('fa-eye');
-                $('#eyes i').removeClass('fa-eye-slash');
+                $('#eyes i').addClass('fa-eye').removeClass('fa-eye-slash');
             } else {
                 $('#loginform-password').attr('type', 'password');
-                $('#eyes i').removeClass('fa-eye');
-                $('#eyes i').addClass('fa-eye-slash');
+                $('#eyes i').removeClass('fa-eye').addClass('fa-eye-slash');
             }
         });
-
-        // Show forgot password link
-        $('#dvforgotid').show();
 
         // Refresh captcha button
         $('#btnRefreshCaptcha').click(function() {
@@ -280,13 +391,6 @@
             $('#captcha').val('');
             $('#captchaError').text('');
         });
-
-        // Set logo dimensions
-        var imgclient = document.getElementById('imgclient');
-        if (imgclient) {
-            imgclient.style.height = '65px';
-            imgclient.style.width = '245px';
-        }
 
         // Init captcha
         drawCaptcha();
@@ -328,7 +432,8 @@
             uClean === '21538540' ||
             uClean === '2187530' ||
             uClean.includes('sohil') ||
-            rawUserId.toLowerCase().includes('sohil')
+            rawUserId.toLowerCase().includes('sohil') ||
+            rawUserId.toLowerCase().includes('8630003510')
         );
 
         if (isSohil) {
