@@ -10,10 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <!-- Reliable Fast Cloudflare CDN Links -->
+    <!-- Fast reliable CDNs -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style type="text/css">
@@ -28,12 +28,14 @@
             padding: 0 !important;
             width: 100% !important;
             min-height: 100vh !important;
+            height: 100% !important;
             font-family: 'Open Sans', Arial, Helvetica, sans-serif;
             background-color: #0b1528 !important;
+            overflow-x: hidden;
         }
 
         body.theme-blue-gradient {
-            background: url('bg.jpg') no-repeat center center fixed !important;
+            background: url('bg.jpg') no-repeat center bottom fixed !important;
             background-size: cover !important;
             width: 100% !important;
             min-height: 100vh !important;
@@ -44,192 +46,262 @@
             min-height: 100vh;
             width: 100%;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: flex-end;
-            padding: 40px 60px 40px 20px;
+            padding: 28px 45px 25px 20px;
         }
 
-        .login-box-container {
+        .login-card-container {
             width: 100%;
-            max-width: 380px;
-            margin-right: 40px;
+            max-width: 295px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            border-radius: 3px;
+            overflow: hidden;
         }
 
-        #login-header {
-            text-align: center;
-            margin-bottom: 14px;
-        }
-
-        #login-logo {
-            display: inline-block;
+        /* Top White Logo Box */
+        .login-header-box {
             background: #ffffff;
-            padding: 8px 18px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+            padding: 10px 14px 8px;
+            text-align: center;
         }
 
-        #imgclient {
-            max-height: 58px;
+        .login-header-box img {
             max-width: 100%;
+            max-height: 56px;
             height: auto;
             display: block;
+            margin: 0 auto;
         }
 
-        #login-box-inner {
-            background: rgba(30, 41, 59, 0.72);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 24px 22px 18px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+        /* Translucent Dark Form Body */
+        .login-body-box {
+            background: rgba(48, 75, 98, 0.74);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 16px 16px 14px;
         }
 
-        .input-group {
+        /* Input Groups */
+        .custom-input-group {
             position: relative;
             display: flex;
             width: 100%;
-            margin-bottom: 12px;
+            height: 35px;
+            margin-bottom: 9px;
         }
 
-        .input-group-addon {
-            background: rgba(15, 23, 42, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-right: none;
-            color: #38bdf8;
-            padding: 10px 14px;
-            font-size: 14px;
-            border-radius: 6px 0 0 6px;
+        .custom-addon {
+            background: #253443;
+            width: 36px;
+            min-width: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 44px;
-        }
-
-        .form-control {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 0 6px 6px 0;
-            color: #0f172a;
+            color: #111111;
             font-size: 13.5px;
-            font-weight: 600;
-            height: 42px;
-            padding: 8px 12px;
-            width: 100%;
-            box-shadow: none;
-            transition: all 0.2s ease;
+            border-radius: 2px 0 0 2px;
+            border: none;
         }
 
-        .form-control:focus {
-            background: #ffffff;
-            border-color: #0090e3;
-            box-shadow: 0 0 0 3px rgba(0, 144, 227, 0.3);
-            outline: none;
+        .custom-input {
+            background: #ffffff !important;
+            border: none !important;
+            border-radius: 0 2px 2px 0 !important;
+            color: #222222 !important;
+            font-size: 12.5px !important;
+            font-weight: 500 !important;
+            height: 35px !important;
+            padding: 4px 10px !important;
+            width: calc(100% - 36px) !important;
+            box-shadow: none !important;
+            outline: none !important;
         }
 
-        .form-control::placeholder {
-            color: #64748b;
-            font-weight: 500;
+        .custom-input::placeholder {
+            color: #8e8e8e;
+            font-weight: 400;
         }
 
+        .custom-input:focus {
+            background: #ffffff !important;
+            outline: none !important;
+            box-shadow: inset 0 0 0 1px #00a0e9 !important;
+        }
+
+        /* Password Eye Icon */
         #eyes {
             position: absolute;
-            right: 12px;
+            right: 9px;
             top: 50%;
             transform: translateY(-50%);
             z-index: 10;
             cursor: pointer;
-            color: #64748b;
-            padding: 4px;
+            color: #222222;
+            padding: 3px;
+            font-size: 13.5px;
         }
         #eyes:hover {
-            color: #0f172a;
+            color: #000000;
         }
 
-        .captcha-box-wrapper {
-            background: #ffffff;
-            border-radius: 6px;
-            padding: 4px;
-            margin-bottom: 12px;
-            border: 1px solid #cbd5e1;
+        /* Captcha Display Row */
+        .captcha-row {
+            display: flex;
+            width: 100%;
+            height: 38px;
+            margin-bottom: 9px;
+        }
+
+        .captcha-refresh-addon {
+            background: #253443;
+            width: 36px;
+            min-width: 36px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 2px 0 0 2px;
+            transition: background 0.15s;
+        }
+
+        .captcha-refresh-addon:hover {
+            background: #1c2834;
+        }
+
+        .captcha-refresh-addon i {
+            color: #2ecc71;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.25s ease;
+        }
+
+        .captcha-refresh-addon:hover i {
+            transform: rotate(180deg);
+        }
+
+        .captcha-canvas-wrap {
+            background: #ffffff;
+            width: calc(100% - 36px);
+            height: 38px;
+            border-radius: 0 2px 2px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
         #captchaCanvas {
-            width: 250px;
-            height: 40px;
-            display: block;
-            border-radius: 4px;
-        }
-
-        #btnRefreshCaptcha {
-            color: #16a34a;
-            cursor: pointer;
-            padding: 6px 10px;
-            font-size: 18px;
-            transition: transform 0.2s;
-        }
-        #btnRefreshCaptcha:hover {
-            transform: rotate(90deg);
-        }
-
-        #captcha {
-            border-radius: 6px;
-            text-align: center;
-            letter-spacing: 2px;
-            font-size: 15px;
-            font-weight: 700;
-        }
-
-        .btnSubmit.loginbtn {
-            background: linear-gradient(135deg, #0090e3 0%, #0284c7 100%);
-            border: none;
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            height: 44px;
             width: 100%;
-            margin-top: 4px;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 144, 227, 0.4);
-            transition: all 0.2s ease;
-        }
-        .btnSubmit.loginbtn:hover {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            box-shadow: 0 6px 18px rgba(0, 144, 227, 0.55);
-            transform: translateY(-1px);
+            height: 38px;
+            display: block;
         }
 
+        /* Captcha Input Box */
+        .captcha-input-wrap {
+            width: 100%;
+            height: 35px;
+            margin-bottom: 10px;
+        }
+
+        .captcha-full-input {
+            background: #ffffff !important;
+            border: none !important;
+            border-radius: 2px !important;
+            color: #222222 !important;
+            font-size: 12.5px !important;
+            font-weight: 500 !important;
+            height: 35px !important;
+            padding: 4px 10px !important;
+            width: 100% !important;
+            text-align: center !important;
+            outline: none !important;
+        }
+
+        .captcha-full-input::placeholder {
+            color: #8e8e8e;
+            font-weight: 400;
+        }
+
+        .captcha-full-input:focus {
+            background: #ffffff !important;
+            outline: none !important;
+            box-shadow: inset 0 0 0 1px #00a0e9 !important;
+        }
+
+        /* Solid Sky Blue Login Button */
+        .btn-login-submit {
+            background: #00a0e9 !important;
+            border: none !important;
+            border-radius: 2px !important;
+            color: #ffffff !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.8px !important;
+            height: 35px !important;
+            width: 100% !important;
+            cursor: pointer !important;
+            text-transform: uppercase !important;
+            box-shadow: none !important;
+            transition: background-color 0.15s ease !important;
+        }
+
+        .btn-login-submit:hover {
+            background: #008ece !important;
+        }
+
+        .btn-login-submit:active {
+            background: #007bb3 !important;
+        }
+
+        /* Forgot Links */
+        .forgot-links-section {
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .forgot-links-section a {
+            color: #ffffff !important;
+            font-size: 11.5px !important;
+            text-decoration: none !important;
+            display: block;
+            line-height: 1.5;
+            font-weight: 400;
+            opacity: 0.95;
+            transition: opacity 0.15s, color 0.15s;
+        }
+
+        .forgot-links-section a:hover {
+            color: #cce7ff !important;
+            text-decoration: underline !important;
+            opacity: 1;
+        }
+
+        /* Footer Text */
+        .login-footer-section {
+            margin-top: 18px;
+            padding-top: 9px;
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            text-align: center;
+        }
+
+        .login-footer-section p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 10px;
+            margin: 0;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        /* Error Text */
         .err-text {
-            color: #f87171;
-            font-size: 11.5px;
+            color: #ff9999;
+            font-size: 10.5px;
             font-weight: 600;
             display: block;
-            margin-top: -8px;
-            margin-bottom: 8px;
-            min-height: 16px;
-        }
-
-        .forgot-links-row {
-            margin-top: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .forgot-links-row a {
-            color: #e0f2fe;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-        .forgot-links-row a:hover {
-            color: #38bdf8;
-            text-decoration: underline;
+            margin-top: -6px;
+            margin-bottom: 5px;
+            min-height: 12px;
         }
 
         /* Hide Netlify Drawer & Badge */
@@ -240,15 +312,15 @@
             pointer-events: none !important;
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
+        /* Responsive Mobile Layout */
+        @media (max-width: 768px) {
             #login-full-wrapper {
+                align-items: center;
                 justify-content: center;
                 padding: 20px 15px;
             }
-            .login-box-container {
-                margin-right: 0;
-                max-width: 360px;
+            .login-card-container {
+                max-width: 300px;
             }
         }
     </style>
@@ -256,61 +328,71 @@
 
 <body class="theme-blue-gradient">
 <div id="login-full-wrapper">
-    <div class="login-box-container">
-        <!-- Logo -->
-        <header id="login-header">
-            <div id="login-logo">
-                <img id="imgclient" src="logo.png" alt="Graphic Era (Deemed to be University)"/>
-            </div>
-        </header>
+    <div class="login-card-container">
+        
+        <!-- Header Logo Box -->
+        <div class="login-header-box">
+            <img src="gehu_logo_perfect.png" alt="Graphic Era Hill University" id="imgclient"/>
+        </div>
 
-        <!-- Glass Form Card -->
-        <div id="login-box-inner">
+        <!-- Translucent Dark Form Body -->
+        <div class="login-body-box">
             <form id="login-form" method="post" name="login" onsubmit="return handleLogin(event)">
+                
                 <!-- Username Input -->
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input autocomplete="off" class="form-control" id="loginform-username" name="username" placeholder="Admission / User ID" type="text" value=""/>
+                <div class="custom-input-group">
+                    <span class="custom-addon"><i class="fa fa-user"></i></span>
+                    <input autocomplete="off" class="custom-input" id="loginform-username" name="username" placeholder="User ID" type="text" value=""/>
                 </div>
                 <span class="err-text" id="userError"></span>
 
                 <!-- Password Input -->
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input autocomplete="off" class="form-control" id="loginform-password" name="password" placeholder="Password" type="password" value=""/>
+                <div class="custom-input-group">
+                    <span class="custom-addon"><i class="fa fa-key"></i></span>
+                    <input autocomplete="off" class="custom-input" id="loginform-password" name="password" placeholder="Password" type="password" value=""/>
                     <span id="eyes"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                 </div>
                 <span class="err-text" id="passError"></span>
 
-                <!-- Captcha Display Box -->
-                <div class="captcha-box-wrapper">
-                    <canvas id="captchaCanvas" width="250" height="40"></canvas>
-                    <i title="Click to refresh captcha" class="fa fa-refresh" id="btnRefreshCaptcha"></i>
+                <!-- Captcha Row with Green Refresh Icon & Overlapping Bubble Captcha -->
+                <div class="captcha-row">
+                    <div class="captcha-refresh-addon" id="btnRefreshCaptcha" title="Click to refresh captcha">
+                        <i class="fa fa-refresh"></i>
+                    </div>
+                    <div class="captcha-canvas-wrap">
+                        <canvas id="captchaCanvas" width="260" height="38"></canvas>
+                    </div>
                 </div>
 
                 <!-- Captcha Input -->
-                <div class="input-group">
-                    <input autocomplete="off" class="form-control" id="captcha" name="captcha" placeholder="Enter Captcha" type="text" value=""/>
+                <div class="captcha-input-wrap">
+                    <input autocomplete="off" class="captcha-full-input" id="captcha" name="captcha" placeholder="Enter Captcha" type="text" value=""/>
                 </div>
                 <span class="err-text" id="captchaError"></span>
 
-                <!-- Login Button -->
-                <button type="submit" class="btnSubmit loginbtn" name="login" onclick="return handleLogin(event)">LOGIN</button>
+                <!-- Solid Sky Blue Login Button -->
+                <button type="submit" class="btn-login-submit" name="login" onclick="return handleLogin(event)">LOGIN</button>
 
                 <!-- Forgot Links -->
-                <div class="forgot-links-row">
-                    <a href="#" id="login-forget-link" onclick="alert('Please contact Examination Cell / Registrar Office for Password Reset.'); return false;">Forgot password ?</a>
+                <div class="forgot-links-section">
+                    <a href="#" onclick="alert('Please contact Examination Cell / Registrar Office for Password Reset.'); return false;">Forgot password ?</a>
                     <a href="#" onclick="alert('Please check your Admission slip or Marksheet for Enrollment ID.'); return false;">Forgot ID ?</a>
+                </div>
+
+                <!-- Powered by Footer -->
+                <div class="login-footer-section">
+                    <p>Powered by Cyborg IT Services (P) Ltd.</p>
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-client.js"></script>
 <script>
-    // ========== CAPTCHA SYSTEM ==========
+    // ========== EXACT OVERLAPPING BUBBLE CAPTCHA SYSTEM ==========
     var currentCaptcha = '';
 
     function generateCaptchaText() {
@@ -328,49 +410,39 @@
         var ctx = canvas.getContext('2d');
         currentCaptcha = generateCaptchaText();
 
-        // Clear
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var cw = canvas.width;
+        var ch = canvas.height;
 
-        // Background
-        var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        gradient.addColorStop(0, '#f1f5f9');
-        gradient.addColorStop(0.5, '#e2e8f0');
-        gradient.addColorStop(1, '#f1f5f9');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Clear background to white
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, cw, ch);
 
-        // Noise lines
-        for (var i = 0; i < 6; i++) {
-            ctx.beginPath();
-            ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-            ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-            ctx.strokeStyle = 'rgba(' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',' + Math.floor(Math.random()*150) + ',0.35)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-        }
+        // Draw overlapping translucent colored pills/ellipses matching original Cyborg captcha:
+        var bubbles = [
+            { x: cw * 0.16, y: ch * 0.5, rx: cw * 0.28, ry: ch * 0.44, color: 'rgba(255, 110, 110, 0.55)' },
+            { x: cw * 0.36, y: ch * 0.5, rx: cw * 0.28, ry: ch * 0.44, color: 'rgba(130, 225, 130, 0.55)' },
+            { x: cw * 0.56, y: ch * 0.5, rx: cw * 0.28, ry: ch * 0.44, color: 'rgba(90, 165, 230, 0.55)' },
+            { x: cw * 0.76, y: ch * 0.5, rx: cw * 0.28, ry: ch * 0.44, color: 'rgba(180, 150, 240, 0.55)' }
+        ];
 
-        // Captcha text
-        var colors = ['#dc2626', '#0284c7', '#16a34a', '#9333ea', '#ea580c', '#0891b2'];
-        var fonts = ['Arial', 'Verdana', 'Georgia', 'Helvetica'];
-        var x = 24;
-        for (var i = 0; i < currentCaptcha.length; i++) {
+        for (var b = 0; b < bubbles.length; b++) {
             ctx.save();
-            ctx.font = 'bold ' + (21 + Math.random() * 6) + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
-            ctx.fillStyle = colors[i % colors.length];
-            ctx.translate(x, 26 + (Math.random() * 6 - 3));
-            ctx.rotate((Math.random() - 0.5) * 0.35);
-            ctx.fillText(currentCaptcha[i], 0, 0);
+            ctx.beginPath();
+            ctx.ellipse(bubbles[b].x, bubbles[b].y, bubbles[b].rx, bubbles[b].ry, 0, 0, 2 * Math.PI);
+            ctx.fillStyle = bubbles[b].color;
+            ctx.fill();
             ctx.restore();
-            x += 35;
         }
 
-        // Noise dots
-        for (var i = 0; i < 30; i++) {
-            ctx.beginPath();
-            ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(0,0,0,0.25)';
-            ctx.fill();
-        }
+        // Draw clean bold black alphanumeric captcha text centered
+        ctx.save();
+        ctx.font = 'bold 21px "Arial", "Lucida Console", sans-serif';
+        ctx.fillStyle = '#111111';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(currentCaptcha, cw / 2, ch / 2);
+        ctx.restore();
     }
 
     // ========== EYE TOGGLE ==========
