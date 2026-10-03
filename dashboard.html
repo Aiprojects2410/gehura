@@ -18,14 +18,19 @@
         // Synchronous Instant Resolution (Zero Flicker)
         (function() {
             var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-            var checkId = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
-            window._isSohil = (
-                checkId === 'ge21538540' ||
-                checkId === '21538540' ||
-                checkId === '2187530' ||
-                checkId.includes('sohil') ||
-                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            var sessName = sessionStorage.getItem('userName') || '';
+            var sessRoll = sessionStorage.getItem('classRollNo') || '';
+            var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            var isHashim = (
+                checkId.includes('ge21545586') ||
+                checkId.includes('21545586') ||
+                checkId.includes('2154682') ||
+                checkId.includes('hashim') ||
+                checkId.includes('babaansari') ||
+                checkId.includes('saeed') ||
+                sessionStorage.getItem('userName') === 'MOHD HASHIM'
             );
+            window._isSohil = !isHashim;
             window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
         })();
     </script>
@@ -813,7 +818,7 @@
                 </div>
                 <div class="dashboard-panel-body">
                     <div id="panelResultTitle"><script>document.write(window._isSohil ? '🎓 Semester VI Grade Card Available' : '🎓 Semester I Grade Card Available');</script></div>
-                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;"><script>document.write(window._isSohil ? 'Status: PASS (SGPA: 8.25 | CGPA: 8.41)' : 'Status: PASS (SGPA: 7.88)');</script></div>
+                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;"><script>document.write(window._isSohil ? 'Status: PASS <span style="color:#0284c7; font-weight:800;">(CGPA: 8.41 | SGPA: 8.25)</span>' : 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 7.88)</span>');</script></div>
                     <a href="view_results.html" class="panel-more-link">More..</a>
                 </div>
             </div>
@@ -1217,9 +1222,17 @@
                     <tr><th>Period</th><th>Subject</th><th>Original Faculty</th><th>Status</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>Period 1 (09:30 AM)</td><td>BCH101 Business Organisation</td><td>Dr. S. K. Verma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>
-                    <tr><td>Period 2 (10:30 AM)</td><td>BCH102 Financial Accounting</td><td>Prof. Anita Rawat</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>
-                    <tr><td>Period 3 (11:45 AM)</td><td>BCH106 Business Mathematics</td><td>Dr. Manoj Sharma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>
+                    <script>
+                        if (window._isSohil) {
+                            document.write('<tr><td>Period 1 (09:30 AM)</td><td>BCH601 Indirect Tax Laws</td><td>Dr. S. K. Verma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>');
+                            document.write('<tr><td>Period 2 (10:30 AM)</td><td>BCH602 Corporate Governance & Ethics</td><td>Prof. Anita Rawat</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>');
+                            document.write('<tr><td>Period 3 (11:45 AM)</td><td>BCH603 Project Management</td><td>Dr. Manoj Sharma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>');
+                        } else {
+                            document.write('<tr><td>Period 1 (09:30 AM)</td><td>BCH101 Business Organisation</td><td>Dr. S. K. Verma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>');
+                            document.write('<tr><td>Period 2 (10:30 AM)</td><td>BCH102 Financial Accounting</td><td>Prof. Anita Rawat</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>');
+                            document.write('<tr><td>Period 3 (11:45 AM)</td><td>BCH106 Business Mathematics</td><td>Dr. Manoj Sharma</td><td><span class="status-badge-green">Regular Lecture</span></td></tr>');
+                        }
+                    </script>
                 </tbody>
             </table>
         </div>
@@ -1232,15 +1245,20 @@
     // Dynamic Student Initialization
     window.addEventListener('DOMContentLoaded', function() {
         var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-        var checkId = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
+        var sessName = sessionStorage.getItem('userName') || '';
+        var sessRoll = sessionStorage.getItem('classRollNo') || '';
+        var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-        var isSohil = (
-            checkId === 'ge21538540' ||
-            checkId === '21538540' ||
-            checkId === '2187530' ||
-            checkId.includes('sohil') ||
-            sessionStorage.getItem('userName') === 'MOHD SOHIL'
+        var isHashim = (
+            checkId.includes('ge21545586') ||
+            checkId.includes('21545586') ||
+            checkId.includes('2154682') ||
+            checkId.includes('hashim') ||
+            checkId.includes('babaansari') ||
+            checkId.includes('saeed') ||
+            sessionStorage.getItem('userName') === 'MOHD HASHIM'
         );
+        var isSohil = !isHashim;
 
         var fallbackStudent = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
 
@@ -1283,7 +1301,7 @@
         if (resTitle && resStatus) {
             if (isSohil) {
                 resTitle.textContent = '🎓 Semester VI Grade Card Available';
-                resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 8.25 | CGPA: 8.41)</span>';
+                resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(CGPA: 8.41 | SGPA: 8.25)</span>';
             } else {
                 resTitle.textContent = '🎓 Semester I Grade Card Available';
                 resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 7.88)</span>';

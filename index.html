@@ -507,32 +507,30 @@
             return false;
         }
 
-        // 2. Select matching Student (Mohd Sohil vs Mohd Hashim vs dynamic)
-        var targetStudent = DEFAULT_STUDENT; // Default to Mohd Hashim
-
-        var isSohil = (
-            uClean === 'ge21538540' ||
-            uClean === '21538540' ||
-            uClean === '2187530' ||
-            uClean.includes('sohil') ||
-            rawUserId.toLowerCase().includes('sohil') ||
-            rawUserId.toLowerCase().includes('8630003510')
+        // 2. Select matching Student (Mohd Sohil is Primary Default; Mohd Hashim if requested)
+        var isHashim = (
+            uClean === 'ge21545586' ||
+            uClean === '21545586' ||
+            uClean === '2154682' ||
+            uClean.includes('hashim') ||
+            uClean.includes('babaansari') ||
+            rawUserId.toLowerCase().includes('hashim') ||
+            rawUserId.toLowerCase().includes('8923456443') ||
+            rawUserId.toLowerCase().includes('babaansari')
         );
 
-        if (isSohil) {
-            targetStudent = SOHIL_STUDENT;
-        } else {
-            // Check dynamic students list if registered in local storage
-            try {
-                var localList = JSON.parse(localStorage.getItem('ge_students') || '[]');
-                var dyn = localList.find(function(s) {
-                    var sClean = (s.enroll_no || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-                    var rClean = (s.class_roll_no || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-                    return sClean === uClean || rClean === uClean;
-                });
-                if (dyn) targetStudent = dyn;
-            } catch(err) {}
-        }
+        var targetStudent = isHashim ? DEFAULT_STUDENT : SOHIL_STUDENT;
+
+        // Check dynamic students list if registered in local storage
+        try {
+            var localList = JSON.parse(localStorage.getItem('ge_students') || '[]');
+            var dyn = localList.find(function(s) {
+                var sClean = (s.enroll_no || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                var rClean = (s.class_roll_no || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                return (sClean && sClean === uClean) || (rClean && rClean === uClean);
+            });
+            if (dyn) targetStudent = dyn;
+        } catch(err) {}
 
         // 3. Student Profile Set
         sessionStorage.setItem('loggedIn', 'true');

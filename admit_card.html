@@ -15,14 +15,19 @@
             var urlParams = new URLSearchParams(window.location.search);
             var queryId = urlParams.get('id') || '';
             var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
-            window._isSohil = (
-                checkId === 'ge21538540' ||
-                checkId === '21538540' ||
-                checkId === '2187530' ||
-                checkId.includes('sohil') ||
-                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            var sessName = sessionStorage.getItem('userName') || '';
+            var sessRoll = sessionStorage.getItem('classRollNo') || '';
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            var isHashim = (
+                checkId.includes('ge21545586') ||
+                checkId.includes('21545586') ||
+                checkId.includes('2154682') ||
+                checkId.includes('hashim') ||
+                checkId.includes('babaansari') ||
+                checkId.includes('saeed') ||
+                sessionStorage.getItem('userName') === 'MOHD HASHIM'
             );
+            window._isSohil = !isHashim;
             window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
         })();
     </script>
@@ -425,20 +430,21 @@
             var urlParams = new URLSearchParams(window.location.search);
             var queryId = urlParams.get('id') || '';
             var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            var sessName = sessionStorage.getItem('userName') || '';
+            var sessRoll = sessionStorage.getItem('classRollNo') || '';
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-            var isSohil = (
-                checkId === 'ge21538540' ||
-                checkId === '21538540' ||
-                checkId === '2187530' ||
-                checkId.includes('sohil') ||
-                (!checkId && sessionStorage.getItem('userName') === 'MOHD SOHIL')
+            var isHashim = (
+                checkId.includes('ge21545586') ||
+                checkId.includes('21545586') ||
+                checkId.includes('2154682') ||
+                checkId.includes('hashim') ||
+                checkId.includes('babaansari') ||
+                checkId.includes('saeed') ||
+                sessionStorage.getItem('userName') === 'MOHD HASHIM'
             );
-
-            // If not Sohil and not explicitly Hashim, default based on session
-            var isHashim = (!isSohil && (checkId === 'ge21545586' || checkId === '21545586' || checkId === '2154682' || checkId.includes('hashim')));
-
-            var student = isSohil ? SOHIL_STUDENT : (isHashim ? DEFAULT_STUDENT : (sessionStorage.getItem('userName') === 'MOHD SOHIL' ? SOHIL_STUDENT : DEFAULT_STUDENT));
+            var isSohil = !isHashim;
+            var student = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
 
             var sName = student.name;
             var sFather = student.father_name;

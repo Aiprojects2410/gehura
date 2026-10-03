@@ -16,14 +16,19 @@
             var urlParams = new URLSearchParams(window.location.search);
             var queryId = urlParams.get('id') || '';
             var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
-            window._isSohil = (
-                checkId === 'ge21538540' ||
-                checkId === '21538540' ||
-                checkId === '2187530' ||
-                checkId.includes('sohil') ||
-                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            var sessName = sessionStorage.getItem('userName') || '';
+            var sessRoll = sessionStorage.getItem('classRollNo') || '';
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            var isHashim = (
+                checkId.includes('ge21545586') ||
+                checkId.includes('21545586') ||
+                checkId.includes('2154682') ||
+                checkId.includes('hashim') ||
+                checkId.includes('babaansari') ||
+                checkId.includes('saeed') ||
+                sessionStorage.getItem('userName') === 'MOHD HASHIM'
             );
+            window._isSohil = !isHashim;
             window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
         })();
     </script>
@@ -442,31 +447,27 @@
             if (!student) {
                 // Check session
                 var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-                var sClean = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
-                var isSohilSess = (sClean === 'ge21538540' || sClean === '21538540' || sClean === '2187530' || sClean.includes('sohil') || sessionStorage.getItem('userName') === 'MOHD SOHIL');
-                if (isSohilSess) {
-                    student = SOHIL_STUDENT;
-                } else {
-                    student = {
-                        name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
-                        enroll_no: sessionStorage.getItem('enrollNo') || 'GE-21545586',
-                        class_roll_no: sessionStorage.getItem('classRollNo') || '2154682',
-                        father_name: sessionStorage.getItem('fatherName') || 'SAEED',
-                        course: sessionStorage.getItem('course') || 'B.COM (Hons)',
-                        dob: sessionStorage.getItem('dob') || '1999-10-12',
-                        phone: sessionStorage.getItem('phone') || '8923456443',
-                        photo: sessionStorage.getItem('photo') || 'candidate_photo_hd.png?v=20260824'
-                    };
-                }
+                var sessName = sessionStorage.getItem('userName') || '';
+                var sessRoll = sessionStorage.getItem('classRollNo') || '';
+                var sClean = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
+                var isHashimSess = (
+                    sClean.includes('ge21545586') ||
+                    sClean.includes('21545586') ||
+                    sClean.includes('2154682') ||
+                    sClean.includes('hashim') ||
+                    sClean.includes('babaansari') ||
+                    sessionStorage.getItem('userName') === 'MOHD HASHIM'
+                );
+                student = isHashimSess ? DEFAULT_STUDENT : SOHIL_STUDENT;
             }
 
-            document.getElementById('idStudentName').textContent = (student.name || 'MOHD HASHIM').toUpperCase();
-            document.getElementById('idEnrollNo').textContent = (student.enroll_no || 'GE-21545586').toUpperCase();
-            document.getElementById('idRollNo').textContent = student.class_roll_no || '2154682';
-            document.getElementById('idFatherName').textContent = (student.father_name || 'SAEED').toUpperCase();
-            document.getElementById('idCourse').textContent = student.course || 'B.COM (Hons)';
-            document.getElementById('idDob').textContent = student.dob || '1999-10-12';
-            document.getElementById('idPhone').textContent = student.phone || '8923456443';
+            document.getElementById('idStudentName').textContent = (sessionStorage.getItem('userName') || student.name).toUpperCase();
+            document.getElementById('idEnrollNo').textContent = (sessionStorage.getItem('enrollNo') || student.enroll_no).toUpperCase();
+            document.getElementById('idRollNo').textContent = sessionStorage.getItem('classRollNo') || student.class_roll_no;
+            document.getElementById('idFatherName').textContent = (sessionStorage.getItem('fatherName') || student.father_name).toUpperCase();
+            document.getElementById('idCourse').textContent = sessionStorage.getItem('course') || student.course;
+            document.getElementById('idDob').textContent = sessionStorage.getItem('dob') || student.dob;
+            document.getElementById('idPhone').textContent = sessionStorage.getItem('phone') || student.phone;
 
             var isSohil = (student.enroll_no === 'GE-21538540' || (student.name || '').includes('SOHIL'));
             var validityElem = document.getElementById('idValidity');

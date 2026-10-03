@@ -159,14 +159,21 @@
             <tbody id="resultsTableBody">
                 <script>
                     (function() {
-                        var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21538540';
-                        var course = sessionStorage.getItem('course') || 'B.COM (Hons)';
-                        var isSohil = (
-                            enrollNo === 'GE-21538540' ||
-                            enrollNo.includes('21538540') ||
-                            enrollNo === '2187530' ||
-                            sessionStorage.getItem('userName') === 'MOHD SOHIL'
+                        var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+                        var sessName = sessionStorage.getItem('userName') || '';
+                        var sessRoll = sessionStorage.getItem('classRollNo') || '';
+                        var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
+                        var isHashim = (
+                            checkId.includes('ge21545586') ||
+                            checkId.includes('21545586') ||
+                            checkId.includes('2154682') ||
+                            checkId.includes('hashim') ||
+                            checkId.includes('babaansari') ||
+                            sessionStorage.getItem('userName') === 'MOHD HASHIM'
                         );
+                        var isSohil = !isHashim;
+                        var enrollNo = isSohil ? 'GE-21538540' : (sessionStorage.getItem('enrollNo') || 'GE-21545586');
+                        var course = isSohil ? 'B.COM (Hons)' : (sessionStorage.getItem('course') || 'B.COM Hons I');
                         var defaultSet = isSohil ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
 
                         var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];

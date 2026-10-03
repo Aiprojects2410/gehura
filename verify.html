@@ -251,17 +251,20 @@
         var params = new URLSearchParams(window.location.search);
         var type = params.get('type') || 'grade_card';
         var queryId = params.get('id') || params.get('enroll') || '';
-        var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-        var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
+        var sessName = sessionStorage.getItem('userName') || '';
+        var sessRoll = sessionStorage.getItem('classRollNo') || '';
+        var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-        var isSohil = (
-            checkId === 'ge21538540' ||
-            checkId === '21538540' ||
-            checkId === '2187530' ||
-            checkId.includes('sohil') ||
-            (params.get('name') || '').toLowerCase().includes('sohil') ||
-            sessionStorage.getItem('userName') === 'MOHD SOHIL'
+        var isHashim = (
+            checkId.includes('ge21545586') ||
+            checkId.includes('21545586') ||
+            checkId.includes('2154682') ||
+            checkId.includes('hashim') ||
+            checkId.includes('babaansari') ||
+            checkId.includes('saeed') ||
+            sessionStorage.getItem('userName') === 'MOHD HASHIM'
         );
+        var isSohil = !isHashim;
 
         var student = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
 
