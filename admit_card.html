@@ -9,6 +9,23 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
+    <script>
+        // Synchronous Instant Resolution (Zero Flicker)
+        (function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            window._isSohil = (
+                checkId === 'ge21538540' ||
+                checkId === '21538540' ||
+                checkId === '2187530' ||
+                checkId.includes('sohil') ||
+                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            );
+            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -228,7 +245,7 @@
 
             <!-- Title -->
             <div class="admit-title-box">
-                <div class="admit-title" id="admSessionTitle">End Semester University Examination (2023-24)</div>
+                <div class="admit-title" id="admSessionTitle"><script>document.write(window._isSohil ? 'End Semester University Examination (2023-24)' : 'End Semester University Examination (2025-26)');</script></div>
                 <div class="admit-subtitle">ADMIT CARD / PROVISIONAL HALL TICKET</div>
             </div>
 
@@ -237,27 +254,27 @@
                 <div class="cand-info-grid">
                     <div class="cand-row">
                         <span class="cand-lbl">Student Name:</span>
-                        <span class="cand-val" id="admName">MOHD SOHIL</span>
+                        <span class="cand-val" id="admName"><script>document.write((sessionStorage.getItem('userName')||window._activeStudent.name).toUpperCase());</script></span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Enrollment No:</span>
-                        <span class="cand-val" id="admEnroll">GE-21538540</span>
+                        <span class="cand-val" id="admEnroll"><script>document.write(sessionStorage.getItem('enrollNo')||window._activeStudent.enroll_no);</script></span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Father's Name:</span>
-                        <span class="cand-val" id="admFather">AHSAN</span>
+                        <span class="cand-val" id="admFather"><script>document.write((sessionStorage.getItem('fatherName')||window._activeStudent.father_name).toUpperCase());</script></span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Class Roll No:</span>
-                        <span class="cand-val" id="admRoll">2187530</span>
+                        <span class="cand-val" id="admRoll"><script>document.write(sessionStorage.getItem('classRollNo')||window._activeStudent.class_roll_no);</script></span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Programme / Course:</span>
-                        <span class="cand-val" id="admCourse">B.COM (Hons)</span>
+                        <span class="cand-val" id="admCourse"><script>document.write(sessionStorage.getItem('course')||window._activeStudent.course);</script></span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Semester:</span>
-                        <span class="cand-val" id="admSem">Semester VI</span>
+                        <span class="cand-val" id="admSem"><script>document.write(window._isSohil ? 'Semester VI' : 'Semester I');</script></span>
                     </div>
                     <div class="cand-row" style="grid-column: span 2;">
                         <span class="cand-lbl">Exam Center:</span>
@@ -266,7 +283,10 @@
                 </div>
 
                 <div class="cand-photo-box">
-                    <img src="sohil_photo.png" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">
+                    <script>
+                        var _admPhoto = window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo_hd.png?v=20260824');
+                        document.write('<img src="' + _admPhoto + '" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">');
+                    </script>
                     <div style="font-size:9.5px; color:#475569; font-weight:700; margin-top:4px;">Candidate Photo</div>
                 </div>
             </div>
@@ -283,7 +303,29 @@
                     </tr>
                 </thead>
                 <tbody id="scheduleTableBody">
-                    <!-- Populated dynamically -->
+                    <script>
+                        var _sched = window._isSohil ? [
+                            { date: '04-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
+                            { date: '08-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
+                            { date: '12-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
+                            { date: '16-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH604(F3)', title: 'Investment Management' },
+                            { date: '20-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH605(F4)', title: 'Multinational Financial System' },
+                            { date: '24-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH606', title: 'Major Project & Viva-Voce' },
+                            { date: '28-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH607', title: 'General Proficiency' }
+                        ] : [
+                            { date: '02-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH101', title: 'Business Organisation' },
+                            { date: '05-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH102', title: 'Financial Accounting' },
+                            { date: '08-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH103', title: 'Micro Economics' },
+                            { date: '11-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH104', title: 'Business Communication' },
+                            { date: '15-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH105', title: 'Fundamentals Of Computer' },
+                            { date: '18-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH106', title: 'Business Mathematics' }
+                        ];
+                        var _sHtml = '';
+                        _sched.forEach(function(item) {
+                            _sHtml += '<tr><td><strong>' + item.date + '</strong></td><td>' + item.time + '</td><td><strong>' + item.code + '</strong></td><td>' + item.title + '</td><td><div style="font-family:\'Brush Script MT\', \'Segoe Script\', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td></tr>';
+                        });
+                        document.write(_sHtml);
+                    </script>
                 </tbody>
             </table>
 
@@ -301,7 +343,7 @@
         <div class="admit-footer" style="display:grid; grid-template-columns: 1.1fr 1.3fr 1.5fr 1.3fr; gap:10px; align-items:flex-end;">
             <div class="sig-col">
                 <div id="admCandidateSign" style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#0f172a; transform:rotate(-3deg); margin-bottom:2px;">
-                    Mohd Sohil
+                    <script>document.write(window._isSohil ? 'Mohd Sohil' : (sessionStorage.getItem('userName')||window._activeStudent.name));</script>
                 </div>
                 <div style="border-top:1px solid #334155; padding-top:4px;">
                     Candidate's Signature

@@ -10,6 +10,23 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
     <script src="qrcode.min.js"></script>
+    <script>
+        // Synchronous Instant Resolution (Zero Flicker)
+        (function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            window._isSohil = (
+                checkId === 'ge21538540' ||
+                checkId === '21538540' ||
+                checkId === '2187530' ||
+                checkId.includes('sohil') ||
+                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            );
+            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -342,42 +359,45 @@
         <!-- Body -->
         <div class="id-body">
             <div class="id-photo-container">
-                <img id="idStudentPhoto" src="candidate_photo.png?v=3" alt="Student Photo">
+                <script>
+                    var _idPhoto = window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo.png?v=3');
+                    document.write('<img id="idStudentPhoto" src="' + _idPhoto + '" alt="Student Photo">');
+                </script>
             </div>
 
-            <div class="id-student-name" id="idStudentName">MOHD HASHIM</div>
-            <div class="id-course-title" id="idCourse">B.COM (Hons)</div>
+            <div class="id-student-name" id="idStudentName"><script>document.write((sessionStorage.getItem('userName') || window._activeStudent.name).toUpperCase());</script></div>
+            <div class="id-course-title" id="idCourse"><script>document.write(sessionStorage.getItem('course') || window._activeStudent.course);</script></div>
 
             <table class="id-details-table">
                 <tr>
                     <td class="lbl">Enrollment No</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idEnrollNo">GE-21545586</td>
+                    <td class="val" id="idEnrollNo"><script>document.write(sessionStorage.getItem('enrollNo') || window._activeStudent.enroll_no);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Class Roll No</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idRollNo">2154682</td>
+                    <td class="val" id="idRollNo"><script>document.write(sessionStorage.getItem('classRollNo') || window._activeStudent.class_roll_no);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Father's Name</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idFatherName">SAEED</td>
+                    <td class="val" id="idFatherName"><script>document.write((sessionStorage.getItem('fatherName') || window._activeStudent.father_name).toUpperCase());</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Date of Birth</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idDob">12-10-1999</td>
+                    <td class="val" id="idDob"><script>document.write(sessionStorage.getItem('dob') || window._activeStudent.dob);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Contact No</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idPhone">8923456443</td>
+                    <td class="val" id="idPhone"><script>document.write(sessionStorage.getItem('phone') || window._activeStudent.phone);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Valid Upto</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idValidity">JUNE 2023 / REGULAR</td>
+                    <td class="val" id="idValidity"><script>document.write(window._isSohil ? 'JUNE 2024 / REGULAR' : 'JUNE 2023 / REGULAR');</script></td>
                 </tr>
             </table>
 

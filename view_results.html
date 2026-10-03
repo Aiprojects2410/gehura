@@ -157,47 +157,45 @@
                 </tr>
             </thead>
             <tbody id="resultsTableBody">
-                <tr><td colspan="5" style="text-align:center;">Loading results...</td></tr>
+                <script>
+                    (function() {
+                        var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21538540';
+                        var course = sessionStorage.getItem('course') || 'B.COM (Hons)';
+                        var isSohil = (
+                            enrollNo === 'GE-21538540' ||
+                            enrollNo.includes('21538540') ||
+                            enrollNo === '2187530' ||
+                            sessionStorage.getItem('userName') === 'MOHD SOHIL'
+                        );
+                        var defaultSet = isSohil ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
+
+                        var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+                        var termTypes = ['ODD', 'EVEN', 'ODD', 'EVEN', 'ODD', 'EVEN'];
+
+                        var html = '';
+                        for (var i = 0; i < 6; i++) {
+                            var semNum = "" + (i + 1);
+                            var found = defaultSet[i];
+                            var prog = isSohil 
+                                ? ('BACHELOR OF COMMERCE (HONOURS) - SEMESTER ' + semRomans[i])
+                                : (course + ' Hons ' + semRomans[i]);
+                            var term = termTypes[i];
+                            var yr = found ? found.exam_year : (2021 + Math.floor(i/2));
+                            var pdfFile = isSohil ? ('sohil_sem' + semNum + '.pdf') : ('grade_card.html?sem=' + semNum + '&id=' + encodeURIComponent(enrollNo));
+
+                            html += '<tr>' +
+                                '<td><strong>' + enrollNo + '</strong></td>' +
+                                '<td>' + prog + '</td>' +
+                                '<td>' + term + '</td>' +
+                                '<td>' + yr + '</td>' +
+                                '<td><a href="' + pdfFile + '" class="btn-view-result" target="_blank">View</a></td>' +
+                                '</tr>';
+                        }
+                        document.write(html);
+                    })();
+                </script>
             </tbody>
         </table>
     </div>
-
-    <script>
-        async function loadStudentResults() {
-            var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21538540';
-            var course = sessionStorage.getItem('course') || 'B.COM (Hons)';
-            var isSohil = (enrollNo === 'GE-21538540' || enrollNo.includes('21538540') || enrollNo === '2187530');
-            var defaultSet = isSohil ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
-
-            var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-            var termTypes = ['ODD', 'EVEN', 'ODD', 'EVEN', 'ODD', 'EVEN'];
-
-            let html = '';
-            for (var i = 0; i < 6; i++) {
-                var semNum = "" + (i + 1);
-                var found = defaultSet[i];
-                var prog = isSohil 
-                    ? `BACHELOR OF COMMERCE (HONOURS) - SEMESTER ${semRomans[i]}`
-                    : (course + ' Hons ' + semRomans[i]);
-                var term = termTypes[i];
-                var yr = found ? found.exam_year : (2021 + Math.floor(i/2));
-                var pdfFile = isSohil ? `sohil_sem${semNum}.pdf` : `grade_card.html?sem=${semNum}&id=${encodeURIComponent(enrollNo)}`;
-
-                html += `
-                    <tr>
-                        <td><strong>${enrollNo}</strong></td>
-                        <td>${prog}</td>
-                        <td>${term}</td>
-                        <td>${yr}</td>
-                        <td><a href="${pdfFile}" class="btn-view-result" target="_blank">View</a></td>
-                    </tr>
-                `;
-            }
-
-            document.getElementById('resultsTableBody').innerHTML = html;
-        }
-
-        window.addEventListener('DOMContentLoaded', loadStudentResults);
-    </script>
 </body>
 </html>

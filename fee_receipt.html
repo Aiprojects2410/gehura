@@ -9,6 +9,23 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
+    <script>
+        // Synchronous Instant Resolution (Zero Flicker)
+        (function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
+            window._isSohil = (
+                checkId === 'ge21538540' ||
+                checkId === '21538540' ||
+                checkId === '2187530' ||
+                checkId.includes('sohil') ||
+                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            );
+            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -251,7 +268,7 @@
             <!-- Title -->
             <div class="receipt-title-box">
                 <div class="receipt-title">Student Fee Payment Receipt</div>
-                <div class="receipt-subtitle" id="recSessionSubtitle">Academic Session: 2023-2024 (Semester VI)</div>
+                <div class="receipt-subtitle" id="recSessionSubtitle"><script>document.write(window._isSohil ? 'Academic Session: 2023-2024 (Semester VI)' : 'Academic Session: 2025-2026 (Semester I)');</script></div>
             </div>
 
             <!-- Student & Receipt Details -->
@@ -259,34 +276,34 @@
                 <div>
                     <div class="detail-row">
                         <span class="detail-lbl">Receipt No:</span>
-                        <span class="detail-val" id="recNo">GEHU/2023-24/REC-84920</span>
+                        <span class="detail-val" id="recNo"><script>document.write(window._isSohil ? 'GEHU/2023-24/REC-84920' : 'GEHU/2025-26/REC-92841');</script></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Student Name:</span>
-                        <span class="detail-val" id="recName">MOHD SOHIL</span>
+                        <span class="detail-val" id="recName"><script>document.write((sessionStorage.getItem('userName')||window._activeStudent.name).toUpperCase());</script></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Father's Name:</span>
-                        <span class="detail-val" id="recFather">AHSAN</span>
+                        <span class="detail-val" id="recFather"><script>document.write((sessionStorage.getItem('fatherName')||window._activeStudent.father_name).toUpperCase());</script></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Admission / Enroll No:</span>
-                        <span class="detail-val" id="recEnroll">GE-21538540</span>
+                        <span class="detail-val" id="recEnroll"><script>document.write(sessionStorage.getItem('enrollNo')||window._activeStudent.enroll_no);</script></span>
                     </div>
                 </div>
 
                 <div>
                     <div class="detail-row">
                         <span class="detail-lbl">Date of Payment:</span>
-                        <span class="detail-val" id="recDate">15-Jan-2024</span>
+                        <span class="detail-val" id="recDate"><script>document.write(window._isSohil ? '15-Jan-2024' : '15-Jul-2025');</script></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Class Roll No:</span>
-                        <span class="detail-val" id="recRoll">2187530</span>
+                        <span class="detail-val" id="recRoll"><script>document.write(sessionStorage.getItem('classRollNo')||window._activeStudent.class_roll_no);</script></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Course / Branch:</span>
-                        <span class="detail-val" id="recCourse">B.COM (Hons)</span>
+                        <span class="detail-val" id="recCourse"><script>document.write(sessionStorage.getItem('course')||window._activeStudent.course);</script></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Campus:</span>

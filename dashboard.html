@@ -14,6 +14,20 @@
         if (sessionStorage.getItem('loggedIn') !== 'true' && sessionStorage.getItem('adminLoggedIn') !== 'true') {
             window.location.href = 'index.html';
         }
+
+        // Synchronous Instant Resolution (Zero Flicker)
+        (function() {
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var checkId = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
+            window._isSohil = (
+                checkId === 'ge21538540' ||
+                checkId === '21538540' ||
+                checkId === '2187530' ||
+                checkId.includes('sohil') ||
+                sessionStorage.getItem('userName') === 'MOHD SOHIL'
+            );
+            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+        })();
     </script>
     <style>
         * {
@@ -541,8 +555,11 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         </a>
 
-        <span class="nav-user-label" id="navStudentName">MOHD HASHIM</span>
-        <img src="candidate_photo_hd.png?v=20260824" id="navAvatarImg" class="nav-user-avatar" alt="Avatar">
+        <span class="nav-user-label" id="navStudentName"><script>document.write((sessionStorage.getItem('userName')||window._activeStudent.name).toUpperCase());</script></span>
+        <script>
+            var _curPhoto = window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo_hd.png?v=20260824');
+            document.write('<img src="' + _curPhoto + '" id="navAvatarImg" class="nav-user-avatar" alt="Avatar">');
+        </script>
         <span class="nav-caret">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="#ffffff"><path d="M7 10l5 5 5-5z"/></svg>
         </span>
@@ -556,16 +573,18 @@
     <div class="profile-column">
         <div class="profile-top-card">
             <div class="profile-photo-wrapper">
-                <img src="candidate_photo_hd.png?v=20260824" id="mainProfilePic" alt="Student Photo">
+                <script>
+                    document.write('<img src="' + _curPhoto + '" id="mainProfilePic" alt="Student Photo">');
+                </script>
             </div>
-            <div class="student-full-name" id="cardStudentName">MOHD HASHIM</div>
+            <div class="student-full-name" id="cardStudentName"><script>document.write((sessionStorage.getItem('userName')||window._activeStudent.name).toUpperCase());</script></div>
             <div class="student-contact-line">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="#ffffff"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                <span id="cardStudentEmail">Babaansari07896@gmail.com</span>
+                <span id="cardStudentEmail"><script>document.write(sessionStorage.getItem('email')||window._activeStudent.email);</script></span>
             </div>
             <div class="student-contact-line">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="#ffffff"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                <span id="cardStudentPhone">8923456443</span>
+                <span id="cardStudentPhone"><script>document.write(sessionStorage.getItem('phone')||window._activeStudent.phone);</script></span>
             </div>
         </div>
 
@@ -573,31 +592,31 @@
             <table class="profile-info-table">
                 <tr>
                     <td class="lbl">Father Name :</td>
-                    <td class="val" id="valFather">SAEED</td>
+                    <td class="val" id="valFather"><script>document.write((sessionStorage.getItem('fatherName')||window._activeStudent.father_name).toUpperCase());</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Mother Name :</td>
-                    <td class="val" id="valMother">SHAHANA</td>
+                    <td class="val" id="valMother"><script>document.write((sessionStorage.getItem('motherName')||window._activeStudent.mother_name).toUpperCase());</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">D.O.B. :</td>
-                    <td class="val" id="valDob">1999-10-12</td>
+                    <td class="val" id="valDob"><script>document.write(sessionStorage.getItem('dob')||window._activeStudent.dob);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Official Email :</td>
-                    <td class="val" id="valOfficialEmail">Babaansari07896@gmail.com</td>
+                    <td class="val" id="valOfficialEmail"><script>document.write(sessionStorage.getItem('officialEmail')||window._activeStudent.official_email);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Course :</td>
-                    <td class="val" id="valCourse">B.COM Hons I</td>
+                    <td class="val" id="valCourse"><script>document.write(sessionStorage.getItem('course')||window._activeStudent.course);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Class Roll No :</td>
-                    <td class="val" id="valRollNo">2154682</td>
+                    <td class="val" id="valRollNo"><script>document.write(sessionStorage.getItem('classRollNo')||window._activeStudent.class_roll_no);</script></td>
                 </tr>
                 <tr>
                     <td class="lbl">Admission No :</td>
-                    <td class="val" id="valEnrollNo">GE-21545586</td>
+                    <td class="val" id="valEnrollNo"><script>document.write(sessionStorage.getItem('enrollNo')||window._activeStudent.enroll_no);</script></td>
                 </tr>
             </table>
 
@@ -793,8 +812,8 @@
                     <span>Results</span>
                 </div>
                 <div class="dashboard-panel-body">
-                    <div id="panelResultTitle">🎓 Semester VI Grade Card Available</div>
-                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;">Status: PASS (SGPA: 8.25 | CGPA: 8.41)</div>
+                    <div id="panelResultTitle"><script>document.write(window._isSohil ? '🎓 Semester VI Grade Card Available' : '🎓 Semester I Grade Card Available');</script></div>
+                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;"><script>document.write(window._isSohil ? 'Status: PASS (SGPA: 8.25 | CGPA: 8.41)' : 'Status: PASS (SGPA: 7.88)');</script></div>
                     <a href="view_results.html" class="panel-more-link">More..</a>
                 </div>
             </div>
@@ -818,7 +837,7 @@
                     <span>Notifications</span>
                 </div>
                 <div class="dashboard-panel-body">
-                    <div id="panelFeeNotice">🔔 Fee receipt for Semester VI generated.</div>
+                    <div id="panelFeeNotice"><script>document.write(window._isSohil ? '🔔 Fee receipt for Semester VI generated.' : '🔔 Fee receipt for Semester I generated.');</script></div>
                     <div id="panelAdmitNotice" style="margin-top:4px;">🔔 Admit card for End-Term Exam is ready.</div>
                     <a class="panel-more-link" onclick="openCircularModal()">More..</a>
                 </div>
