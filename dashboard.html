@@ -7,6 +7,8 @@
     <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <script>
         // Route Protection Guard: If not logged in, redirect to login portal
         if (sessionStorage.getItem('loggedIn') !== 'true' && sessionStorage.getItem('adminLoggedIn') !== 'true') {
@@ -791,8 +793,8 @@
                     <span>Results</span>
                 </div>
                 <div class="dashboard-panel-body">
-                    <div>🎓 Semester I Grade Card Available</div>
-                    <div style="margin-top:4px; font-weight:700; color:#16a34a;">Status: PASS (SGPA: 7.88)</div>
+                    <div id="panelResultTitle">🎓 Semester VI Grade Card Available</div>
+                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;">Status: PASS (SGPA: 8.25 | CGPA: 8.41)</div>
                     <a href="view_results.html" class="panel-more-link">More..</a>
                 </div>
             </div>
@@ -816,8 +818,8 @@
                     <span>Notifications</span>
                 </div>
                 <div class="dashboard-panel-body">
-                    <div>🔔 Fee receipt for Semester I generated.</div>
-                    <div style="margin-top:4px;">🔔 Admit card for End-Term Exam is ready.</div>
+                    <div id="panelFeeNotice">🔔 Fee receipt for Semester VI generated.</div>
+                    <div id="panelAdmitNotice" style="margin-top:4px;">🔔 Admit card for End-Term Exam is ready.</div>
                     <a class="panel-more-link" onclick="openCircularModal()">More..</a>
                 </div>
             </div>
@@ -886,7 +888,7 @@
             <!-- Attendance Tab -->
             <div id="tabAttendance" class="academic-subtab">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; background:#f8fafc; padding:10px 14px; border:1px solid #e2e8f0; border-radius:4px;">
-                    <div><strong>Overall Attendance:</strong> <span style="color:#16a34a; font-size:16px; font-weight:800;">86.4%</span></div>
+                    <div><strong>Overall Attendance:</strong> <span id="acadOverallAttendance" style="color:#16a34a; font-size:16px; font-weight:800;">88.5%</span></div>
                     <div>Eligibility Status: <span class="status-badge-green">ELIGIBLE FOR EXAMS</span></div>
                 </div>
                 <table class="modal-table">
@@ -900,13 +902,8 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr><td><strong>BCH101</strong></td><td>Business Organisation</td><td>45</td><td>40</td><td><strong>88.8%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
-                        <tr><td><strong>BCH102</strong></td><td>Financial Accounting</td><td>48</td><td>42</td><td><strong>87.5%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
-                        <tr><td><strong>BCH103</strong></td><td>Micro Economics</td><td>36</td><td>31</td><td><strong>86.1%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
-                        <tr><td><strong>BCH104</strong></td><td>Business Communication</td><td>36</td><td>30</td><td><strong>83.3%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
-                        <tr><td><strong>BCH105</strong></td><td>Fundamentals Of Computer</td><td>36</td><td>32</td><td><strong>88.8%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
-                        <tr><td><strong>BCH106</strong></td><td>Business Mathematics</td><td>48</td><td>40</td><td><strong>83.3%</strong></td><td><span class="status-badge-green">Normal</span></td></tr>
+                    <tbody id="acadAttendanceBody">
+                        <!-- Populated dynamically -->
                     </tbody>
                 </table>
             </div>
@@ -924,26 +921,16 @@
                             <th>02:30 - 03:30 PM</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr><td><strong>Monday</strong></td><td>BCH101 (CR-104)</td><td>BCH102 (CR-104)</td><td>BCH106 (CR-104)</td><td>BCH105 (Lab-2)</td><td>BCH104 (CR-104)</td></tr>
-                        <tr><td><strong>Tuesday</strong></td><td>BCH102 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH101 (CR-104)</td><td>BCH106 (CR-104)</td><td>Library</td></tr>
-                        <tr><td><strong>Wednesday</strong></td><td>BCH106 (CR-104)</td><td>BCH105 (Lab-2)</td><td>BCH102 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH101 (CR-104)</td></tr>
-                        <tr><td><strong>Thursday</strong></td><td>BCH104 (CR-104)</td><td>BCH101 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH102 (CR-104)</td><td>Sports</td></tr>
-                        <tr><td><strong>Friday</strong></td><td>BCH103 (CR-104)</td><td>BCH106 (CR-104)</td><td>BCH104 (CR-104)</td><td>BCH105 (Lab-2)</td><td>Seminar</td></tr>
+                    <tbody id="acadTimetableBody">
+                        <!-- Populated dynamically -->
                     </tbody>
                 </table>
             </div>
 
             <!-- Syllabus Tab -->
             <div id="tabSyllabus" class="academic-subtab" style="display:none;">
-                <div style="line-height:1.6;">
-                    <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">B.COM (Honours) - Semester I Syllabus Structure:</div>
-                    <div>• <strong>BCH101 Business Organisation:</strong> Forms of business organizations, company management, business ethics. (4 Credits)</div>
-                    <div>• <strong>BCH102 Financial Accounting:</strong> Accounting principles, depreciation, final accounts preparation. (4 Credits)</div>
-                    <div>• <strong>BCH103 Micro Economics:</strong> Demand & supply analysis, consumer behavior, production functions. (3 Credits)</div>
-                    <div>• <strong>BCH104 Business Communication:</strong> Corporate correspondence, presentation skills, business letters. (3 Credits)</div>
-                    <div>• <strong>BCH105 Fundamentals Of Computer:</strong> MS Office, database management, internet protocols. (3 Credits)</div>
-                    <div>• <strong>BCH106 Business Mathematics:</strong> Matrices, calculus, financial mathematics. (4 Credits)</div>
+                <div id="acadSyllabusContent" style="line-height:1.6;">
+                    <!-- Populated dynamically -->
                 </div>
             </div>
         </div>
@@ -962,9 +949,9 @@
         <div class="modal-custom-body">
             <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <div style="font-size:12px; color:#166534; font-weight:700;">SEMESTER I FEE STATUS:</div>
+                    <div id="feeModalStatusTitle" style="font-size:12px; color:#166534; font-weight:700;">SEMESTER VI FEE STATUS:</div>
                     <div style="font-size:22px; font-weight:800; color:#15803d; margin-top:2px;">₹ 68,500.00 PAID</div>
-                    <div style="font-size:11.5px; color:#64748b; margin-top:2px;">Receipt No: <strong>GEHU/2025-26/REC-92841</strong></div>
+                    <div style="font-size:11.5px; color:#64748b; margin-top:2px;">Receipt No: <strong id="feeModalRecNo">GEHU/2023-24/REC-84920</strong></div>
                 </div>
                 <div>
                     <a href="fee_receipt.html" target="_blank" class="btn btn-primary" style="font-size:12.5px; font-weight:700;">
@@ -977,8 +964,8 @@
                 <thead>
                     <tr><th>Fee Head</th><th>Total Dues</th><th>Paid Amount</th><th>Balance</th></tr>
                 </thead>
-                <tbody>
-                    <tr><td>Tuition Fee (Sem I)</td><td>₹ 52,000</td><td>₹ 52,000</td><td><span class="status-badge-green">NIL</span></td></tr>
+                <tbody id="feeModalTableBody">
+                    <tr><td id="feeModalTuition">Tuition Fee (Sem VI)</td><td>₹ 52,000</td><td>₹ 52,000</td><td><span class="status-badge-green">NIL</span></td></tr>
                     <tr><td>University Exam Fee</td><td>₹ 4,500</td><td>₹ 4,500</td><td><span class="status-badge-green">NIL</span></td></tr>
                     <tr><td>Academic Development & Lab</td><td>₹ 6,000</td><td>₹ 6,000</td><td><span class="status-badge-green">NIL</span></td></tr>
                     <tr><td>Library Resource Deposit</td><td>₹ 3,000</td><td>₹ 3,000</td><td><span class="status-badge-green">NIL</span></td></tr>
@@ -1223,53 +1210,153 @@
 <!-- ===== DASHBOARD JAVASCRIPT ===== -->
 <script src="qrcode.min.js"></script>
 <script>
-    // Set clean passport photo for avatar
+    // Dynamic Student Initialization
     window.addEventListener('DOMContentLoaded', function() {
-        var enrollNo = sessionStorage.getItem('enrollNo') || 'GE-21545586';
-        var isSohil = (enrollNo === 'GE-21538540' || enrollNo.includes('21538540') || enrollNo === '2187530');
-        var sPhoto = sessionStorage.getItem('photo');
+        var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+        var checkId = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-        if (!sPhoto || sPhoto === 'student_profile.png' || sPhoto === 'candidate_photo.png') {
-            sPhoto = isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824';
-            sessionStorage.setItem('photo', sPhoto);
-        } else if (isSohil && sPhoto.indexOf('candidate_photo_hd') !== -1) {
-            sPhoto = 'sohil_photo.png';
-            sessionStorage.setItem('photo', sPhoto);
-        }
+        var isSohil = (
+            checkId === 'ge21538540' ||
+            checkId === '21538540' ||
+            checkId === '2187530' ||
+            checkId.includes('sohil') ||
+            sessionStorage.getItem('userName') === 'MOHD SOHIL'
+        );
 
-        document.getElementById('mainProfilePic').src = sPhoto;
-        document.getElementById('navAvatarImg').src = sPhoto;
+        var fallbackStudent = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+
+        var studentData = {
+            name: sessionStorage.getItem('userName') || fallbackStudent.name,
+            email: sessionStorage.getItem('email') || fallbackStudent.email,
+            phone: sessionStorage.getItem('phone') || fallbackStudent.phone,
+            father: sessionStorage.getItem('fatherName') || fallbackStudent.father_name,
+            mother: sessionStorage.getItem('motherName') || fallbackStudent.mother_name,
+            dob: sessionStorage.getItem('dob') || fallbackStudent.dob,
+            officialEmail: sessionStorage.getItem('officialEmail') || fallbackStudent.official_email,
+            course: sessionStorage.getItem('course') || fallbackStudent.course,
+            rollNo: sessionStorage.getItem('classRollNo') || fallbackStudent.class_roll_no,
+            enrollNo: sessionStorage.getItem('enrollNo') || fallbackStudent.enroll_no,
+            photo: isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || 'candidate_photo_hd.png?v=20260824')
+        };
+
+        // Profile card & Top nav
+        document.getElementById('navStudentName').textContent = studentData.name.toUpperCase();
+        document.getElementById('cardStudentName').textContent = studentData.name.toUpperCase();
+        document.getElementById('cardStudentEmail').textContent = studentData.email;
+        document.getElementById('cardStudentPhone').textContent = studentData.phone;
+        document.getElementById('mainProfilePic').src = studentData.photo;
+        document.getElementById('navAvatarImg').src = studentData.photo;
+
+        document.getElementById('valFather').textContent = studentData.father.toUpperCase();
+        document.getElementById('valMother').textContent = studentData.mother.toUpperCase();
+        document.getElementById('valDob').textContent = studentData.dob;
+        document.getElementById('valOfficialEmail').textContent = studentData.officialEmail;
+        document.getElementById('valCourse').textContent = studentData.course;
+        document.getElementById('valRollNo').textContent = studentData.rollNo;
+        document.getElementById('valEnrollNo').textContent = studentData.enrollNo;
 
         var idCardLink = document.getElementById('viewIdCardLink');
-        if (idCardLink) idCardLink.href = 'id_card.html?id=' + encodeURIComponent(enrollNo);
+        if (idCardLink) idCardLink.href = 'id_card.html?id=' + encodeURIComponent(studentData.enrollNo);
+
+        // Results Card (Panel #5)
+        var resTitle = document.getElementById('panelResultTitle');
+        var resStatus = document.getElementById('panelResultStatus');
+        if (resTitle && resStatus) {
+            if (isSohil) {
+                resTitle.textContent = '🎓 Semester VI Grade Card Available';
+                resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 8.25 | CGPA: 8.41)</span>';
+            } else {
+                resTitle.textContent = '🎓 Semester I Grade Card Available';
+                resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 7.88)</span>';
+            }
+        }
+
+        // Notifications Card (Panel #7)
+        var feeNotice = document.getElementById('panelFeeNotice');
+        if (feeNotice) {
+            feeNotice.textContent = isSohil ? '🔔 Fee receipt for Semester VI generated.' : '🔔 Fee receipt for Semester I generated.';
+        }
+
+        // Fee Modal
+        var feeTitle = document.getElementById('feeModalStatusTitle');
+        var feeRecNo = document.getElementById('feeModalRecNo');
+        var feeTuition = document.getElementById('feeModalTuition');
+        if (feeTitle) feeTitle.textContent = isSohil ? 'SEMESTER VI FEE STATUS:' : 'SEMESTER I FEE STATUS:';
+        if (feeRecNo) feeRecNo.textContent = isSohil ? 'GEHU/2023-24/REC-84920' : 'GEHU/2025-26/REC-92841';
+        if (feeTuition) feeTuition.textContent = isSohil ? 'Tuition Fee (Sem VI)' : 'Tuition Fee (Sem I)';
+
+        // Academic Modal - Attendance
+        var acadAttendance = document.getElementById('acadAttendanceBody');
+        var overallAttElem = document.getElementById('acadOverallAttendance');
+        if (acadAttendance) {
+            var attList = isSohil ? [
+                { code: 'BCH601', name: 'Indirect Tax Laws', held: 45, att: 41, pct: '91.1%' },
+                { code: 'BCH602', name: 'Corporate Governance & Business Ethics', held: 48, att: 42, pct: '87.5%' },
+                { code: 'BCH603', name: 'Project Management', held: 45, att: 40, pct: '88.8%' },
+                { code: 'BCH604(F3)', name: 'Investment Management', held: 36, att: 31, pct: '86.1%' },
+                { code: 'BCH605(F4)', name: 'Multinational Financial System', held: 45, att: 39, pct: '86.6%' },
+                { code: 'BCH606', name: 'Major Project & Viva-Voce', held: 40, att: 38, pct: '95.0%' },
+                { code: 'BCH607', name: 'General Proficiency', held: 20, att: 18, pct: '90.0%' }
+            ] : [
+                { code: 'BCH101', name: 'Business Organisation', held: 45, att: 40, pct: '88.8%' },
+                { code: 'BCH102', name: 'Financial Accounting', held: 48, att: 42, pct: '87.5%' },
+                { code: 'BCH103', name: 'Micro Economics', held: 36, att: 31, pct: '86.1%' },
+                { code: 'BCH104', name: 'Business Communication', held: 36, att: 30, pct: '83.3%' },
+                { code: 'BCH105', name: 'Fundamentals Of Computer', held: 36, att: 32, pct: '88.8%' },
+                { code: 'BCH106', name: 'Business Mathematics', held: 48, att: 40, pct: '83.3%' }
+            ];
+
+            if (overallAttElem) overallAttElem.textContent = isSohil ? '88.5%' : '86.4%';
+
+            var attHtml = '';
+            attList.forEach(function(item) {
+                attHtml += `<tr><td><strong>${item.code}</strong></td><td>${item.name}</td><td>${item.held}</td><td>${item.att}</td><td><strong>${item.pct}</strong></td><td><span class="status-badge-green">Normal</span></td></tr>`;
+            });
+            acadAttendance.innerHTML = attHtml;
+        }
+
+        // Academic Modal - Timetable
+        var timetableBody = document.getElementById('acadTimetableBody');
+        if (timetableBody) {
+            var ttHtml = isSohil ? `
+                <tr><td><strong>Monday</strong></td><td>BCH601 (CR-302)</td><td>BCH602 (CR-302)</td><td>BCH603 (CR-302)</td><td>Project Lab</td><td>BCH604 (CR-302)</td></tr>
+                <tr><td><strong>Tuesday</strong></td><td>BCH602 (CR-302)</td><td>BCH605 (CR-302)</td><td>BCH601 (CR-302)</td><td>BCH603 (CR-302)</td><td>Library</td></tr>
+                <tr><td><strong>Wednesday</strong></td><td>BCH603 (CR-302)</td><td>Project Lab</td><td>BCH602 (CR-302)</td><td>BCH605 (CR-302)</td><td>BCH601 (CR-302)</td></tr>
+                <tr><td><strong>Thursday</strong></td><td>BCH604 (CR-302)</td><td>BCH601 (CR-302)</td><td>BCH605 (CR-302)</td><td>BCH602 (CR-302)</td><td>Viva Prep</td></tr>
+                <tr><td><strong>Friday</strong></td><td>BCH605 (CR-302)</td><td>BCH603 (CR-302)</td><td>BCH604 (CR-302)</td><td>Project Lab</td><td>Seminar</td></tr>
+            ` : `
+                <tr><td><strong>Monday</strong></td><td>BCH101 (CR-104)</td><td>BCH102 (CR-104)</td><td>BCH106 (CR-104)</td><td>BCH105 (Lab-2)</td><td>BCH104 (CR-104)</td></tr>
+                <tr><td><strong>Tuesday</strong></td><td>BCH102 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH101 (CR-104)</td><td>BCH106 (CR-104)</td><td>Library</td></tr>
+                <tr><td><strong>Wednesday</strong></td><td>BCH106 (CR-104)</td><td>BCH105 (Lab-2)</td><td>BCH102 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH101 (CR-104)</td></tr>
+                <tr><td><strong>Thursday</strong></td><td>BCH104 (CR-104)</td><td>BCH101 (CR-104)</td><td>BCH103 (CR-104)</td><td>BCH102 (CR-104)</td><td>Sports</td></tr>
+                <tr><td><strong>Friday</strong></td><td>BCH103 (CR-104)</td><td>BCH106 (CR-104)</td><td>BCH104 (CR-104)</td><td>BCH105 (Lab-2)</td><td>Seminar</td></tr>
+            `;
+            timetableBody.innerHTML = ttHtml;
+        }
+
+        // Academic Modal - Syllabus
+        var syllabusContent = document.getElementById('acadSyllabusContent');
+        if (syllabusContent) {
+            syllabusContent.innerHTML = isSohil ? `
+                <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">B.COM (Honours) - Semester VI (Final Year) Syllabus Structure:</div>
+                <div>• <strong>BCH601 Indirect Tax Laws:</strong> Goods and Services Tax (GST) principles, custom duty laws, compliance. (4 Credits)</div>
+                <div>• <strong>BCH602 Corporate Governance & Business Ethics:</strong> Board committee roles, CSR regulations, whistleblower policies. (4 Credits)</div>
+                <div>• <strong>BCH603 Project Management:</strong> Capital budgeting, project feasibility analysis, risk management. (4 Credits)</div>
+                <div>• <strong>BCH604(F3) Investment Management:</strong> Portfolio theory, security analysis, mutual funds, capital markets. (4 Credits)</div>
+                <div>• <strong>BCH605(F4) Multinational Financial System:</strong> Forex risk management, international trade financing, MNC capital structure. (4 Credits)</div>
+                <div>• <strong>BCH606 Major Project & Viva-Voce:</strong> Dissertation research, empirical study, comprehensive viva. (4 Credits)</div>
+                <div>• <strong>BCH607 General Proficiency:</strong> Overall academic and co-curricular performance evaluation. (1 Credit)</div>
+            ` : `
+                <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">B.COM (Honours) - Semester I Syllabus Structure:</div>
+                <div>• <strong>BCH101 Business Organisation:</strong> Forms of business organizations, company management, business ethics. (4 Credits)</div>
+                <div>• <strong>BCH102 Financial Accounting:</strong> Accounting principles, depreciation, final accounts preparation. (4 Credits)</div>
+                <div>• <strong>BCH103 Micro Economics:</strong> Demand & supply analysis, consumer behavior, production functions. (3 Credits)</div>
+                <div>• <strong>BCH104 Business Communication:</strong> Corporate correspondence, presentation skills, business letters. (3 Credits)</div>
+                <div>• <strong>BCH105 Fundamentals Of Computer:</strong> MS Office, database management, internet protocols. (3 Credits)</div>
+                <div>• <strong>BCH106 Business Mathematics:</strong> Matrices, calculus, financial mathematics. (4 Credits)</div>
+            `;
+        }
     });
-
-    // Populate data from sessionStorage
-    var studentData = {
-        name: sessionStorage.getItem('userName') || 'MOHD HASHIM',
-        email: sessionStorage.getItem('email') || 'Babaansari07896@gmail.com',
-        phone: sessionStorage.getItem('phone') || '8923456443',
-        father: sessionStorage.getItem('fatherName') || 'SAEED',
-        mother: sessionStorage.getItem('motherName') || 'SHAHANA',
-        dob: sessionStorage.getItem('dob') || '1999-10-12',
-        officialEmail: sessionStorage.getItem('officialEmail') || 'Babaansari07896@gmail.com',
-        course: sessionStorage.getItem('course') || 'B.COM (Hons)',
-        rollNo: sessionStorage.getItem('classRollNo') || '2154682',
-        enrollNo: sessionStorage.getItem('enrollNo') || 'GE-21545586'
-    };
-
-    document.getElementById('navStudentName').textContent = studentData.name.toUpperCase();
-    document.getElementById('cardStudentName').textContent = studentData.name.toUpperCase();
-    document.getElementById('cardStudentEmail').textContent = studentData.email;
-    document.getElementById('cardStudentPhone').textContent = studentData.phone;
-
-    document.getElementById('valFather').textContent = studentData.father;
-    document.getElementById('valMother').textContent = studentData.mother;
-    document.getElementById('valDob').textContent = studentData.dob;
-    document.getElementById('valOfficialEmail').textContent = studentData.officialEmail;
-    document.getElementById('valCourse').textContent = studentData.course;
-    document.getElementById('valRollNo').textContent = studentData.rollNo;
-    document.getElementById('valEnrollNo').textContent = studentData.enrollNo;
 
     function logout(e) {
         if (e) e.preventDefault();
@@ -1308,7 +1395,9 @@
             var qrCont = document.getElementById('gatePassQRCode');
             qrCont.innerHTML = '';
             var reason = document.getElementById('gpReason').value || 'Home Visit';
-            var qrPayload = `GRAPHIC ERA HOSTEL GATE PASS\n--------------------------\nPass ID: GP-84920\nStudent: ${studentData.name.toUpperCase()}\nEnroll: ${studentData.enrollNo}\nRoom: B-204 (SC Bose Hostel)\nReason: ${reason}\nStatus: APPROVED - VALID FOR EXIT`;
+            var sName = sessionStorage.getItem('userName') || 'MOHD SOHIL';
+            var sEnroll = sessionStorage.getItem('enrollNo') || 'GE-21538540';
+            var qrPayload = `GRAPHIC ERA HOSTEL GATE PASS\n--------------------------\nPass ID: GP-84920\nStudent: ${sName.toUpperCase()}\nEnroll: ${sEnroll}\nRoom: B-204 (SC Bose Hostel)\nReason: ${reason}\nStatus: APPROVED - VALID FOR EXIT`;
             
             new QRCode(qrCont, {
                 text: qrPayload,

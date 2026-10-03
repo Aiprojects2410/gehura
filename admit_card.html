@@ -7,6 +7,8 @@
     <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <style>
         * {
             margin: 0;
@@ -226,7 +228,7 @@
 
             <!-- Title -->
             <div class="admit-title-box">
-                <div class="admit-title">End Semester University Examination (2025-26)</div>
+                <div class="admit-title" id="admSessionTitle">End Semester University Examination (2023-24)</div>
                 <div class="admit-subtitle">ADMIT CARD / PROVISIONAL HALL TICKET</div>
             </div>
 
@@ -235,27 +237,27 @@
                 <div class="cand-info-grid">
                     <div class="cand-row">
                         <span class="cand-lbl">Student Name:</span>
-                        <span class="cand-val" id="admName">MOHD HASHIM</span>
+                        <span class="cand-val" id="admName">MOHD SOHIL</span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Enrollment No:</span>
-                        <span class="cand-val" id="admEnroll">GE-21545586</span>
+                        <span class="cand-val" id="admEnroll">GE-21538540</span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Father's Name:</span>
-                        <span class="cand-val" id="admFather">SAEED</span>
+                        <span class="cand-val" id="admFather">AHSAN</span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Class Roll No:</span>
-                        <span class="cand-val" id="admRoll">2154682</span>
+                        <span class="cand-val" id="admRoll">2187530</span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Programme / Course:</span>
-                        <span class="cand-val" id="admCourse">B.COM Hons I</span>
+                        <span class="cand-val" id="admCourse">B.COM (Hons)</span>
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Semester:</span>
-                        <span class="cand-val">Semester I</span>
+                        <span class="cand-val" id="admSem">Semester VI</span>
                     </div>
                     <div class="cand-row" style="grid-column: span 2;">
                         <span class="cand-lbl">Exam Center:</span>
@@ -264,7 +266,7 @@
                 </div>
 
                 <div class="cand-photo-box">
-                    <img src="candidate_photo_hd.png?v=20260824" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">
+                    <img src="sohil_photo.png" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">
                     <div style="font-size:9.5px; color:#475569; font-weight:700; margin-top:4px;">Candidate Photo</div>
                 </div>
             </div>
@@ -280,49 +282,8 @@
                         <th style="width: 18%;">Invigilator Sign</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>02-Dec-2025</strong></td>
-                        <td>09:30 AM - 12:30 PM</td>
-                        <td><strong>BCH101</strong></td>
-                        <td>Business Organisation</td>
-                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>05-Dec-2025</strong></td>
-                        <td>09:30 AM - 12:30 PM</td>
-                        <td><strong>BCH102</strong></td>
-                        <td>Financial Accounting</td>
-                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>08-Dec-2025</strong></td>
-                        <td>09:30 AM - 12:30 PM</td>
-                        <td><strong>BCH103</strong></td>
-                        <td>Micro Economics</td>
-                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>11-Dec-2025</strong></td>
-                        <td>09:30 AM - 12:30 PM</td>
-                        <td><strong>BCH104</strong></td>
-                        <td>Business Communication</td>
-                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>15-Dec-2025</strong></td>
-                        <td>09:30 AM - 12:30 PM</td>
-                        <td><strong>BCH105</strong></td>
-                        <td>Fundamentals Of Computer</td>
-                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>18-Dec-2025</strong></td>
-                        <td>09:30 AM - 12:30 PM</td>
-                        <td><strong>BCH106</strong></td>
-                        <td>Business Mathematics</td>
-                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
-                    </tr>
+                <tbody id="scheduleTableBody">
+                    <!-- Populated dynamically -->
                 </tbody>
             </table>
 
@@ -339,8 +300,8 @@
         <!-- Footer Signatures -->
         <div class="admit-footer" style="display:grid; grid-template-columns: 1.1fr 1.3fr 1.5fr 1.3fr; gap:10px; align-items:flex-end;">
             <div class="sig-col">
-                <div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#0f172a; transform:rotate(-3deg); margin-bottom:2px;">
-                    Mohd Hashim
+                <div id="admCandidateSign" style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:16px; color:#0f172a; transform:rotate(-3deg); margin-bottom:2px;">
+                    Mohd Sohil
                 </div>
                 <div style="border-top:1px solid #334155; padding-top:4px;">
                     Candidate's Signature
@@ -400,7 +361,7 @@
                         <rect x="210" y="0" width="2" height="36" fill="#000"/>
                         <rect x="215" y="0" width="4" height="36" fill="#000"/>
                     </svg>
-                    <div style="font-size:8.5px; color:#64748b; margin-top:1px;">GEHU-SECURE-2025</div>
+                    <div id="admBarcodeLabel" style="font-size:8.5px; color:#64748b; margin-top:1px;">GEHU-SECURE-2024</div>
                 </div>
             </div>
 
@@ -418,44 +379,103 @@
 
     <script src="qrcode.min.js"></script>
     <script>
-        var sName = sessionStorage.getItem('userName') || 'MOHD HASHIM';
-        var sFather = sessionStorage.getItem('fatherName') || 'SAEED';
-        var sEnroll = sessionStorage.getItem('enrollNo') || 'GE-21545586';
-        var sRoll = sessionStorage.getItem('classRollNo') || '2154682';
-        var sCourse = sessionStorage.getItem('course') || 'B.COM Hons I';
-        var sPhoto = sessionStorage.getItem('photo');
-        if (!sPhoto || sPhoto === 'student_profile.png' || sPhoto === 'candidate_photo.png') {
-            sPhoto = 'candidate_photo_hd.png?v=20260824';
-        }
+        function loadAdmitCard() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-        document.getElementById('admName').textContent = sName.toUpperCase();
-        document.getElementById('admFather').textContent = sFather.toUpperCase();
-        document.getElementById('admEnroll').textContent = sEnroll;
-        document.getElementById('admRoll').textContent = sRoll;
-        document.getElementById('admCourse').textContent = sCourse;
-        document.getElementById('admPhoto').src = sPhoto;
+            var isSohil = (
+                checkId === 'ge21538540' ||
+                checkId === '21538540' ||
+                checkId === '2187530' ||
+                checkId.includes('sohil') ||
+                (!checkId && sessionStorage.getItem('userName') === 'MOHD SOHIL')
+            );
 
-        // Generate Real Scannable QR Code
-        try {
-            var qrCont = document.getElementById('admitCardQRCode');
-            qrCont.innerHTML = '';
-            
-            var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-                ? (window.location.protocol + '//172.20.10.8:8080')
-                : window.location.origin;
-            var verifyUrl = baseUrl + '/verify.html?type=admit_card&id=' + encodeURIComponent(sEnroll) + '&name=' + encodeURIComponent(sName) + '&roll=' + encodeURIComponent(sRoll) + '&course=' + encodeURIComponent(sCourse) + '&status=VALID';
-            
-            new QRCode(qrCont, {
-                text: verifyUrl,
-                width: 60,
-                height: 60,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
+            // If not Sohil and not explicitly Hashim, default based on session
+            var isHashim = (!isSohil && (checkId === 'ge21545586' || checkId === '21545586' || checkId === '2154682' || checkId.includes('hashim')));
+
+            var student = isSohil ? SOHIL_STUDENT : (isHashim ? DEFAULT_STUDENT : (sessionStorage.getItem('userName') === 'MOHD SOHIL' ? SOHIL_STUDENT : DEFAULT_STUDENT));
+
+            var sName = student.name;
+            var sFather = student.father_name;
+            var sEnroll = student.enroll_no;
+            var sRoll = student.class_roll_no;
+            var sCourse = student.course || (isSohil ? 'B.COM (Hons)' : 'B.COM Hons I');
+            var sSem = isSohil ? 'Semester VI' : 'Semester I';
+            var sPhoto = student.photo || (isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824');
+            var sSession = isSohil ? 'End Semester University Examination (2023-24)' : 'End Semester University Examination (2025-26)';
+            var sBarcode = isSohil ? 'GEHU-SECURE-2024' : 'GEHU-SECURE-2025';
+
+            // Populate UI Elements
+            document.getElementById('admSessionTitle').textContent = sSession;
+            document.getElementById('admName').textContent = sName.toUpperCase();
+            document.getElementById('admFather').textContent = sFather.toUpperCase();
+            document.getElementById('admEnroll').textContent = sEnroll;
+            document.getElementById('admRoll').textContent = sRoll;
+            document.getElementById('admCourse').textContent = sCourse;
+            document.getElementById('admSem').textContent = sSem;
+            document.getElementById('admPhoto').src = sPhoto;
+            document.getElementById('admCandidateSign').textContent = sName;
+            document.getElementById('admBarcodeLabel').textContent = sBarcode;
+
+            // Render Schedule Table
+            var schedule = isSohil ? [
+                { date: '04-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
+                { date: '08-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
+                { date: '12-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
+                { date: '16-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH604(F3)', title: 'Investment Management' },
+                { date: '20-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH605(F4)', title: 'Multinational Financial System' },
+                { date: '24-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH606', title: 'Major Project & Viva-Voce' },
+                { date: '28-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH607', title: 'General Proficiency' }
+            ] : [
+                { date: '02-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH101', title: 'Business Organisation' },
+                { date: '05-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH102', title: 'Financial Accounting' },
+                { date: '08-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH103', title: 'Micro Economics' },
+                { date: '11-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH104', title: 'Business Communication' },
+                { date: '15-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH105', title: 'Fundamentals Of Computer' },
+                { date: '18-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH106', title: 'Business Mathematics' }
+            ];
+
+            var scheduleHtml = '';
+            schedule.forEach(function(item) {
+                scheduleHtml += `
+                    <tr>
+                        <td><strong>${item.date}</strong></td>
+                        <td>${item.time}</td>
+                        <td><strong>${item.code}</strong></td>
+                        <td>${item.title}</td>
+                        <td><div style="font-family:'Brush Script MT', 'Segoe Script', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td>
+                    </tr>
+                `;
             });
-        } catch(e) {
-            console.error("Admit QR error:", e);
+            document.getElementById('scheduleTableBody').innerHTML = scheduleHtml;
+
+            // Generate Real Scannable QR Code
+            try {
+                var qrCont = document.getElementById('admitCardQRCode');
+                qrCont.innerHTML = '';
+                
+                var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                    ? (window.location.protocol + '//172.20.10.8:8080')
+                    : window.location.origin;
+                var verifyUrl = baseUrl + '/verify.html?type=admit_card&id=' + encodeURIComponent(sEnroll) + '&name=' + encodeURIComponent(sName) + '&roll=' + encodeURIComponent(sRoll) + '&course=' + encodeURIComponent(sCourse) + '&status=VALID';
+                
+                new QRCode(qrCont, {
+                    text: verifyUrl,
+                    width: 55,
+                    height: 55,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } catch(e) {
+                console.error("Admit QR error:", e);
+            }
         }
+
+        window.addEventListener('DOMContentLoaded', loadAdmitCard);
     </script>
 </body>
 </html>

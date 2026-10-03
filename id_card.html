@@ -423,7 +423,8 @@
                 // Check session
                 var sessEnroll = sessionStorage.getItem('enrollNo') || '';
                 var sClean = sessEnroll.toLowerCase().replace(/[^a-z0-9]/g, '');
-                if (sClean === 'ge21538540' || sClean === '21538540' || sClean === '2187530') {
+                var isSohilSess = (sClean === 'ge21538540' || sClean === '21538540' || sClean === '2187530' || sClean.includes('sohil') || sessionStorage.getItem('userName') === 'MOHD SOHIL');
+                if (isSohilSess) {
                     student = SOHIL_STUDENT;
                 } else {
                     student = {

@@ -7,6 +7,8 @@
     <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -248,19 +250,34 @@
     <script>
         var params = new URLSearchParams(window.location.search);
         var type = params.get('type') || 'grade_card';
-        var name = params.get('name') || sessionStorage.getItem('userName') || 'MOHD HASHIM';
-        var enroll = params.get('id') || params.get('enroll') || sessionStorage.getItem('enrollNo') || 'GE-21545586';
-        var roll = params.get('roll') || sessionStorage.getItem('classRollNo') || '2154682';
-        var course = params.get('course') || sessionStorage.getItem('course') || 'B.COM (Honours)';
-        var sem = params.get('sem') || '1';
-        var sgpa = params.get('sgpa') || '7.88';
+        var queryId = params.get('id') || params.get('enroll') || '';
+        var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+        var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
+
+        var isSohil = (
+            checkId === 'ge21538540' ||
+            checkId === '21538540' ||
+            checkId === '2187530' ||
+            checkId.includes('sohil') ||
+            (params.get('name') || '').toLowerCase().includes('sohil') ||
+            sessionStorage.getItem('userName') === 'MOHD SOHIL'
+        );
+
+        var student = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+
+        var name = params.get('name') || sessionStorage.getItem('userName') || student.name;
+        var enroll = queryId || sessEnroll || student.enroll_no;
+        var roll = params.get('roll') || sessionStorage.getItem('classRollNo') || student.class_roll_no;
+        var course = params.get('course') || sessionStorage.getItem('course') || student.course;
+        var sem = params.get('sem') || (isSohil ? '6' : '1');
+        var sgpa = params.get('sgpa') || (isSohil ? '8.25' : '7.88');
         var status = params.get('status') || params.get('res') || 'PASS';
 
         document.getElementById('verName').textContent = name.toUpperCase();
         document.getElementById('verEnroll').textContent = enroll;
         document.getElementById('verRoll').textContent = roll;
         document.getElementById('verCourse').textContent = course;
-        document.getElementById('verSem').textContent = 'Semester ' + sem + ' (Academic Session)';
+        document.getElementById('verSem').textContent = 'Semester ' + sem + (isSohil ? ' (2023-24)' : ' (2025-26)');
         document.getElementById('verSgpa').textContent = sgpa;
         document.getElementById('verStatus').textContent = status.toUpperCase();
         document.getElementById('verTime').textContent = new Date().toLocaleString();
@@ -279,7 +296,8 @@
             document.getElementById('verDocLink').href = 'admit_card.html';
             document.getElementById('verDocLink').textContent = 'View Official Admit Card';
         } else {
-            document.getElementById('verDocLink').href = 'grade_card.html?sem=' + sem + '&id=' + enroll;
+            var docHref = isSohil ? `sohil_sem${sem}.pdf` : `grade_card.html?sem=${sem}&id=${encodeURIComponent(enroll)}`;
+            document.getElementById('verDocLink').href = docHref;
         }
     </script>
 </body>

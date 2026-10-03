@@ -7,6 +7,8 @@
     <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://student.gehu.ac.in/css/libs/font-awesome.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <style>
         * {
             margin: 0;
@@ -249,7 +251,7 @@
             <!-- Title -->
             <div class="receipt-title-box">
                 <div class="receipt-title">Student Fee Payment Receipt</div>
-                <div class="receipt-subtitle">Academic Session: 2025-2026 (Semester I)</div>
+                <div class="receipt-subtitle" id="recSessionSubtitle">Academic Session: 2023-2024 (Semester VI)</div>
             </div>
 
             <!-- Student & Receipt Details -->
@@ -257,34 +259,34 @@
                 <div>
                     <div class="detail-row">
                         <span class="detail-lbl">Receipt No:</span>
-                        <span class="detail-val" id="recNo">GEHU/2025-26/REC-92841</span>
+                        <span class="detail-val" id="recNo">GEHU/2023-24/REC-84920</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Student Name:</span>
-                        <span class="detail-val" id="recName">MOHD HASHIM</span>
+                        <span class="detail-val" id="recName">MOHD SOHIL</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Father's Name:</span>
-                        <span class="detail-val" id="recFather">SAEED</span>
+                        <span class="detail-val" id="recFather">AHSAN</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Admission / Enroll No:</span>
-                        <span class="detail-val" id="recEnroll">GE-21545586</span>
+                        <span class="detail-val" id="recEnroll">GE-21538540</span>
                     </div>
                 </div>
 
                 <div>
                     <div class="detail-row">
                         <span class="detail-lbl">Date of Payment:</span>
-                        <span class="detail-val" id="recDate">15-Jul-2025</span>
+                        <span class="detail-val" id="recDate">15-Jan-2024</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Class Roll No:</span>
-                        <span class="detail-val" id="recRoll">2154682</span>
+                        <span class="detail-val" id="recRoll">2187530</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Course / Branch:</span>
-                        <span class="detail-val" id="recCourse">B.COM Hons I</span>
+                        <span class="detail-val" id="recCourse">B.COM (Hons)</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-lbl">Campus:</span>
@@ -305,7 +307,7 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Tuition Fee (Semester I)</td>
+                        <td id="recTuitionLabel">Tuition Fee (Semester VI)</td>
                         <td class="text-right">₹ 52,000.00</td>
                     </tr>
                     <tr>
@@ -388,40 +390,66 @@
 
     <script src="qrcode.min.js"></script>
     <script>
-        // Load Session Data
-        var sName = sessionStorage.getItem('userName') || 'MOHD HASHIM';
-        var sFather = sessionStorage.getItem('fatherName') || 'SAEED';
-        var sEnroll = sessionStorage.getItem('enrollNo') || 'GE-21545586';
-        var sRoll = sessionStorage.getItem('classRollNo') || '2154682';
-        var sCourse = sessionStorage.getItem('course') || 'B.COM Hons I';
+        function loadReceipt() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var checkId = (queryId || sessEnroll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-        document.getElementById('recName').textContent = sName.toUpperCase();
-        document.getElementById('recFather').textContent = sFather.toUpperCase();
-        document.getElementById('recEnroll').textContent = sEnroll;
-        document.getElementById('recRoll').textContent = sRoll;
-        document.getElementById('recCourse').textContent = sCourse;
+            var isSohil = (
+                checkId === 'ge21538540' ||
+                checkId === '21538540' ||
+                checkId === '2187530' ||
+                checkId.includes('sohil') ||
+                (!checkId && sessionStorage.getItem('userName') === 'MOHD SOHIL')
+            );
 
-        // Generate Real Scannable QR Code
-        try {
-            var qrCont = document.getElementById('receiptQRCode');
-            qrCont.innerHTML = '';
-            
-            var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-                ? (window.location.protocol + '//172.20.10.8:8080')
-                : window.location.origin;
-            var verifyUrl = baseUrl + '/verify.html?type=fee_receipt&id=' + encodeURIComponent(sEnroll) + '&name=' + encodeURIComponent(sName) + '&roll=' + encodeURIComponent(sRoll) + '&course=' + encodeURIComponent(sCourse) + '&status=PAID';
-            
-            new QRCode(qrCont, {
-                text: verifyUrl,
-                width: 68,
-                height: 68,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
-            });
-        } catch(e) {
-            console.error("Fee QR error:", e);
+            var student = isSohil ? SOHIL_STUDENT : (sessionStorage.getItem('userName') === 'MOHD SOHIL' ? SOHIL_STUDENT : DEFAULT_STUDENT);
+
+            var sName = student.name;
+            var sFather = student.father_name;
+            var sEnroll = student.enroll_no;
+            var sRoll = student.class_roll_no;
+            var sCourse = student.course || (isSohil ? 'B.COM (Hons)' : 'B.COM Hons I');
+            var sRecNo = isSohil ? 'GEHU/2023-24/REC-84920' : 'GEHU/2025-26/REC-92841';
+            var sSession = isSohil ? 'Academic Session: 2023-2024 (Semester VI)' : 'Academic Session: 2025-2026 (Semester I)';
+            var sDate = isSohil ? '15-Jan-2024' : '15-Jul-2025';
+            var sTuition = isSohil ? 'Tuition Fee (Semester VI)' : 'Tuition Fee (Semester I)';
+
+            document.getElementById('recSessionSubtitle').textContent = sSession;
+            document.getElementById('recNo').textContent = sRecNo;
+            document.getElementById('recName').textContent = sName.toUpperCase();
+            document.getElementById('recFather').textContent = sFather.toUpperCase();
+            document.getElementById('recEnroll').textContent = sEnroll;
+            document.getElementById('recDate').textContent = sDate;
+            document.getElementById('recRoll').textContent = sRoll;
+            document.getElementById('recCourse').textContent = sCourse;
+            document.getElementById('recTuitionLabel').textContent = sTuition;
+
+            // Generate Real Scannable QR Code
+            try {
+                var qrCont = document.getElementById('receiptQRCode');
+                qrCont.innerHTML = '';
+                
+                var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                    ? (window.location.protocol + '//172.20.10.8:8080')
+                    : window.location.origin;
+                var verifyUrl = baseUrl + '/verify.html?type=fee_receipt&id=' + encodeURIComponent(sEnroll) + '&name=' + encodeURIComponent(sName) + '&roll=' + encodeURIComponent(sRoll) + '&course=' + encodeURIComponent(sCourse) + '&status=PAID';
+                
+                new QRCode(qrCont, {
+                    text: verifyUrl,
+                    width: 68,
+                    height: 68,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } catch(e) {
+                console.error("Fee QR error:", e);
+            }
         }
+
+        window.addEventListener('DOMContentLoaded', loadReceipt);
     </script>
 </body>
 </html>
