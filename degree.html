@@ -360,24 +360,14 @@
                 btnVerify.href = 'verify.html?type=degree&id=' + encodeURIComponent(sEnroll) + '&roll=' + encodeURIComponent(sRoll);
             }
 
-            // Generate Scannable QR Code
+            // Generate Scannable QR Code with Official Certification Text
             try {
                 var qrCont = document.getElementById('degreeQRCode');
                 qrCont.innerHTML = '';
-                var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-                    ? (window.location.protocol + '//172.20.10.8:8080')
-                    : 'https://gehura.netlify.app';
-
-                var verifyUrl = baseUrl + '/verify.html?type=degree' +
-                    '&id=' + encodeURIComponent(sEnroll) +
-                    '&name=' + encodeURIComponent(sName) +
-                    '&roll=' + encodeURIComponent(sRoll) +
-                    '&course=' + encodeURIComponent('Bachelor of Commerce') +
-                    '&cgpa=' + encodeURIComponent(sCGPA) +
-                    '&status=CONFERRED';
+                var certText = 'This is to certify that ' + sName.toUpperCase() + ' having passed the Examination of the University, securing a CGPA ' + sCGPA + ' on a 10 Point Scale, in the year 2024 has been awarded the Degree of Bachelor of Commerce';
 
                 new QRCode(qrCont, {
-                    text: verifyUrl,
+                    text: certText,
                     width: 70,
                     height: 70,
                     colorDark: "#000000",
