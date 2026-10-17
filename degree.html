@@ -112,7 +112,7 @@
             width: 210mm;
             height: 297mm;
             position: relative;
-            background-color: #fffdf7;
+            background-color: #faf8f5; /* Authentic soft cream paper matching original sample */
             background-image: url('gehu_degree_clean_base.jpg');
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -164,10 +164,10 @@
         /* 2. Scannable Verification QR Code */
         .overlay-qr-box {
             position: absolute;
-            top: 10.50%;
-            left: 14.04%;
-            width: 8.23%;
-            height: 5.82%;
+            top: 10.59%;
+            left: 14.24%;
+            width: 7.87%;
+            height: 5.56%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -177,6 +177,24 @@
         .overlay-qr-box canvas, .overlay-qr-box img {
             width: 100% !important;
             height: 100% !important;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        /* 2B. 1D Verification Barcode (GE-21538540) */
+        .overlay-barcode-box {
+            position: absolute;
+            top: 78.50%;
+            left: 74.00%;
+            width: 17.00%;
+            height: 3.30%;
+            overflow: hidden;
+            background: transparent;
+            pointer-events: none;
+        }
+        .overlay-barcode-box img {
+            width: 100%;
+            height: 100%;
             display: block;
             image-rendering: pixelated;
         }
@@ -217,7 +235,7 @@
         .overlay-hindi-cgpa {
             position: absolute;
             top: 41.95%;
-            left: 45.40%;
+            left: 46.50%;
             font-family: 'Noto Serif Devanagari', 'Mangal', 'Kokila', serif;
             font-size: 18px;
             font-weight: 700;
@@ -312,6 +330,9 @@
         <!-- 2. Official Verification QR Code -->
         <div class="overlay-qr-box" id="degreeQRCode"></div>
 
+        <!-- 2B. Official Verification Barcode -->
+        <div class="overlay-barcode-box" id="degreeBarcode"></div>
+
         <!-- 3. Candidate Photograph -->
         <div class="overlay-photo-box">
             <img id="degPhoto" src="sohil_photo.png" alt="Candidate Photograph">
@@ -360,22 +381,33 @@
                 btnVerify.href = 'verify.html?type=degree&id=' + encodeURIComponent(sEnroll) + '&roll=' + encodeURIComponent(sRoll);
             }
 
-            // Generate Scannable QR Code with Official Certification Text
-            try {
-                var qrCont = document.getElementById('degreeQRCode');
-                qrCont.innerHTML = '';
-                var certText = 'This is to certify that ' + sName.toUpperCase() + ' having passed the Examination of the University, securing a CGPA ' + sCGPA + ' on a 10 Point Scale, in the year 2024 has been awarded the Degree of Bachelor of Commerce';
-
-                new QRCode(qrCont, {
-                    text: certText,
-                    width: 70,
-                    height: 70,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.M
-                });
-            } catch(e) {
-                console.error("Degree QR error:", e);
+            // Scannable Verification QR Code & Barcode
+            var qrCont = document.getElementById('degreeQRCode');
+            var barCont = document.getElementById('degreeBarcode');
+            if (isSohil) {
+                if (qrCont) {
+                    qrCont.innerHTML = '';
+                    qrCont.style.background = 'transparent';
+                }
+                if (barCont) {
+                    barCont.innerHTML = '';
+                    barCont.style.background = 'transparent';
+                }
+            } else {
+                try {
+                    qrCont.innerHTML = '';
+                    var certText = 'This is to certify that ' + sName.toUpperCase() + ' having passed the Examination of the University, securing a CGPA ' + sCGPA + ' on a 10 Point Scale, in the year 2024 has been awarded the Degree of Bachelor of Commerce';
+                    new QRCode(qrCont, {
+                        text: certText,
+                        width: 195,
+                        height: 195,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } catch(e) {
+                    console.error("Degree QR error:", e);
+                }
             }
         }
 
