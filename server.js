@@ -13,6 +13,7 @@ const server = http.createServer((req, res) => {
     if (reqUrl === '/grade_card' || reqUrl === '/grade_card.php' || reqUrl === '/grade_card.pdf') reqUrl = '/grade_card.html';
     if (reqUrl === '/fee_receipt' || reqUrl === '/fee_receipt.php' || reqUrl === '/fee_receipt.pdf') reqUrl = '/fee_receipt.html';
     if (reqUrl === '/admit_card' || reqUrl === '/admit_card.php' || reqUrl === '/admit_card.pdf') reqUrl = '/admit_card.html';
+    if (reqUrl === '/degree' || reqUrl === '/degree.php' || reqUrl === '/degree.pdf') reqUrl = '/degree.html';
     if (reqUrl === '/verify' || reqUrl === '/verify.php') reqUrl = '/verify.html';
 
     let filePath = path.join(__dirname, reqUrl);
