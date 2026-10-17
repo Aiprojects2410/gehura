@@ -298,6 +298,13 @@
             document.getElementById('rowStatus').innerHTML = '<td class="lbl">Exam Center:</td><td class="val">Main Campus Dehradun</td>';
             document.getElementById('verDocLink').href = 'admit_card.html';
             document.getElementById('verDocLink').textContent = 'View Official Admit Card';
+        } else if (type === 'degree') {
+            document.getElementById('verDocTitle').textContent = 'OFFICIALLY VERIFIED ORIGINAL DEGREE CERTIFICATE';
+            document.getElementById('verSem').textContent = isSohil ? 'Graduating Batch 2021-2024 (Conferred 2024)' : 'Graduating Batch 2020-2023';
+            document.getElementById('rowSgpa').innerHTML = '<td class="lbl">Final CGPA & Division:</td><td class="val" style="color:#0284c7; font-size:15px;">CGPA: ' + (isSohil ? '8.41 (First Division with Distinction)' : '7.82 (First Division)') + '</td>';
+            document.getElementById('rowStatus').innerHTML = '<td class="lbl">Degree Status:</td><td class="val" style="color:#16a34a;"><i class="fa fa-check-circle"></i> OFFICIALLY CONFERRED & VALID</td>';
+            document.getElementById('verDocLink').href = 'degree.html';
+            document.getElementById('verDocLink').innerHTML = '<i class="fa fa-graduation-cap"></i> View Official Degree Certificate';
         } else {
             var docHref = isSohil ? `sohil_sem${sem}.pdf` : `grade_card.html?sem=${sem}&id=${encodeURIComponent(enroll)}`;
             document.getElementById('verDocLink').href = docHref;

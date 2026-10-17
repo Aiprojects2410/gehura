@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Era Hill University | Degree Certificate - MOHD SOHIL</title>
+    <link href="https://student.gehu.ac.in/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Great+Vibes&family=Marcellus&family=Noto+Serif+Devanagari:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script>
+        // Route Protection Guard
+        if (sessionStorage.getItem('loggedIn') !== 'true' && sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            // Allow direct viewing if query param exists or fallback
+        }
+        
+        // Synchronous Student Detection
+        (function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var sessName = sessionStorage.getItem('userName') || '';
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName).toLowerCase().replace(/[^a-z0-9]/g, '');
+            var isHashim = (
+                checkId.includes('ge21545586') ||
+                checkId.includes('21545586') ||
+                checkId.includes('2154682') ||
+                checkId.includes('hashim')
+            );
+            window._isSohil = !isHashim;
+            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #3e444a;
+            color: #111111;
+            font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+            padding: 25px 0 50px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Top Action / Navigation Bar */
+        .action-bar {
+            width: 210mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            z-index: 100;
+        }
+        .action-bar-left, .action-bar-right {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            font-size: 13.5px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: none;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+        .btn-back {
+            background-color: #1e293b;
+            color: #ffffff;
+        }
+        .btn-back:hover {
+            background-color: #0f172a;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .btn-print {
+            background: linear-gradient(135deg, #b8860b, #d4af37);
+            color: #1e1b18;
+            font-weight: 800;
+        }
+        .btn-print:hover {
+            background: linear-gradient(135deg, #a37508, #c59b27);
+            color: #000;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+        .btn-verify {
+            background-color: #0284c7;
+            color: #ffffff;
+        }
+        .btn-verify:hover {
+            background-color: #0369a1;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* ===== DEGREE CERTIFICATE A4 PORTRAIT CONTAINER ===== */
+        .degree-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            height: 297mm;
+            position: relative;
+            background: #fffdf7;
+            padding: 9mm 10mm 8mm 10mm;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Subtle Anti-Copy Security Guilloche Background Pattern */
+        .security-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 65%),
+                repeating-linear-gradient(45deg, rgba(184, 134, 11, 0.015) 0px, rgba(184, 134, 11, 0.015) 2px, transparent 2px, transparent 8px),
+                repeating-linear-gradient(-45deg, rgba(11, 37, 69, 0.015) 0px, rgba(11, 37, 69, 0.015) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Central University Emblem Watermark */
+        .center-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -46%);
+            width: 140mm;
+            opacity: 0.065;
+            pointer-events: none;
+            z-index: 2;
+            filter: grayscale(20%);
+        }
+
+        /* ===== ORNATE CERTIFICATE BORDER ===== */
+        .ornate-border-wrapper {
+            position: absolute;
+            top: 5mm;
+            left: 5mm;
+            right: 5mm;
+            bottom: 5mm;
+            border: 3.5px solid #7c1d1d; /* Deep Royal Burgundy */
+            outline: 1.5px solid #b8860b; /* Gold Accent */
+            outline-offset: -5px;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .ornate-inner-border {
+            position: absolute;
+            top: 8.5mm;
+            left: 8.5mm;
+            right: 8.5mm;
+            bottom: 8.5mm;
+            border: 1px dashed #c59b27;
+            pointer-events: none;
+            z-index: 3;
+        }
+        /* Corner Rosettes */
+        .corner-ornament {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            z-index: 4;
+            fill: #7c1d1d;
+        }
+        .corner-tl { top: 6mm; left: 6mm; }
+        .corner-tr { top: 6mm; right: 6mm; transform: rotate(90deg); }
+        .corner-br { bottom: 6mm; right: 6mm; transform: rotate(180deg); }
+        .corner-bl { bottom: 6mm; left: 6mm; transform: rotate(270deg); }
+
+        /* ===== INNER CONTENT LAYER ===== */
+        .degree-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2mm 5mm 1mm 5mm;
+            text-align: center;
+        }
+
+        /* Top Security Header Row */
+        .top-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #555555;
+            letter-spacing: 0.5px;
+            padding: 0 4px;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+            padding-bottom: 3px;
+        }
+        .top-meta-val {
+            color: #7c1d1d;
+            font-weight: 800;
+        }
+
+        /* University Brand & Emblem Header */
+        .univ-header-block {
+            margin-top: 3px;
+        }
+        .univ-emblem-img {
+            height: 64px;
+            width: auto;
+            display: block;
+            margin: 0 auto 4px auto;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+        .univ-hindi-title {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 21px;
+            font-weight: 800;
+            color: #7c1d1d;
+            line-height: 1.15;
+            letter-spacing: 0.5px;
+            margin-bottom: 1px;
+        }
+        .univ-eng-title {
+            font-family: 'Cinzel', serif;
+            font-size: 23px;
+            font-weight: 900;
+            color: #0b2545;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.15;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        .univ-statutory-sub {
+            font-family: 'Marcellus', Georgia, serif;
+            font-size: 9.5px;
+            color: #4b5563;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
+            line-height: 1.35;
+        }
+        .univ-location {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #7c1d1d;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+
+        /* Decorative Divider */
+        .gold-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px auto 4px auto;
+            width: 75%;
+        }
+        .gold-divider-line {
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #b8860b, transparent);
+        }
+        .gold-divider-star {
+            color: #b8860b;
+            padding: 0 8px;
+            font-size: 11px;
+        }
+
+        /* Candidate Photo & Floating Security Stamp */
+        .photo-security-box {
+            position: absolute;
+            top: 22mm;
+            right: 7mm;
+            width: 28mm;
+            text-align: center;
+            z-index: 15;
+        }
+        .photo-frame {
+            width: 25mm;
+            height: 31mm;
+            border: 2px solid #7c1d1d;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+            background: #ffffff;
+            padding: 1.5px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-security-stamp {
+            position: absolute;
+            bottom: -5px;
+            right: -6px;
+            width: 32px;
+            height: 32px;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+        .photo-label {
+            font-family: -apple-system, sans-serif;
+            font-size: 7.5px;
+            color: #64748b;
+            font-weight: 700;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Conferment Statement */
+        .confer-preamble-hindi {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 12.5px;
+            color: #374151;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-top: 4px;
+        }
+        .confer-preamble-eng {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 13.5px;
+            color: #1f2937;
+            margin-top: 1px;
+        }
+
+        /* Recipient Name Display */
+        .recipient-box {
+            margin: 6px 0 5px 0;
+            padding: 4px 0;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
+            border-top: 1px solid rgba(184, 134, 11, 0.25);
+            border-bottom: 1px solid rgba(184, 134, 11, 0.25);
+        }
+        .recipient-hindi-name {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 19px;
+            font-weight: 800;
+            color: #7c1d1d;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .recipient-name {
+            font-family: 'Cinzel Decorative', 'Cinzel', serif;
+            font-size: 25px;
+            font-weight: 900;
+            color: #0b2545;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.12);
+            line-height: 1.15;
+        }
+        .parentage-line {
+            font-family: 'Playfair Display', serif;
+            font-size: 12px;
+            color: #4b5563;
+            font-style: italic;
+            margin-top: 3px;
+        }
+
+        /* Degree Name / Title Awarded */
+        .degree-awarded-block {
+            margin: 6px 0 5px 0;
+        }
+        .degree-prefix {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: #374151;
+            margin-bottom: 2px;
+        }
+        .degree-hindi-title {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: #7c1d1d;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .degree-eng-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: #7c1d1d;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 1px 2px rgba(124, 29, 29, 0.15);
+            line-height: 1.15;
+        }
+
+        /* Citation & Academic Performance Block */
+        .citation-block {
+            margin: 4px auto 6px auto;
+            width: 90%;
+            line-height: 1.5;
+        }
+        .citation-hindi {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 11.5px;
+            color: #374151;
+            margin-bottom: 3px;
+        }
+        .citation-eng {
+            font-family: 'Playfair Display', serif;
+            font-size: 12.5px;
+            color: #1f2937;
+        }
+        .highlight-gold {
+            font-weight: 800;
+            color: #0b2545;
+        }
+        .division-badge-text {
+            color: #15803d;
+            font-weight: 800;
+        }
+
+        /* Specific Candidate Academic Records Ribbon */
+        .academic-records-strip {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: #fdfaf0;
+            border: 1px solid rgba(184, 134, 11, 0.35);
+            border-radius: 4px;
+            padding: 5px 14px;
+            margin: 4px auto 6px auto;
+            width: 86%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 11px;
+            color: #374151;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .record-item strong {
+            color: #0b2545;
+            font-weight: 700;
+        }
+        .record-item span {
+            color: #7c1d1d;
+            font-weight: 800;
+        }
+
+        /* University Given Under Seal Line */
+        .confer-seal-date {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 11px;
+            color: #4b5563;
+            margin: 3px 0 5px 0;
+        }
+
+        /* ===== FOOTER SIGNATURES & UNIVERSITY EMBOSSED SEAL ===== */
+        .degree-footer {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr 1.1fr;
+            align-items: flex-end;
+            margin-top: 5px;
+            padding: 0 4px;
+            text-align: center;
+        }
+        .sig-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .sig-handwritten {
+            height: 38px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 26px;
+            color: #0b2545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-3deg);
+            margin-bottom: 1px;
+            user-select: none;
+        }
+        .sig-handwritten.chancellor-sign {
+            color: #7c1d1d;
+            font-size: 28px;
+            transform: rotate(-2deg);
+        }
+        .sig-line {
+            width: 90%;
+            border-top: 1.2px solid #0b2545;
+            padding-top: 3px;
+        }
+        .sig-title-hindi {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #7c1d1d;
+            line-height: 1.2;
+        }
+        .sig-title-eng {
+            font-family: 'Cinzel', serif;
+            font-size: 9.5px;
+            font-weight: 800;
+            color: #0b2545;
+            letter-spacing: 0.5px;
+        }
+        .sig-name {
+            font-family: -apple-system, sans-serif;
+            font-size: 8px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* Center Golden 3D Metallic Embossed Seal Badge */
+        .seal-center-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .golden-seal-svg {
+            width: 82px;
+            height: 82px;
+            filter: drop-shadow(0 4px 8px rgba(184, 134, 11, 0.45));
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .golden-seal-svg:hover {
+            transform: scale(1.04);
+        }
+        .seal-label {
+            font-family: 'Cinzel', serif;
+            font-size: 7.5px;
+            font-weight: 800;
+            color: #854d0e;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Scannable Verification QR Box */
+        .qr-verification-box {
+            position: absolute;
+            bottom: 11mm;
+            left: 10mm;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(184, 134, 11, 0.35);
+        }
+        #degreeQRCode {
+            width: 44px;
+            height: 44px;
+        }
+        .qr-text-info {
+            text-align: left;
+            font-family: -apple-system, sans-serif;
+            font-size: 7.5px;
+            color: #475569;
+            line-height: 1.25;
+        }
+        .qr-text-info strong {
+            color: #0b2545;
+            display: block;
+            font-size: 8px;
+        }
+
+        /* Security Barcode Box */
+        .security-barcode-box {
+            position: absolute;
+            bottom: 11mm;
+            right: 10mm;
+            text-align: right;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(184, 134, 11, 0.35);
+        }
+        .security-barcode-svg {
+            height: 20px;
+            width: 110px;
+            display: block;
+            margin-left: auto;
+        }
+        .security-barcode-num {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 8px;
+            color: #334155;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 1px;
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+            .action-bar {
+                display: none !important;
+            }
+            .degree-sheet {
+                width: 210mm;
+                height: 297mm;
+                min-height: 297mm;
+                box-shadow: none;
+                padding: 9mm 10mm 8mm 10mm;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Action / Print Bar -->
+    <div class="action-bar">
+        <div class="action-bar-left">
+            <a href="dashboard.html" class="btn-action btn-back">
+                <i class="fa fa-arrow-left"></i> Dashboard
+            </a>
+            <a href="view_results.html" class="btn-action btn-back">
+                <i class="fa fa-list"></i> View All Grade Cards
+            </a>
+        </div>
+        <div class="action-bar-right">
+            <a href="verify.html?type=degree&id=GE-21538540&name=MOHD+SOHIL&roll=2187530&course=B.COM+(Hons)&cgpa=8.41&status=CONFERRED" target="_blank" class="btn-action btn-verify">
+                <i class="fa fa-check-circle"></i> Online Verification
+            </a>
+            <button onclick="window.print()" class="btn-action btn-print">
+                <i class="fa fa-print"></i> Print / Download Degree (PDF)
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== DEGREE CERTIFICATE A4 PORTRAIT ===== -->
+    <div class="degree-sheet">
+        <!-- Anti-Copy Guilloche Security Pattern -->
+        <div class="security-background"></div>
+
+        <!-- Central Watermark -->
+        <img src="gehu_emblem_hd.png" class="center-watermark" alt="GEHU Watermark">
+
+        <!-- Ornamental Borders & Corner Elements -->
+        <div class="ornate-border-wrapper"></div>
+        <div class="ornate-inner-border"></div>
+
+        <!-- SVG Corner Baroque Flourishes -->
+        <svg class="corner-ornament corner-tl" viewBox="0 0 100 100">
+            <path d="M 10 10 L 90 10 C 60 10 30 20 20 50 C 15 65 10 80 10 90 Z M 20 20 L 70 20 C 50 25 35 35 25 60 C 22 50 20 35 20 20 Z" />
+            <circle cx="30" cy="30" r="5" fill="#b8860b"/>
+        </svg>
+        <svg class="corner-ornament corner-tr" viewBox="0 0 100 100">
+            <path d="M 10 10 L 90 10 C 60 10 30 20 20 50 C 15 65 10 80 10 90 Z M 20 20 L 70 20 C 50 25 35 35 25 60 C 22 50 20 35 20 20 Z" />
+            <circle cx="30" cy="30" r="5" fill="#b8860b"/>
+        </svg>
+        <svg class="corner-ornament corner-br" viewBox="0 0 100 100">
+            <path d="M 10 10 L 90 10 C 60 10 30 20 20 50 C 15 65 10 80 10 90 Z M 20 20 L 70 20 C 50 25 35 35 25 60 C 22 50 20 35 20 20 Z" />
+            <circle cx="30" cy="30" r="5" fill="#b8860b"/>
+        </svg>
+        <svg class="corner-ornament corner-bl" viewBox="0 0 100 100">
+            <path d="M 10 10 L 90 10 C 60 10 30 20 20 50 C 15 65 10 80 10 90 Z M 20 20 L 70 20 C 50 25 35 35 25 60 C 22 50 20 35 20 20 Z" />
+            <circle cx="30" cy="30" r="5" fill="#b8860b"/>
+        </svg>
+
+        <!-- Candidate Photograph Box with Security Frame -->
+        <div class="photo-security-box">
+            <div class="photo-frame">
+                <img src="sohil_photo.png" id="degPhoto" alt="Graduate Photo">
+                <!-- Embossed Stamp Simulation over photo -->
+                <svg class="photo-security-stamp" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#7c1d1d" stroke-width="3" stroke-dasharray="4,2"/>
+                    <circle cx="50" cy="50" r="36" fill="none" stroke="#b8860b" stroke-width="1.5"/>
+                    <text x="50" y="44" font-family="'Cinzel',serif" font-size="11" font-weight="bold" fill="#7c1d1d" text-anchor="middle">GEHU</text>
+                    <text x="50" y="60" font-family="'Cinzel',serif" font-size="8" font-weight="bold" fill="#7c1d1d" text-anchor="middle">SEALED</text>
+                </svg>
+            </div>
+            <div class="photo-label">CANDIDATE PHOTO</div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="degree-content">
+            <!-- Header Security Meta -->
+            <div>
+                <div class="top-meta-row">
+                    <div>
+                        Sr. No. / क्रम संख्या: <span class="top-meta-val" id="degSerial">GEHU/DEG/2024/084920</span>
+                    </div>
+                    <div>
+                        Enrollment No. / नामांकन संख्या: <span class="top-meta-val" id="degEnroll">GE-21538540</span>
+                    </div>
+                    <div>
+                        Class Roll No. / अनुक्रमांक: <span class="top-meta-val" id="degRoll">2187530</span>
+                    </div>
+                </div>
+
+                <!-- University Title & Emblem -->
+                <div class="univ-header-block">
+                    <img src="gehu_emblem_hd.png" class="univ-emblem-img" alt="Graphic Era Hill University Coat of Arms">
+                    <div class="univ-hindi-title">ग्राफिक एरा पर्वतीय विश्वविद्यालय</div>
+                    <div class="univ-eng-title">Graphic Era Hill University</div>
+                    <div class="univ-statutory-sub">
+                        (उत्तराखंड राज्य अधिनियम संख्या 12, 2011 एवं विश्वविद्यालय अनुदान आयोग अधिनियम, 1956 की धारा 2(f) के अंतर्गत स्थापित)<br>
+                        (Established under Uttarakhand State Act No. 12 of 2011 & recognized under Section 2(f) of UGC Act, 1956)
+                    </div>
+                    <div class="univ-location">DEHRADUN, UTTARAKHAND, INDIA</div>
+                </div>
+
+                <!-- Gold Star Divider -->
+                <div class="gold-divider">
+                    <div class="gold-divider-line"></div>
+                    <div class="gold-divider-star">✦ &bull; ✦</div>
+                    <div class="gold-divider-line"></div>
+                </div>
+
+                <!-- Conferment Preamble -->
+                <div class="confer-preamble-hindi">
+                    विद्या परिषद की संस्तुति पर विश्वविद्यालय के प्रबंध बोर्ड द्वारा
+                </div>
+                <div class="confer-preamble-eng">
+                    On the recommendation of the Academic Council, the Board of Management hereby confers upon
+                </div>
+
+                <!-- Recipient Name Block -->
+                <div class="recipient-box">
+                    <div class="recipient-hindi-name" id="degHindiName">मोहम्मद सोहिल</div>
+                    <div class="recipient-name" id="degName">MOHD SOHIL</div>
+                    <div class="parentage-line" id="degParentage">
+                        Son of Shri Ahsan & Smt. Jameela / सुपुत्र श्री अहसान एवं श्रीमती जमीला
+                    </div>
+                </div>
+
+                <!-- Degree Awarded Title -->
+                <div class="degree-awarded-block">
+                    <div class="degree-prefix">the degree of / की उपाधि</div>
+                    <div class="degree-hindi-title" id="degHindiTitle">वाणिज्य स्नातक (ऑनर्स)</div>
+                    <div class="degree-eng-title" id="degTitle">Bachelor of Commerce (Honours)</div>
+                </div>
+
+                <!-- Citation Text -->
+                <div class="citation-block">
+                    <div class="citation-hindi">
+                        जिन्होंने इस उपाधि की प्राप्ति हेतु निर्धारित समस्त शैक्षणिक आवश्यकताओं को वर्ष <span class="highlight-gold">2024</span> में सफलतापूर्वक पूर्ण किया है तथा इन्हें संचयी ग्रेड बिंदु औसत (CGPA) <span class="highlight-gold">8.41</span> के साथ <span class="division-badge-text">प्रथम श्रेणी (विशिष्टता सहित)</span> में घोषित किया गया है।
+                    </div>
+                    <div class="citation-eng">
+                        having successfully completed all the prescribed academic requirements for the degree in the year <span class="highlight-gold">2024</span> and placed in <span class="division-badge-text">First Division with Distinction</span> with a Cumulative Grade Point Average of <span class="highlight-gold">8.41</span>.
+                    </div>
+                </div>
+
+                <!-- Official Academic Records Strip -->
+                <div class="academic-records-strip">
+                    <div class="record-item">Programme: <strong>B.COM (Hons)</strong></div>
+                    <div class="record-item">Academic Session: <strong>2021-2024</strong></div>
+                    <div class="record-item">Credits Earned: <strong>149 / 149</strong></div>
+                    <div class="record-item">Final CGPA: <span>8.41</span></div>
+                    <div class="record-item">Division: <span style="color:#15803d;">First with Distinction</span></div>
+                </div>
+
+                <!-- Given under Seal Statement -->
+                <div class="confer-seal-date">
+                    Given under the seal of the University at Dehradun (Uttarakhand) in the Republic of India on the 29th day of June, 2024.<br>
+                    विश्वविद्यालय की मुहर के अंतर्गत यह उपाधि आज दिनांक 29 जून 2024 को देहरादून में प्रदान की गई।
+                </div>
+            </div>
+
+            <!-- Footer Signatures & Golden Embossed Seal -->
+            <div class="degree-footer">
+                <!-- 1. Registrar -->
+                <div class="sig-block">
+                    <div class="sig-handwritten" style="font-family:'Brush Script MT', 'Great Vibes', cursive; font-size:24px; color:#1e3a8a;">
+                        Dinesh Joshi
+                    </div>
+                    <div class="sig-line"></div>
+                    <div class="sig-title-hindi">कुलसचिव</div>
+                    <div class="sig-title-eng">Registrar</div>
+                    <div class="sig-name">(Dr. Dinesh Joshi)</div>
+                </div>
+
+                <!-- 2. Official University Golden Embossed 3D Seal -->
+                <div class="seal-center-box">
+                    <svg class="golden-seal-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <radialGradient id="goldGradient" cx="45%" cy="40%" r="60%">
+                                <stop offset="0%" stop-color="#fff6cc"/>
+                                <stop offset="25%" stop-color="#ffd700"/>
+                                <stop offset="60%" stop-color="#d4af37"/>
+                                <stop offset="85%" stop-color="#aa7c11"/>
+                                <stop offset="100%" stop-color="#694605"/>
+                            </radialGradient>
+                            <filter id="sealShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#553a05" flood-opacity="0.4"/>
+                            </filter>
+                        </defs>
+                        <!-- Serrated Star/Ribbon Seal Outer Edge -->
+                        <path d="M 100 5 L 109 21 L 127 15 L 131 33 L 149 32 L 148 50 L 165 55 L 158 72 L 173 82 L 161 97 L 173 111 L 157 121 L 164 139 L 146 143 L 148 162 L 129 160 L 124 179 L 106 171 L 96 188 L 82 175 L 67 187 L 60 170 L 41 176 L 40 157 L 22 157 L 28 139 L 13 133 L 24 117 L 13 103 L 28 93 L 22 75 L 40 72 L 39 53 L 57 56 L 62 38 L 80 44 L 90 28 Z" fill="url(#goldGradient)" filter="url(#sealShadow)" stroke="#b8860b" stroke-width="1.5"/>
+                        <!-- Inner Concentric Rings -->
+                        <circle cx="100" cy="100" r="76" fill="none" stroke="#785208" stroke-width="2"/>
+                        <circle cx="100" cy="100" r="72" fill="none" stroke="#fff8dc" stroke-width="1.2" stroke-dasharray="3,2"/>
+                        <circle cx="100" cy="100" r="54" fill="none" stroke="#785208" stroke-width="2"/>
+                        <circle cx="100" cy="100" r="50" fill="url(#goldGradient)"/>
+                        <!-- Circular Curved Text Path -->
+                        <path id="sealTextPath" d="M 100,100 m -64,0 a 64,64 0 1,1 128,0 a 64,64 0 1,1 -128,0" fill="none"/>
+                        <text font-family="'Cinzel',serif" font-size="10.5" font-weight="900" fill="#4d3303" letter-spacing="2">
+                            <textPath href="#sealTextPath" startOffset="50%" text-anchor="middle">
+                                GRAPHIC ERA HILL UNIVERSITY &bull; DEHRADUN &bull;
+                            </textPath>
+                        </text>
+                        <!-- Center Seal Shield & Star -->
+                        <path d="M 100 68 L 115 78 L 115 106 C 115 120 100 130 100 130 C 100 130 85 120 85 106 L 85 78 Z" fill="#7c1d1d" stroke="#fff8dc" stroke-width="1.5"/>
+                        <polygon points="100,78 103,87 112,87 105,92 108,101 100,96 92,101 95,92 88,87 97,87" fill="#ffd700"/>
+                        <text x="100" y="118" font-family="'Cinzel',serif" font-size="8" font-weight="bold" fill="#fff8dc" text-anchor="middle">2011</text>
+                    </svg>
+                    <div class="seal-label">OFFICIAL SEAL</div>
+                </div>
+
+                <!-- 3. Vice-Chancellor -->
+                <div class="sig-block">
+                    <div class="sig-handwritten" style="font-family:'Great Vibes', cursive; font-size:27px; color:#0b2545;">
+                        Tabassum Naqvi
+                    </div>
+                    <div class="sig-line"></div>
+                    <div class="sig-title-hindi">कुलपति</div>
+                    <div class="sig-title-eng">Vice-Chancellor</div>
+                    <div class="sig-name">(Prof. Dr. Tabassum Naqvi)</div>
+                </div>
+
+                <!-- 4. Chancellor -->
+                <div class="sig-block">
+                    <div class="sig-handwritten chancellor-sign" style="font-family:'Great Vibes', cursive; font-size:27px;">
+                        Kamal Ghanshala
+                    </div>
+                    <div class="sig-line" style="border-top-color:#7c1d1d;"></div>
+                    <div class="sig-title-hindi">कुलाधिपति</div>
+                    <div class="sig-title-eng">Chancellor</div>
+                    <div class="sig-name">(Prof. Dr. Kamal Ghanshala)</div>
+                </div>
+            </div>
+
+            <!-- Absolute Verification QR Code (Bottom Left) -->
+            <div class="qr-verification-box">
+                <div id="degreeQRCode"></div>
+                <div class="qr-text-info">
+                    <strong>DIGITAL AUTHENTICITY</strong>
+                    Scan with any smartphone camera<br>
+                    to verify university registry records.
+                </div>
+            </div>
+
+            <!-- Absolute Barcode (Bottom Right) -->
+            <div class="security-barcode-box">
+                <svg class="security-barcode-svg" viewBox="0 0 220 36">
+                    <rect x="0" y="0" width="3" height="36" fill="#000"/>
+                    <rect x="5" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="10" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="18" y="0" width="1" height="36" fill="#000"/>
+                    <rect x="22" y="0" width="4" height="36" fill="#000"/>
+                    <rect x="29" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="34" y="0" width="6" height="36" fill="#000"/>
+                    <rect x="43" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="48" y="0" width="4" height="36" fill="#000"/>
+                    <rect x="55" y="0" width="1" height="36" fill="#000"/>
+                    <rect x="59" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="67" y="0" width="3" height="36" fill="#000"/>
+                    <rect x="73" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="78" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="86" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="91" y="0" width="4" height="36" fill="#000"/>
+                    <rect x="98" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="103" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="111" y="0" width="1" height="36" fill="#000"/>
+                    <rect x="115" y="0" width="4" height="36" fill="#000"/>
+                    <rect x="122" y="0" width="3" height="36" fill="#000"/>
+                    <rect x="128" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="133" y="0" width="6" height="36" fill="#000"/>
+                    <rect x="142" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="147" y="0" width="4" height="36" fill="#000"/>
+                    <rect x="154" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="159" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="167" y="0" width="3" height="36" fill="#000"/>
+                    <rect x="173" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="178" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="186" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="191" y="0" width="4" height="36" fill="#000"/>
+                    <rect x="198" y="0" width="2" height="36" fill="#000"/>
+                    <rect x="203" y="0" width="5" height="36" fill="#000"/>
+                    <rect x="211" y="0" width="3" height="36" fill="#000"/>
+                    <rect x="217" y="0" width="3" height="36" fill="#000"/>
+                </svg>
+                <div class="security-barcode-num" id="degBarcodeNum">*GEHU-DEG-2024-84920*</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to Hydrate and Generate Scannable QR -->
+    <script>
+        function initDegreeCertificate() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var sessName = sessionStorage.getItem('userName') || '';
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName).toLowerCase().replace(/[^a-z0-9]/g, '');
+            var isHashim = (
+                checkId.includes('ge21545586') ||
+                checkId.includes('21545586') ||
+                checkId.includes('2154682') ||
+                checkId.includes('hashim')
+            );
+            var isSohil = !isHashim;
+            var student = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+
+            var sName = isSohil ? 'MOHD SOHIL' : (sessionStorage.getItem('userName') || student.name);
+            var sHindiName = isSohil ? 'मोहम्मद सोहिल' : 'मोहम्मद हाशिम';
+            var sFather = isSohil ? 'AHSAN' : (sessionStorage.getItem('fatherName') || student.father_name);
+            var sMother = isSohil ? 'JAMEELA' : (sessionStorage.getItem('motherName') || student.mother_name);
+            var sFatherHindi = isSohil ? 'अहसान' : 'सईद';
+            var sMotherHindi = isSohil ? 'जमीला' : 'शहाना';
+            var sEnroll = isSohil ? 'GE-21538540' : (sessionStorage.getItem('enrollNo') || student.enroll_no);
+            var sRoll = isSohil ? '2187530' : (sessionStorage.getItem('classRollNo') || student.class_roll_no);
+            var sPhoto = isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || 'candidate_photo_hd.png?v=20260824');
+            var sSerial = isSohil ? 'GEHU/DEG/2024/084920' : 'GEHU/DEG/2023/074812';
+            var sBarcode = isSohil ? '*GEHU-DEG-2024-84920*' : '*GEHU-DEG-2023-74812*';
+
+            // Populate DOM
+            document.getElementById('degSerial').textContent = sSerial;
+            document.getElementById('degEnroll').textContent = sEnroll;
+            document.getElementById('degRoll').textContent = sRoll;
+            document.getElementById('degHindiName').textContent = sHindiName;
+            document.getElementById('degName').textContent = sName.toUpperCase();
+            document.getElementById('degParentage').textContent = 'Son of Shri ' + sFather.toUpperCase() + ' & Smt. ' + sMother.toUpperCase() + ' / सुपुत्र श्री ' + sFatherHindi + ' एवं श्रीमती ' + sMotherHindi;
+            document.getElementById('degPhoto').src = sPhoto;
+            document.getElementById('degBarcodeNum').textContent = sBarcode;
+
+            // Generate Scannable QR Code
+            try {
+                var qrCont = document.getElementById('degreeQRCode');
+                qrCont.innerHTML = '';
+                var baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                    ? (window.location.protocol + '//172.20.10.8:8080')
+                    : window.location.origin;
+
+                var verifyUrl = baseUrl + '/verify.html?type=degree' +
+                    '&id=' + encodeURIComponent(sEnroll) +
+                    '&name=' + encodeURIComponent(sName) +
+                    '&roll=' + encodeURIComponent(sRoll) +
+                    '&course=' + encodeURIComponent('B.COM (Hons)') +
+                    '&cgpa=8.41' +
+                    '&status=CONFERRED';
+
+                new QRCode(qrCont, {
+                    text: verifyUrl,
+                    width: 44,
+                    height: 44,
+                    colorDark: "#0b2545",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } catch(e) {
+                console.error("Degree QR error:", e);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initDegreeCertificate);
+    </script>
+</body>
+</html>

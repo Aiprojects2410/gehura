@@ -181,7 +181,14 @@ const SOHIL_STUDENT = {
     phone: "8630003510",
     course: "B.COM (Hons)",
     password: "student@123",
-    photo: "sohil_photo.png"
+    photo: "sohil_photo.png",
+    degree_conferred: true,
+    degree_name: "BACHELOR OF COMMERCE (HONOURS)",
+    degree_serial: "GEHU/DEG/2024/084920",
+    convocation_year: "2024",
+    final_cgpa: "8.41",
+    final_division: "First Division with Distinction",
+    degree_date: "29/06/2024"
 };
 
 // Master All 6 Semesters Results for MOHD SOHIL (Batch 2021-24)

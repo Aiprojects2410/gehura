@@ -144,6 +144,40 @@
         </div>
     </div>
 
+    <!-- Degree Award Banner for Graduated Students -->
+    <div id="gradBanner">
+        <script>
+            (function() {
+                var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+                var sessName = sessionStorage.getItem('userName') || '';
+                var checkId = (sessEnroll + ' ' + sessName).toLowerCase().replace(/[^a-z0-9]/g, '');
+                var isHashim = checkId.includes('hashim') || checkId.includes('21545586') || checkId.includes('2154682');
+                if (!isHashim) {
+                    document.write(`
+                        <div style="background: linear-gradient(135deg, #fef3c7, #fffbeb); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 14px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);">
+                            <div style="display:flex; align-items:center; gap:16px;">
+                                <div style="width:46px; height:46px; border-radius:50%; background:#d97706; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;">
+                                    <i class="fa fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size:15px; font-weight:800; color:#92400e; letter-spacing:0.3px;">Official Degree Conferred: Bachelor of Commerce (Honours)</div>
+                                    <div style="font-size:12px; color:#b45309; margin-top:2px;">
+                                        <strong>Graduating Batch 2021-2024 (Completed)</strong> &bull; Final CGPA: <strong style="color:#0b2545; font-size:13px;">8.41</strong> &bull; Division: <strong style="color:#15803d;">First Division with Distinction</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="degree.html" target="_blank" style="background: linear-gradient(135deg, #d97706, #b45309); color:#ffffff; font-weight:700; font-size:12.5px; padding:9px 18px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 3px 8px rgba(217, 119, 6, 0.35);">
+                                    <i class="fa fa-certificate"></i> View Degree Certificate
+                                </a>
+                            </div>
+                        </div>
+                    `);
+                }
+            })();
+        </script>
+    </div>
+
     <!-- Results Table -->
     <div class="results-table-container">
         <table class="results-table">
