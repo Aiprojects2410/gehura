@@ -163,7 +163,7 @@ html_content = f'''<!DOCTYPE html>
   /* Body Content */
   .body-content {{
     position: absolute;
-    top: 1030px;
+    top: 1040px;
     left: 200px;
     right: 200px;
     text-align: center;
@@ -176,96 +176,96 @@ html_content = f'''<!DOCTYPE html>
     line-height: 1.45;
   }}
   .hindi-line1 {{
-    font-size: 52px;
+    font-size: 50px;
     font-weight: 500;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     color: #1a1a1a;
   }}
   .hindi-name {{
-    font-size: 68px;
+    font-size: 64px;
     font-weight: 700;
-    color: #c4261d;
-    margin-bottom: 24px;
-    letter-spacing: 1px;
+    color: #111111;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
   }}
   .hindi-line2 {{
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 500;
     margin-bottom: 22px;
     color: #1a1a1a;
   }}
   .hindi-line3 {{
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 500;
     margin-bottom: 22px;
     color: #1a1a1a;
   }}
   .hindi-line4 {{
-    font-size: 50px;
+    font-size: 48px;
     font-weight: 500;
     margin-bottom: 24px;
     color: #1a1a1a;
   }}
   .hindi-degree {{
-    font-size: 64px;
+    font-size: 60px;
     font-weight: 700;
-    color: #c4261d;
+    color: #111111;
     margin-bottom: 22px;
     letter-spacing: 0.5px;
   }}
   .hindi-line5 {{
-    font-size: 52px;
+    font-size: 50px;
     font-weight: 500;
-    margin-bottom: 45px;
+    margin-bottom: 50px;
     color: #1a1a1a;
   }}
 
-  /* English Block */
+  /* English Block - Times New Roman / Serif matching reference */
   .english-block {{
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     line-height: 1.4;
   }}
   .eng-line1 {{
-    font-size: 52px;
+    font-size: 50px;
     font-weight: 400;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     color: #1a1a1a;
   }}
   .eng-name {{
-    font-size: 66px;
+    font-size: 62px;
     font-weight: 700;
-    color: #c4261d;
-    margin-bottom: 22px;
-    letter-spacing: 1.5px;
+    color: #111111;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
   }}
   .eng-line2 {{
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 400;
     margin-bottom: 20px;
     color: #1a1a1a;
   }}
   .eng-line3 {{
-    font-size: 50px;
+    font-size: 48px;
     font-weight: 400;
     margin-bottom: 20px;
     color: #1a1a1a;
   }}
   .eng-line4 {{
-    font-size: 50px;
+    font-size: 48px;
     font-weight: 400;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     color: #1a1a1a;
   }}
   .eng-line5 {{
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 400;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     color: #1a1a1a;
   }}
   .eng-degree {{
-    font-size: 64px;
+    font-size: 58px;
     font-weight: 700;
-    color: #c4261d;
+    color: #111111;
     letter-spacing: 0.5px;
   }}
 
