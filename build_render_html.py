@@ -9,8 +9,7 @@ def get_b64(path):
 
 bg_b64 = get_b64('blank_degree_hd.png')
 logo_b64 = get_b64('clean_ge_logo.png')
-graphic_era_b64 = get_b64('clean_title_white_bg.png')
-hill_univ_b64 = get_b64('clean_hill_university.png')
+brand_logo_b64 = get_b64('clean_gehu_brand_perfect.png')
 photo_b64 = get_b64('sohil_photo.png')
 qr_b64 = get_b64('sohil_new_qr.png')
 bar_b64 = get_b64('sohil_crisp_barcode.png')
@@ -137,16 +136,10 @@ html_content = f'''<!DOCTYPE html>
     width: 2480px;
     text-align: center;
   }}
-  .graphic-era-logo {{
-    height: 120px;
+  .gehu-brand-logo {{
+    height: 145px;
     object-fit: contain;
-    margin-bottom: 5px;
-  }}
-  .hill-univ-logo {{
-    height: 48px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 12px auto;
+    margin-bottom: 12px;
   }}
   .sub-act {{
     font-size: 26px;
@@ -428,8 +421,7 @@ html_content = f'''<!DOCTYPE html>
 
     <!-- University Title Section -->
     <div class="title-section">
-      <img class="graphic-era-logo" src="{graphic_era_b64}"><br>
-      <img class="hill-univ-logo" src="{hill_univ_b64}">
+      <img class="gehu-brand-logo" src="{brand_logo_b64}">
       <div class="sub-act">Established by an Act of the State Legislature of Uttarakhand (Adhiniyam Sankhya 12 of 2011)</div>
       <div class="sub-ugc">University under section 2(f) of UGC Act, 1956</div>
       <div class="title-divider-line"></div>
