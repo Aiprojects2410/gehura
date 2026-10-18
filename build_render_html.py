@@ -12,7 +12,7 @@ logo_b64 = get_b64('clean_ge_logo.png')
 brand_logo_b64 = get_b64('clean_gehu_brand_perfect.png')
 photo_b64 = get_b64('sohil_photo.png')
 qr_b64 = get_b64('sohil_new_qr.png')
-bar_b64 = get_b64('sohil_crisp_barcode.png')
+bar_b64 = get_b64('sohil_scannable_bar.png')
 seal_b64 = get_b64('clean_seal_square.png')
 sig_reg_b64 = get_b64('sig_reg_perfect.png')
 sig_vc_b64 = get_b64('sig_vc_perfect.png')
@@ -102,28 +102,28 @@ html_content = f'''<!DOCTYPE html>
     width: 580px;
   }}
 
-  /* Header row: QR, Logo, Photo */
+  /* Header row: QR, Logo, Photo matching reference */
   .qr-code {{
     position: absolute;
     top: 360px;
-    left: 350px;
-    width: 240px;
-    height: 240px;
+    left: 240px;
+    width: 200px;
+    height: 200px;
   }}
   .main-logo {{
     position: absolute;
     top: 310px;
-    left: 1090px;
-    width: 300px;
-    height: 300px;
+    left: 1085px;
+    width: 310px;
+    height: 310px;
     object-fit: contain;
   }}
   .student-photo {{
     position: absolute;
     top: 360px;
-    left: 1910px;
-    width: 245px;
-    height: 310px;
+    left: 1980px;
+    width: 220px;
+    height: 275px;
     object-fit: cover;
     border: 1px solid #ddd;
   }}
@@ -223,7 +223,7 @@ html_content = f'''<!DOCTYPE html>
   /* English Block - Times New Roman / Serif matching reference */
   .english-block {{
     font-family: 'Times New Roman', Times, serif;
-    line-height: 1.4;
+    line-height: 1.45;
   }}
   .eng-line1 {{
     font-size: 50px;
@@ -241,25 +241,13 @@ html_content = f'''<!DOCTYPE html>
   .eng-line2 {{
     font-size: 48px;
     font-weight: 400;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     color: #1a1a1a;
   }}
   .eng-line3 {{
     font-size: 48px;
     font-weight: 400;
-    margin-bottom: 20px;
-    color: #1a1a1a;
-  }}
-  .eng-line4 {{
-    font-size: 48px;
-    font-weight: 400;
-    margin-bottom: 24px;
-    color: #1a1a1a;
-  }}
-  .eng-line5 {{
-    font-size: 48px;
-    font-weight: 400;
-    margin-bottom: 24px;
+    margin-bottom: 26px;
     color: #1a1a1a;
   }}
   .eng-degree {{
@@ -309,25 +297,24 @@ html_content = f'''<!DOCTYPE html>
   /* Seal */
   .stamp-seal {{
     position: absolute;
-    top: 2700px;
-    left: 1060px;
-    width: 360px;
-    height: 360px;
+    top: 2710px;
+    left: 1065px;
+    width: 350px;
+    height: 350px;
     object-fit: contain;
   }}
 
-  /* Barcode */
+  /* Barcode matching reference */
   .barcode-box {{
     position: absolute;
-    top: 2620px;
-    left: 1840px;
-    width: 380px;
-    height: 95px;
+    top: 2635px;
+    left: 1890px;
+    width: 320px;
+    height: 80px;
   }}
   .barcode-img {{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 320px;
+    height: 80px;
     image-rendering: pixelated;
   }}
 
@@ -433,19 +420,17 @@ html_content = f'''<!DOCTYPE html>
         <div class="hindi-line1">प्रमाणित किया जाता है कि</div>
         <div class="hindi-name">मोहम्मद सोहिल</div>
         <div class="hindi-line2">को वर्ष २०२४ में</div>
-        <div class="hindi-line3">विश्वविद्यालय द्वारा आयोजित</div>
-        <div class="hindi-line4">परीक्षा में दस बिन्दु पैमाने पर ८.४१ सी.जी.पी.ए. प्राप्त कर उत्तीर्ण होने पर</div>
-        <div class="hindi-degree">वाणिज्य स्नातक (विज्ञ-पाठ्यक्रम)</div>
+        <div class="hindi-line3">विश्वविद्यालय द्वारा आयोजित परीक्षा</div>
+        <div class="hindi-line4">८.४१ सी.जी.पी.ए. के साथ उत्तीर्ण करने पर</div>
+        <div class="hindi-degree">वाणिज्य स्नातक</div>
         <div class="hindi-line5">की उपाधि प्रदान की जाती है</div>
       </div>
 
       <div class="english-block">
         <div class="eng-line1">This is to certify that</div>
         <div class="eng-name">MOHD SOHIL</div>
-        <div class="eng-line2">having passed the</div>
-        <div class="eng-line3">Examination of the University, securing a CGPA 8.41</div>
-        <div class="eng-line4">on a 10 Point Scale, in the year 2024</div>
-        <div class="eng-line5">has been awarded the Degree of</div>
+        <div class="eng-line2">having passed the University examination of 2024</div>
+        <div class="eng-line3">with CGPA 8.41 has been awarded the Degree of</div>
         <div class="eng-degree">Bachelor of Commerce</div>
       </div>
     </div>
