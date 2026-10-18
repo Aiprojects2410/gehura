@@ -11,7 +11,7 @@ bg_b64 = get_b64('blank_degree_hd.png')
 logo_b64 = get_b64('clean_ge_logo.png')
 brand_logo_b64 = get_b64('clean_gehu_brand_perfect.png')
 photo_b64 = get_b64('sohil_photo.png')
-qr_b64 = get_b64('sohil_new_qr.png')
+qr_b64 = get_b64('sohil_authentic_qr.png')
 bar_b64 = get_b64('sohil_scannable_bar.png')
 seal_b64 = get_b64('clean_seal_square.png')
 sig_reg_b64 = get_b64('sig_reg_perfect.png')
@@ -109,6 +109,8 @@ html_content = f'''<!DOCTYPE html>
     left: 240px;
     width: 200px;
     height: 200px;
+    background-color: #ffffff;
+    image-rendering: pixelated;
   }}
   .main-logo {{
     position: absolute;
@@ -311,6 +313,7 @@ html_content = f'''<!DOCTYPE html>
     left: 1890px;
     width: 320px;
     height: 80px;
+    background-color: #ffffff;
   }}
   .barcode-img {{
     width: 320px;
