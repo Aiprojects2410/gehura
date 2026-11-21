@@ -19,17 +19,10 @@
             var sessName = sessionStorage.getItem('userName') || '';
             var sessRoll = sessionStorage.getItem('classRollNo') || '';
             var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-            var isHashim = (
-                checkId.includes('ge21545586') ||
-                checkId.includes('21545586') ||
-                checkId.includes('2154682') ||
-                checkId.includes('hashim') ||
-                checkId.includes('babaansari') ||
-                checkId.includes('saeed') ||
-                sessionStorage.getItem('userName') === 'MOHD HASHIM'
-            );
-            window._isSohil = !isHashim;
-            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var res = resolvePortalStudent(checkId);
+            window._activeStudent = res.student;
+            window._isSohil = (window._activeStudent.enroll_no === 'GE-21538540');
+            window._isSalib = (window._activeStudent.enroll_no === 'PV-22360135');
         })();
     </script>
     <style>
@@ -402,7 +395,7 @@
                 <tr>
                     <td class="lbl">Valid Upto</td>
                     <td class="colon">:</td>
-                    <td class="val" id="idValidity"><script>document.write(window._isSohil ? 'JUNE 2024 / REGULAR' : 'JUNE 2023 / REGULAR');</script></td>
+                    <td class="val" id="idValidity"><script>document.write(window._isSalib ? 'JUNE 2026 / REGULAR' : (window._isSohil ? 'JUNE 2024 / REGULAR' : 'JUNE 2023 / REGULAR'));</script></td>
                 </tr>
             </table>
 
@@ -430,36 +423,14 @@
     <script>
         async function loadIdCard() {
             var urlParams = new URLSearchParams(window.location.search);
-            var queryId = urlParams.get('id');
+            var queryId = urlParams.get('id') || '';
+            var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+            var sessName = sessionStorage.getItem('userName') || '';
+            var sessRoll = sessionStorage.getItem('classRollNo') || '';
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-            var student = null;
-
-            if (queryId) {
-                var qClean = queryId.toLowerCase().replace(/[^a-z0-9]/g, '');
-                if (qClean === 'ge21538540' || qClean === '21538540' || qClean === '2187530' || qClean.includes('sohil')) {
-                    student = SOHIL_STUDENT;
-                } else {
-                    var allStudents = await dbGetStudents();
-                    student = allStudents.find(s => (s.enroll_no || '').toLowerCase() === queryId.toLowerCase() || (s.id || '').toLowerCase() === queryId.toLowerCase() || (s.class_roll_no || '').toLowerCase() === queryId.toLowerCase());
-                }
-            }
-
-            if (!student) {
-                // Check session
-                var sessEnroll = sessionStorage.getItem('enrollNo') || '';
-                var sessName = sessionStorage.getItem('userName') || '';
-                var sessRoll = sessionStorage.getItem('classRollNo') || '';
-                var sClean = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-                var isHashimSess = (
-                    sClean.includes('ge21545586') ||
-                    sClean.includes('21545586') ||
-                    sClean.includes('2154682') ||
-                    sClean.includes('hashim') ||
-                    sClean.includes('babaansari') ||
-                    sessionStorage.getItem('userName') === 'MOHD HASHIM'
-                );
-                student = isHashimSess ? DEFAULT_STUDENT : SOHIL_STUDENT;
-            }
+            var res = resolvePortalStudent(checkId);
+            var student = res.student;
 
             document.getElementById('idStudentName').textContent = (sessionStorage.getItem('userName') || student.name).toUpperCase();
             document.getElementById('idEnrollNo').textContent = (sessionStorage.getItem('enrollNo') || student.enroll_no).toUpperCase();
@@ -469,15 +440,20 @@
             document.getElementById('idDob').textContent = sessionStorage.getItem('dob') || student.dob;
             document.getElementById('idPhone').textContent = sessionStorage.getItem('phone') || student.phone;
 
-            var isSohil = (student.enroll_no === 'GE-21538540' || (student.name || '').includes('SOHIL'));
             var validityElem = document.getElementById('idValidity');
             if (validityElem) {
-                validityElem.textContent = isSohil ? 'JUNE 2024 / REGULAR' : 'JUNE 2023 / REGULAR';
+                if (student.enroll_no === 'PV-22360135') {
+                    validityElem.textContent = 'JUNE 2026 / REGULAR';
+                } else if (student.enroll_no === 'GE-21538540') {
+                    validityElem.textContent = 'JUNE 2024 / REGULAR';
+                } else {
+                    validityElem.textContent = 'JUNE 2023 / REGULAR';
+                }
             }
 
-            var photoSrc = student.photo || (isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824');
+            var photoSrc = student.photo || (student.enroll_no === 'PV-22360135' ? 'salib_photo.png' : (student.enroll_no === 'GE-21538540' ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824'));
             if (!photoSrc.includes('data:') && !photoSrc.includes('?')) {
-                photoSrc = photoSrc + '?v=3';
+                photoSrc = photoSrc + '?v=4';
             }
             document.getElementById('idStudentPhoto').src = photoSrc;
 

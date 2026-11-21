@@ -150,9 +150,13 @@
             (function() {
                 var sessEnroll = sessionStorage.getItem('enrollNo') || '';
                 var sessName = sessionStorage.getItem('userName') || '';
-                var checkId = (sessEnroll + ' ' + sessName).toLowerCase().replace(/[^a-z0-9]/g, '');
-                var isHashim = checkId.includes('hashim') || checkId.includes('21545586') || checkId.includes('2154682');
-                if (!isHashim) {
+                var sessRoll = sessionStorage.getItem('classRollNo') || '';
+                var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
+                var resObj = resolvePortalStudent(checkId);
+                var curStudent = resObj.student;
+
+                if (curStudent.degree_conferred) {
+                    var batchText = curStudent.convocation_year === '2026' ? '2023-2026' : '2021-2024';
                     document.write(`
                         <div style="background: linear-gradient(135deg, #fef3c7, #fffbeb); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 14px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);">
                             <div style="display:flex; align-items:center; gap:16px;">
@@ -160,14 +164,14 @@
                                     <i class="fa fa-graduation-cap"></i>
                                 </div>
                                 <div>
-                                    <div style="font-size:15px; font-weight:800; color:#92400e; letter-spacing:0.3px;">Official Degree Conferred: Bachelor of Commerce (Honours)</div>
+                                    <div style="font-size:15px; font-weight:800; color:#92400e; letter-spacing:0.3px;">Official Degree Conferred: ${curStudent.degree_name}</div>
                                     <div style="font-size:12px; color:#b45309; margin-top:2px;">
-                                        <strong>Graduating Batch 2021-2024 (Completed)</strong> &bull; Final CGPA: <strong style="color:#0b2545; font-size:13px;">8.41</strong> &bull; Division: <strong style="color:#15803d;">First Division with Distinction</strong>
+                                        <strong>Graduating Batch ${batchText} (Completed)</strong> &bull; Final CGPA: <strong style="color:#0b2545; font-size:13px;">${curStudent.final_cgpa}</strong> &bull; Division: <strong style="color:#15803d;">${curStudent.final_division}</strong>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <a href="degree.html" target="_blank" style="background: linear-gradient(135deg, #d97706, #b45309); color:#ffffff; font-weight:700; font-size:12.5px; padding:9px 18px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 3px 8px rgba(217, 119, 6, 0.35);">
+                                <a href="degree.html?id=${encodeURIComponent(curStudent.enroll_no)}" target="_blank" style="background: linear-gradient(135deg, #d97706, #b45309); color:#ffffff; font-weight:700; font-size:12.5px; padding:9px 18px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 3px 8px rgba(217, 119, 6, 0.35);">
                                     <i class="fa fa-certificate"></i> View Degree Certificate
                                 </a>
                             </div>
@@ -197,18 +201,11 @@
                         var sessName = sessionStorage.getItem('userName') || '';
                         var sessRoll = sessionStorage.getItem('classRollNo') || '';
                         var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-                        var isHashim = (
-                            checkId.includes('ge21545586') ||
-                            checkId.includes('21545586') ||
-                            checkId.includes('2154682') ||
-                            checkId.includes('hashim') ||
-                            checkId.includes('babaansari') ||
-                            sessionStorage.getItem('userName') === 'MOHD HASHIM'
-                        );
-                        var isSohil = !isHashim;
-                        var enrollNo = isSohil ? 'GE-21538540' : (sessionStorage.getItem('enrollNo') || 'GE-21545586');
-                        var course = isSohil ? 'B.COM (Hons)' : (sessionStorage.getItem('course') || 'B.COM Hons I');
-                        var defaultSet = isSohil ? ALL_SOHIL_RESULTS : ALL_DEFAULT_RESULTS;
+
+                        var resObj = resolvePortalStudent(checkId);
+                        var curStudent = resObj.student;
+                        var defaultSet = resObj.results;
+                        var enrollNo = curStudent.enroll_no;
 
                         var semRomans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
                         var termTypes = ['ODD', 'EVEN', 'ODD', 'EVEN', 'ODD', 'EVEN'];
@@ -217,12 +214,10 @@
                         for (var i = 0; i < 6; i++) {
                             var semNum = "" + (i + 1);
                             var found = defaultSet[i];
-                            var prog = isSohil 
-                                ? ('BACHELOR OF COMMERCE (HONOURS) - SEMESTER ' + semRomans[i])
-                                : (course + ' Hons ' + semRomans[i]);
+                            var prog = 'BACHELOR OF COMMERCE (HONOURS) - SEMESTER ' + semRomans[i];
                             var term = termTypes[i];
-                            var yr = found ? found.exam_year : (2021 + Math.floor(i/2));
-                            var pdfFile = isSohil ? ('sohil_sem' + semNum + '.pdf') : ('grade_card.html?sem=' + semNum + '&id=' + encodeURIComponent(enrollNo));
+                            var yr = found ? found.exam_year : (2023 + Math.floor(i/2));
+                            var pdfFile = found && found.pdf_file ? found.pdf_file : ('grade_card.html?sem=' + semNum + '&id=' + encodeURIComponent(enrollNo));
 
                             html += '<tr>' +
                                 '<td><strong>' + enrollNo + '</strong></td>' +

@@ -21,17 +21,9 @@
             var sessName = sessionStorage.getItem('userName') || '';
             var sessRoll = sessionStorage.getItem('classRollNo') || '';
             var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-            var isHashim = (
-                checkId.includes('ge21545586') ||
-                checkId.includes('21545586') ||
-                checkId.includes('2154682') ||
-                checkId.includes('hashim') ||
-                checkId.includes('babaansari') ||
-                checkId.includes('saeed') ||
-                sessionStorage.getItem('userName') === 'MOHD HASHIM'
-            );
-            window._isSohil = !isHashim;
-            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var resolved = resolvePortalStudent(checkId);
+            window._activeStudent = resolved.student;
+            window._activeResults = resolved.results;
         })();
     </script>
     <style>
@@ -1269,18 +1261,8 @@
         var sessRoll = sessionStorage.getItem('classRollNo') || '';
         var checkId = (sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-        var isHashim = (
-            checkId.includes('ge21545586') ||
-            checkId.includes('21545586') ||
-            checkId.includes('2154682') ||
-            checkId.includes('hashim') ||
-            checkId.includes('babaansari') ||
-            checkId.includes('saeed') ||
-            sessionStorage.getItem('userName') === 'MOHD HASHIM'
-        );
-        var isSohil = !isHashim;
-
-        var fallbackStudent = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+        var resolved = resolvePortalStudent(checkId);
+        var fallbackStudent = resolved.student;
 
         var studentData = {
             name: sessionStorage.getItem('userName') || fallbackStudent.name,
@@ -1293,7 +1275,7 @@
             course: sessionStorage.getItem('course') || fallbackStudent.course,
             rollNo: sessionStorage.getItem('classRollNo') || fallbackStudent.class_roll_no,
             enrollNo: sessionStorage.getItem('enrollNo') || fallbackStudent.enroll_no,
-            photo: isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || 'candidate_photo_hd.png?v=20260824')
+            photo: sessionStorage.getItem('photo') || fallbackStudent.photo
         };
 
         // Profile card & Top nav

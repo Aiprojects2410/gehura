@@ -17,18 +17,8 @@
             var sessEnroll = sessionStorage.getItem('enrollNo') || '';
             var sessName = sessionStorage.getItem('userName') || '';
             var sessRoll = sessionStorage.getItem('classRollNo') || '';
-            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-            var isHashim = (
-                checkId.includes('ge21545586') ||
-                checkId.includes('21545586') ||
-                checkId.includes('2154682') ||
-                checkId.includes('hashim') ||
-                checkId.includes('babaansari') ||
-                checkId.includes('saeed') ||
-                sessionStorage.getItem('userName') === 'MOHD HASHIM'
-            );
-            window._isSohil = !isHashim;
-            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase();
+            window._activeStudent = typeof resolvePortalStudent === 'function' ? resolvePortalStudent(checkId) : SALIB_STUDENT;
         })();
     </script>
     <style>
@@ -418,29 +408,20 @@
             var sessEnroll = sessionStorage.getItem('enrollNo') || '';
             var sessName = sessionStorage.getItem('userName') || '';
             var sessRoll = sessionStorage.getItem('classRollNo') || '';
-            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-
-            var isHashim = (
-                checkId.includes('ge21545586') ||
-                checkId.includes('21545586') ||
-                checkId.includes('2154682') ||
-                checkId.includes('hashim') ||
-                checkId.includes('babaansari') ||
-                checkId.includes('saeed') ||
-                sessionStorage.getItem('userName') === 'MOHD HASHIM'
-            );
-            var isSohil = !isHashim;
-            var student = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase();
+            var student = typeof resolvePortalStudent === 'function' ? resolvePortalStudent(checkId) : SALIB_STUDENT;
 
             var sName = student.name;
             var sFather = student.father_name;
             var sEnroll = student.enroll_no;
             var sRoll = student.class_roll_no;
-            var sCourse = student.course || (isSohil ? 'B.COM (Hons)' : 'B.COM Hons I');
-            var sRecNo = isSohil ? 'GEHU/2023-24/REC-84920' : 'GEHU/2025-26/REC-92841';
-            var sSession = isSohil ? 'Academic Session: 2023-2024 (Semester VI)' : 'Academic Session: 2025-2026 (Semester I)';
-            var sDate = isSohil ? '15-Jan-2024' : '15-Jul-2025';
-            var sTuition = isSohil ? 'Tuition Fee (Semester VI)' : 'Tuition Fee (Semester I)';
+            var sCourse = student.course || 'B.COM (Hons)';
+            var isSalib = (student.class_roll_no === '22360135' || student.name.includes('SALIB'));
+            var isSohil = (student.class_roll_no === '2119028' || student.name.includes('SOHIL'));
+            var sRecNo = isSalib ? 'GEHU/2025-26/REC-98214' : (isSohil ? 'GEHU/2023-24/REC-84920' : 'GEHU/2025-26/REC-92841');
+            var sSession = isSalib ? 'Academic Session: 2025-2026 (Semester VI)' : (isSohil ? 'Academic Session: 2023-2024 (Semester VI)' : 'Academic Session: 2025-2026 (Semester I)');
+            var sDate = isSalib ? '10-Feb-2026' : (isSohil ? '15-Jan-2024' : '15-Jul-2025');
+            var sTuition = (isSalib || isSohil) ? 'Tuition Fee (Semester VI)' : 'Tuition Fee (Semester I)';
 
             document.getElementById('recSessionSubtitle').textContent = sSession;
             document.getElementById('recNo').textContent = sRecNo;

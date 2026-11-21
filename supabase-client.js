@@ -356,23 +356,226 @@ const ALL_SOHIL_RESULTS = [
     }
 ];
 
+// Master Student Record (SALIB KHAN - Primary Active Student)
+const SALIB_STUDENT = {
+    id: "PV-22360135",
+    enroll_no: "PV-22360135",
+    class_roll_no: "22360135",
+    name: "SALIB KHAN",
+    father_name: "AARIF KHAN",
+    mother_name: "TALAT BEGAM",
+    dob: "2007-07-20",
+    email: "salibkhan2236@gmail.com",
+    official_email: "salibkhan2236@gehu.ac.in",
+    phone: "8923456443",
+    course: "B.COM (Hons)",
+    password: "student@123",
+    photo: "salib_photo.png",
+    degree_conferred: true,
+    degree_name: "BACHELOR OF COMMERCE (HONOURS)",
+    degree_serial: "GEHU 2010",
+    convocation_year: "2026",
+    final_cgpa: "7.72",
+    final_division: "First Division",
+    degree_date: "29/06/2026",
+    address: "VILLAGE DARAU POST DARAU, KICHHA, UDHAM SINGH NAGAR, UTTARAKHAND - 263148"
+};
+
+// Master All 6 Semesters Results for SALIB KHAN (Batch 2023-26)
+const ALL_SALIB_RESULTS = [
+    // Semester 1
+    {
+        student_id: "PV-22360135",
+        semester: "1",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 1562",
+        issue_date: "25/01/2024",
+        exam_year: "2023-24",
+        exam_title: "BACHELOR OF COMMERCE (HONOURS)- I SEMESTER EXAMINATION (2023-24)",
+        result_status: "PASS",
+        total_credits: 23,
+        credits_earned: 23,
+        sgpa: "7.50",
+        cgpa: "",
+        pdf_file: "salib_sem1.pdf",
+        subjects: [
+            { code: "BCH101", name: "Business Organisation", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH102", name: "Financial Accounting", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH103", name: "Micro Economics", credit: 4, grade: "C", gradePoint: 7 },
+            { code: "BCH104", name: "Business Communication", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH105", name: "Fundamentals Of Computer", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH106", name: "Business Mathematics", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH107", name: "Seminar", credit: 1, grade: "B", gradePoint: 8 },
+            { code: "BCH108", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 2
+    {
+        student_id: "PV-22360135",
+        semester: "2",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 1685",
+        issue_date: "20/11/2024",
+        exam_year: "2023-24",
+        exam_title: "BACHELOR OF COMMERCE (HONOURS)- II SEMESTER EXAMINATION (2023-24)",
+        result_status: "PASS",
+        total_credits: 22,
+        credits_earned: 22,
+        sgpa: "7.88",
+        cgpa: "",
+        pdf_file: "salib_sem2.pdf",
+        subjects: [
+            { code: "BCH201", name: "Macro Economics", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH202", name: "Business Law", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH203", name: "Business Finance", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH204", name: "Principles of Management", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH205", name: "Business Statistics", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH206", name: "Environmental Science", credit: 3, grade: "A", gradePoint: 9 },
+            { code: "BCH207", name: "Career Skill-I", credit: 1, grade: "C", gradePoint: 7 },
+            { code: "BCH208", name: "General Proficiency", credit: 1, grade: "C", gradePoint: 7 }
+        ]
+    },
+    // Semester 3
+    {
+        student_id: "PV-22360135",
+        semester: "3",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 1739",
+        issue_date: "08/05/2025",
+        exam_year: "2024-25",
+        exam_title: "BACHELOR OF COMMERCE (HONOURS)- III SEMESTER EXAMINATION (2024-25)",
+        result_status: "PASS",
+        total_credits: 20,
+        credits_earned: 20,
+        sgpa: "7.63",
+        cgpa: "",
+        pdf_file: "salib_sem3.pdf",
+        subjects: [
+            { code: "BCH301", name: "Corporate Accounting", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH302", name: "Human Resource Management", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH303", name: "Industry Law", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH304", name: "Indian Financial System", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH305", name: "Principles of Marketing", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH306", name: "Business Environment", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH307", name: "Career Skill-II", credit: 1, grade: "C", gradePoint: 7 },
+            { code: "GP301", name: "General Proficiency", credit: 1, grade: "C", gradePoint: 7 }
+        ]
+    },
+    // Semester 4
+    {
+        student_id: "PV-22360135",
+        semester: "4",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 1800",
+        issue_date: "16/09/2025",
+        exam_year: "2024-25",
+        exam_title: "BACHELOR OF COMMERCE (HONOURS)- IV SEMESTER EXAMINATION (2024-25)",
+        result_status: "PASS",
+        total_credits: 21,
+        credits_earned: 21,
+        sgpa: "7.38",
+        cgpa: "",
+        pdf_file: "salib_sem4.pdf",
+        subjects: [
+            { code: "BCH401", name: "Indian Economy", credit: 4, grade: "C", gradePoint: 7 },
+            { code: "BCH402", name: "Company Law", credit: 4, grade: "C", gradePoint: 7 },
+            { code: "BCH403", name: "Cost Accounting", credit: 4, grade: "C", gradePoint: 7 },
+            { code: "BCH404", name: "Research Methodology", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH405", name: "Management of Financial Services", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH406", name: "Digital Marketing", credit: 1, grade: "B", gradePoint: 8 },
+            { code: "BCH407", name: "Computerized Accounting", credit: 1, grade: "B", gradePoint: 8 },
+            { code: "GP408", name: "General Proficiency", credit: 1, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 5
+    {
+        student_id: "PV-22360135",
+        semester: "5",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 1899",
+        issue_date: "16/02/2026",
+        exam_year: "2025-26",
+        exam_title: "BACHELOR OF COMMERCE (HONOURS)- V SEMESTER EXAMINATION (2025-26)",
+        result_status: "PASS",
+        total_credits: 22,
+        credits_earned: 22,
+        sgpa: "7.75",
+        cgpa: "",
+        pdf_file: "salib_sem5.pdf",
+        subjects: [
+            { code: "BCH501", name: "Management Accounting", credit: 3, grade: "A", gradePoint: 9 },
+            { code: "BCH502", name: "Income Tax Law and Practice", credit: 3, grade: "A", gradePoint: 9 },
+            { code: "BCH503", name: "International Business", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH504", name: "Auditing", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH505", name: "Entrepreneurship and Small Business", credit: 3, grade: "C", gradePoint: 7 },
+            { code: "BCH506", name: "F1 Financial Analysis and Reporting", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH507", name: "F2 Working Capital Management", credit: 3, grade: "A", gradePoint: 9 },
+            { code: "GP501", name: "General Proficiency", credit: 1, grade: "D", gradePoint: 6 }
+        ]
+    },
+    // Semester 6
+    {
+        student_id: "PV-22360135",
+        semester: "6",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 2010",
+        issue_date: "29/06/2026",
+        exam_year: "2025-26",
+        exam_title: "BACHELOR OF COMMERCE (HONOURS)- FINAL YEAR (BATCH 2023-26)",
+        result_status: "PASS",
+        total_credits: 22,
+        credits_earned: 22,
+        sgpa: "8.15",
+        cgpa: "7.72",
+        pdf_file: "salib_sem6.pdf",
+        has_summary_grid: true,
+        summary_sgpas: ["7.50", "7.88", "7.63", "7.38", "7.75", "8.15"],
+        total_programme_credits: 130,
+        total_programme_earned: 130,
+        final_result: "PASS",
+        subjects: [
+            { code: "BCH601", name: "Indirect Tax Laws", credit: 4, grade: "A", gradePoint: 9 },
+            { code: "BCH602", name: "Corporate Governance & Business Ethics", credit: 4, grade: "A", gradePoint: 9 },
+            { code: "BCH603", name: "Project Management", credit: 3, grade: "A", gradePoint: 9 },
+            { code: "BCH604(F3)", name: "Investment Management", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH605(F4)", name: "Multinational Financial System", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH606", name: "Major Project & Viva-Voce", credit: 4, grade: "C", gradePoint: 7 },
+            { code: "BCH607", name: "General Proficiency", credit: 1, grade: "C", gradePoint: 7 }
+        ]
+    }
+];
+
+// Master Student Resolution Helper
+function resolvePortalStudent(checkId) {
+    var c = (checkId || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (c.includes('hashim') || c.includes('21545586') || c.includes('2154682')) {
+        return { student: DEFAULT_STUDENT, results: ALL_DEFAULT_RESULTS };
+    }
+    if (c.includes('sohil') || c.includes('2187530') || c.includes('ge21538540')) {
+        return { student: SOHIL_STUDENT, results: ALL_SOHIL_RESULTS };
+    }
+    // Default: SALIB KHAN
+    return { student: SALIB_STUDENT, results: ALL_SALIB_RESULTS };
+}
+
 const DEFAULT_RESULT = ALL_DEFAULT_RESULTS[0];
 
 // Clean & Reset Database to Default Records
 async function dbResetDatabaseToHashimOnly() {
     if (supabaseClient) {
         try {
-            await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT]);
-            await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS]);
+            await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT, SALIB_STUDENT]);
+            await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS, ...ALL_SALIB_RESULTS]);
             console.log("Database reset to master records successfully!");
         } catch(e) {
             console.error("Reset error:", e);
         }
     }
     localStorage.clear();
-    localStorage.setItem('ge_students', JSON.stringify([DEFAULT_STUDENT, SOHIL_STUDENT]));
-    localStorage.setItem('ge_results_GE-21545586', JSON.stringify(ALL_DEFAULT_RESULTS));
+    localStorage.setItem('ge_students', JSON.stringify([SALIB_STUDENT, SOHIL_STUDENT, DEFAULT_STUDENT]));
+    localStorage.setItem('ge_results_PV-22360135', JSON.stringify(ALL_SALIB_RESULTS));
     localStorage.setItem('ge_results_GE-21538540', JSON.stringify(ALL_SOHIL_RESULTS));
+    localStorage.setItem('ge_results_GE-21545586', JSON.stringify(ALL_DEFAULT_RESULTS));
     return true;
 }
 
@@ -380,8 +583,8 @@ async function dbResetDatabaseToHashimOnly() {
 async function initDefaultData() {
     if (!supabaseClient) return;
     try {
-        await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT]);
-        await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS]);
+        await supabaseClient.from('students').upsert([SALIB_STUDENT, SOHIL_STUDENT, DEFAULT_STUDENT]);
+        await supabaseClient.from('results').upsert([...ALL_SALIB_RESULTS, ...ALL_SOHIL_RESULTS, ...ALL_DEFAULT_RESULTS]);
     } catch (e) {
         console.error("Init seed error:", e);
     }
@@ -394,8 +597,9 @@ async function dbGetStudents() {
             const { data, error } = await supabaseClient.from('students').select('*').order('created_at', { ascending: false });
             if (!error && data && data.length > 0) {
                 let list = [...data];
-                if (!list.some(x => x.enroll_no === DEFAULT_STUDENT.enroll_no)) list.unshift(DEFAULT_STUDENT);
+                if (!list.some(x => x.enroll_no === SALIB_STUDENT.enroll_no)) list.unshift(SALIB_STUDENT);
                 if (!list.some(x => x.enroll_no === SOHIL_STUDENT.enroll_no)) list.push(SOHIL_STUDENT);
+                if (!list.some(x => x.enroll_no === DEFAULT_STUDENT.enroll_no)) list.push(DEFAULT_STUDENT);
                 return list;
             }
         } catch (e) {
@@ -404,7 +608,7 @@ async function dbGetStudents() {
     }
     // Local fallback
     var local = localStorage.getItem('ge_students');
-    return local ? JSON.parse(local) : [DEFAULT_STUDENT, SOHIL_STUDENT];
+    return local ? JSON.parse(local) : [SALIB_STUDENT, SOHIL_STUDENT, DEFAULT_STUDENT];
 }
 
 // Add or Update a student

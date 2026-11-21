@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphic Era Hill University - Statement of Grades</title>
+    <script src="supabase-client.js"></script>
     <script>
         var urlParams = new URLSearchParams(window.location.search);
         var sem = urlParams.get('sem') || '1';
-        window.location.replace('sohil_sem' + sem + '.pdf');
+        var queryId = urlParams.get('id') || sessionStorage.getItem('enrollNo') || '';
+        var res = resolvePortalStudent(queryId);
+        if (res.student.enroll_no === 'PV-22360135') {
+            window.location.replace('salib_sem' + sem + '.pdf');
+        } else if (res.student.enroll_no === 'GE-21538540') {
+            window.location.replace('sohil_sem' + sem + '.pdf');
+        } else {
+            window.location.replace('salib_sem' + sem + '.pdf');
+        }
     </script>
 </head>
 <body style="background:#1a202c; color:#ffffff; font-family:Arial, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; margin:0;">

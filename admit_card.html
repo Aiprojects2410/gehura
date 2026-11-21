@@ -18,17 +18,11 @@
             var sessName = sessionStorage.getItem('userName') || '';
             var sessRoll = sessionStorage.getItem('classRollNo') || '';
             var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
-            var isHashim = (
-                checkId.includes('ge21545586') ||
-                checkId.includes('21545586') ||
-                checkId.includes('2154682') ||
-                checkId.includes('hashim') ||
-                checkId.includes('babaansari') ||
-                checkId.includes('saeed') ||
-                sessionStorage.getItem('userName') === 'MOHD HASHIM'
-            );
-            window._isSohil = !isHashim;
-            window._activeStudent = window._isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var res = resolvePortalStudent(checkId);
+            window._activeStudent = res.student;
+            window._activeResults = res.results;
+            window._isSalib = (window._activeStudent.enroll_no === 'PV-22360135');
+            window._isSohil = (window._activeStudent.enroll_no === 'GE-21538540');
         })();
     </script>
     <style>
@@ -289,7 +283,7 @@
 
                 <div class="cand-photo-box">
                     <script>
-                        var _admPhoto = window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo_hd.png?v=20260824');
+                        var _admPhoto = window._isSalib ? 'salib_photo.png' : (window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo_hd.png?v=20260824'));
                         document.write('<img src="' + _admPhoto + '" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">');
                     </script>
                     <div style="font-size:9.5px; color:#475569; font-weight:700; margin-top:4px;">Candidate Photo</div>
@@ -309,7 +303,15 @@
                 </thead>
                 <tbody id="scheduleTableBody">
                     <script>
-                        var _sched = window._isSohil ? [
+                        var _sched = window._isSalib ? [
+                            { date: '04-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
+                            { date: '08-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
+                            { date: '12-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
+                            { date: '16-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH604(F3)', title: 'Investment Management' },
+                            { date: '20-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH605(F4)', title: 'Multinational Financial System' },
+                            { date: '24-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH606', title: 'Major Project & Viva-Voce' },
+                            { date: '28-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH607', title: 'General Proficiency' }
+                        ] : (window._isSohil ? [
                             { date: '04-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
                             { date: '08-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
                             { date: '12-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
@@ -324,7 +326,7 @@
                             { date: '11-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH104', title: 'Business Communication' },
                             { date: '15-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH105', title: 'Fundamentals Of Computer' },
                             { date: '18-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH106', title: 'Business Mathematics' }
-                        ];
+                        ]);
                         var _sHtml = '';
                         _sched.forEach(function(item) {
                             _sHtml += '<tr><td><strong>' + item.date + '</strong></td><td>' + item.time + '</td><td><strong>' + item.code + '</strong></td><td>' + item.title + '</td><td><div style="font-family:\'Brush Script MT\', \'Segoe Script\', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td></tr>';
