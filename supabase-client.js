@@ -365,19 +365,15 @@ const SALIB_STUDENT = {
     father_name: "AARIF KHAN",
     mother_name: "TALAT BEGAM",
     dob: "2007-07-20",
-    email: "salibkhan2236@gmail.com",
-    official_email: "salibkhan2236@gehu.ac.in",
+    email: "salibkhan34971@gmail.com",
+    official_email: "salibkhan34971@gmail.com",
     phone: "8923456443",
     course: "B.COM (Hons)",
     password: "student@123",
     photo: "salib_photo.png",
-    degree_conferred: true,
-    degree_name: "BACHELOR OF COMMERCE (HONOURS)",
-    degree_serial: "GEHU 2010",
-    convocation_year: "2026",
+    degree_conferred: false,
     final_cgpa: "7.72",
     final_division: "First Division",
-    degree_date: "29/06/2026",
     address: "VILLAGE DARAU POST DARAU, KICHHA, UDHAM SINGH NAGAR, UTTARAKHAND - 263148"
 };
 

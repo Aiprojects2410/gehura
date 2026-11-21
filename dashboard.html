@@ -24,6 +24,11 @@
             var resolved = resolvePortalStudent(checkId);
             window._activeStudent = resolved.student;
             window._activeResults = resolved.results;
+            window._isSohil = (window._activeStudent.enroll_no === 'GE-21538540' || (window._activeStudent.name || '').includes('SOHIL'));
+            if (window._activeStudent) {
+                sessionStorage.setItem('email', window._activeStudent.email);
+                sessionStorage.setItem('officialEmail', window._activeStudent.official_email);
+            }
         })();
     </script>
     <style>

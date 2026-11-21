@@ -2,7 +2,27 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Degree Certificate - MOHD SOHIL</title>
+<title>Degree Certificate | Graphic Era Hill University</title>
+<script>
+  (function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var queryId = urlParams.get('id') || '';
+    var sessEnroll = sessionStorage.getItem('enrollNo') || '';
+    var sessName = sessionStorage.getItem('userName') || '';
+    var sessRoll = sessionStorage.getItem('classRollNo') || '';
+    var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase();
+
+    if (checkId.includes('22360135') || checkId.includes('salib') || queryId.toUpperCase() === 'PV-22360135') {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.innerHTML = '<div style="font-family:Arial, sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; background:#f1f5f9; padding:20px; box-sizing:border-box;"><div style="max-width:540px; width:100%; background:#ffffff; border:1px solid #cbd5e1; border-radius:12px; padding:40px 30px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.08);"><div style="width:70px; height:70px; border-radius:50%; background:#fef3c7; color:#d97706; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 20px;">🎓</div><h2 style="color:#0f172a; font-size:22px; font-weight:700; margin-bottom:10px;">Degree Certificate Not Applicable</h2><p style="color:#475569; font-size:14.5px; line-height:1.6; margin-bottom:24px;">Official Degree Certificate is not issued for Enrollment No: <strong>PV-22360135</strong> (SALIB KHAN). Only Semester Grade Cards are issued and available on the portal.</p><a href="view_results.html" style="background:#0284c7; color:#ffffff; text-decoration:none; padding:11px 22px; border-radius:6px; font-weight:600; font-size:14px; display:inline-block; box-shadow:0 2px 6px rgba(2,132,199,0.3);">← Return to Results & Grade Cards</a></div></div>';
+        document.body.style.width = '100%';
+        document.body.style.height = 'auto';
+        document.body.style.overflow = 'auto';
+        document.body.style.position = 'static';
+      });
+    }
+  })();
+</script>
 <style>
   @font-face {
     font-family: 'NotoSerifDevanagari';
