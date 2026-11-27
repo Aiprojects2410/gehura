@@ -824,8 +824,8 @@
                     <span>Results</span>
                 </div>
                 <div class="dashboard-panel-body">
-                    <div id="panelResultTitle"><script>document.write(window._isSohil ? '🎓 Semester VI Grade Card Available' : '🎓 Semester I Grade Card Available');</script></div>
-                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;"><script>document.write(window._isSohil ? 'Status: PASS <span style="color:#0284c7; font-weight:800;">(CGPA: 8.41 | SGPA: 8.25)</span>' : 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 7.88)</span>');</script></div>
+                    <div id="panelResultTitle"><script>document.write((window._activeStudent.final_cgpa || window._isSohil) ? '🎓 Semester VI Grade Card Available' : '🎓 Semester I Grade Card Available');</script></div>
+                    <div id="panelResultStatus" style="margin-top:4px; font-weight:700; color:#16a34a;"><script>document.write((window._activeStudent.final_cgpa) ? ('Status: PASS <span style="color:#0284c7; font-weight:800;">(CGPA: ' + window._activeStudent.final_cgpa + ')</span>') : 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 7.88)</span>');</script></div>
                     <script>
                         if (window._isSohil) {
                             document.write('<div style="margin-top:6px;"><a href="degree.html" target="_blank" style="display:inline-flex; align-items:center; gap:5px; background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; text-decoration:none;"><i class="fa fa-graduation-cap"></i> Degree Certificate Awarded</a></div>');
@@ -854,7 +854,7 @@
                     <span>Notifications</span>
                 </div>
                 <div class="dashboard-panel-body">
-                    <div id="panelFeeNotice"><script>document.write(window._isSohil ? '🔔 Fee receipt for Semester VI generated.' : '🔔 Fee receipt for Semester I generated.');</script></div>
+                    <div id="panelFeeNotice"><script>document.write((window._activeStudent.final_cgpa || window._isSohil) ? '🔔 Fee receipt for Semester VI generated.' : '🔔 Fee receipt for Semester I generated.');</script></div>
                     <div id="panelAdmitNotice" style="margin-top:4px;">🔔 Admit card for End-Term Exam is ready.</div>
                     <a class="panel-more-link" onclick="openCircularModal()">More..</a>
                 </div>
@@ -1268,6 +1268,8 @@
 
         var resolved = resolvePortalStudent(checkId);
         var fallbackStudent = resolved.student;
+        var isSohil = (fallbackStudent.enroll_no === 'GE-21538540' || (fallbackStudent.name || '').includes('SOHIL'));
+        var hasFinal = !!fallbackStudent.final_cgpa || isSohil;
 
         var studentData = {
             name: sessionStorage.getItem('userName') || fallbackStudent.name,
@@ -1306,9 +1308,9 @@
         var resTitle = document.getElementById('panelResultTitle');
         var resStatus = document.getElementById('panelResultStatus');
         if (resTitle && resStatus) {
-            if (isSohil) {
+            if (hasFinal) {
                 resTitle.textContent = '🎓 Semester VI Grade Card Available';
-                resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(CGPA: 8.41 | SGPA: 8.25)</span>';
+                resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(CGPA: ' + (fallbackStudent.final_cgpa || '8.41') + ')</span>';
             } else {
                 resTitle.textContent = '🎓 Semester I Grade Card Available';
                 resStatus.innerHTML = 'Status: PASS <span style="color:#0284c7; font-weight:800;">(SGPA: 7.88)</span>';
@@ -1318,7 +1320,7 @@
         // Notifications Card (Panel #7)
         var feeNotice = document.getElementById('panelFeeNotice');
         if (feeNotice) {
-            feeNotice.textContent = isSohil ? '🔔 Fee receipt for Semester VI generated.' : '🔔 Fee receipt for Semester I generated.';
+            feeNotice.textContent = hasFinal ? '🔔 Fee receipt for Semester VI generated.' : '🔔 Fee receipt for Semester I generated.';
         }
 
         // Fee Modal

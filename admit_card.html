@@ -21,6 +21,7 @@
             var res = resolvePortalStudent(checkId);
             window._activeStudent = res.student;
             window._activeResults = res.results;
+            window._isZeeshan = (window._activeStudent.enroll_no === 'GE-20873981' || window._activeStudent.class_roll_no === '2065568');
             window._isSalib = (window._activeStudent.enroll_no === 'PV-22360135');
             window._isSohil = (window._activeStudent.enroll_no === 'GE-21538540');
         })();
@@ -244,7 +245,7 @@
 
             <!-- Title -->
             <div class="admit-title-box">
-                <div class="admit-title" id="admSessionTitle"><script>document.write(window._isSohil ? 'End Semester University Examination (2023-24)' : 'End Semester University Examination (2025-26)');</script></div>
+                <div class="admit-title" id="admSessionTitle"><script>document.write(window._isZeeshan ? 'End Semester University Examination (2022-23)' : (window._isSohil ? 'End Semester University Examination (2023-24)' : 'End Semester University Examination (2025-26)'));</script></div>
                 <div class="admit-subtitle">ADMIT CARD / PROVISIONAL HALL TICKET</div>
             </div>
 
@@ -273,7 +274,7 @@
                     </div>
                     <div class="cand-row">
                         <span class="cand-lbl">Semester:</span>
-                        <span class="cand-val" id="admSem"><script>document.write(window._isSohil ? 'Semester VI' : 'Semester I');</script></span>
+                        <span class="cand-val" id="admSem"><script>document.write((window._isZeeshan || window._isSohil || window._isSalib) ? 'Semester VI' : 'Semester I');</script></span>
                     </div>
                     <div class="cand-row" style="grid-column: span 2;">
                         <span class="cand-lbl">Exam Center:</span>
@@ -283,7 +284,7 @@
 
                 <div class="cand-photo-box">
                     <script>
-                        var _admPhoto = window._isSalib ? 'salib_photo.png' : (window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo_hd.png?v=20260824'));
+                        var _admPhoto = window._isZeeshan ? 'zeeshan_photo.png' : (window._isSalib ? 'salib_photo.png' : (window._isSohil ? 'sohil_photo.png' : (sessionStorage.getItem('photo') || window._activeStudent.photo || 'candidate_photo_hd.png?v=20260824')));
                         document.write('<img src="' + _admPhoto + '" id="admPhoto" class="cand-photo-img" alt="Candidate Photo">');
                     </script>
                     <div style="font-size:9.5px; color:#475569; font-weight:700; margin-top:4px;">Candidate Photo</div>
@@ -303,7 +304,15 @@
                 </thead>
                 <tbody id="scheduleTableBody">
                     <script>
-                        var _sched = window._isSalib ? [
+                        var _sched = window._isZeeshan ? [
+                            { date: '04-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
+                            { date: '08-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
+                            { date: '12-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
+                            { date: '16-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH604(F3)', title: 'Investment Management' },
+                            { date: '20-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH605(F4)', title: 'Multinational Financial System' },
+                            { date: '24-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH606', title: 'Major Project & Viva-Voce' },
+                            { date: '28-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH607', title: 'General Proficiency' }
+                        ] : (window._isSalib ? [
                             { date: '04-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
                             { date: '08-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
                             { date: '12-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
@@ -326,7 +335,7 @@
                             { date: '11-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH104', title: 'Business Communication' },
                             { date: '15-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH105', title: 'Fundamentals Of Computer' },
                             { date: '18-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH106', title: 'Business Mathematics' }
-                        ]);
+                        ]));
                         var _sHtml = '';
                         _sched.forEach(function(item) {
                             _sHtml += '<tr><td><strong>' + item.date + '</strong></td><td>' + item.time + '</td><td><strong>' + item.code + '</strong></td><td>' + item.title + '</td><td><div style="font-family:\'Brush Script MT\', \'Segoe Script\', cursive; font-size:15px; color:#1e40af; transform:rotate(-4deg); font-weight:bold;">Sandeep Kr.</div></td></tr>';
@@ -436,27 +445,22 @@
             var sessRoll = sessionStorage.getItem('classRollNo') || '';
             var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-            var isHashim = (
-                checkId.includes('ge21545586') ||
-                checkId.includes('21545586') ||
-                checkId.includes('2154682') ||
-                checkId.includes('hashim') ||
-                checkId.includes('babaansari') ||
-                checkId.includes('saeed') ||
-                sessionStorage.getItem('userName') === 'MOHD HASHIM'
-            );
-            var isSohil = !isHashim;
-            var student = isSohil ? SOHIL_STUDENT : DEFAULT_STUDENT;
+            var checkId = (queryId + ' ' + sessEnroll + ' ' + sessName + ' ' + sessRoll).toLowerCase();
+            var res = resolvePortalStudent(checkId);
+            var student = res.student;
 
             var sName = student.name;
             var sFather = student.father_name;
             var sEnroll = student.enroll_no;
             var sRoll = student.class_roll_no;
-            var sCourse = student.course || (isSohil ? 'B.COM (Hons)' : 'B.COM Hons I');
-            var sSem = isSohil ? 'Semester VI' : 'Semester I';
-            var sPhoto = student.photo || (isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824');
-            var sSession = isSohil ? 'End Semester University Examination (2023-24)' : 'End Semester University Examination (2025-26)';
-            var sBarcode = isSohil ? 'GEHU-SECURE-2024' : 'GEHU-SECURE-2025';
+            var sCourse = student.course || 'B.COM (Hons)';
+            var isZeeshan = (student.class_roll_no === '2065568' || student.name.includes('ZEESHAN'));
+            var isSalib = (student.class_roll_no === '22360135' || student.name.includes('SALIB'));
+            var isSohil = (student.class_roll_no === '2119028' || student.name.includes('SOHIL'));
+            var sSem = (isZeeshan || isSalib || isSohil) ? 'Semester VI' : 'Semester I';
+            var sPhoto = student.photo || (isZeeshan ? 'zeeshan_photo.png' : (isSalib ? 'salib_photo.png' : (isSohil ? 'sohil_photo.png' : 'candidate_photo_hd.png?v=20260824')));
+            var sSession = isZeeshan ? 'End Semester University Examination (2022-23)' : (isSalib ? 'End Semester University Examination (2025-26)' : (isSohil ? 'End Semester University Examination (2023-24)' : 'End Semester University Examination (2025-26)'));
+            var sBarcode = isZeeshan ? 'GEHU-SECURE-2023' : (isSalib ? 'GEHU-SECURE-2026' : (isSohil ? 'GEHU-SECURE-2024' : 'GEHU-SECURE-2025'));
 
             // Populate UI Elements
             document.getElementById('admSessionTitle').textContent = sSession;
@@ -471,7 +475,23 @@
             document.getElementById('admBarcodeLabel').textContent = sBarcode;
 
             // Render Schedule Table
-            var schedule = isSohil ? [
+            var schedule = isZeeshan ? [
+                { date: '04-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
+                { date: '08-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
+                { date: '12-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
+                { date: '16-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH604(F3)', title: 'Investment Management' },
+                { date: '20-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH605(F4)', title: 'Multinational Financial System' },
+                { date: '24-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH606', title: 'Major Project & Viva-Voce' },
+                { date: '28-May-2023', time: '09:30 AM - 12:30 PM', code: 'BCH607', title: 'General Proficiency' }
+            ] : (isSalib ? [
+                { date: '04-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
+                { date: '08-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
+                { date: '12-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
+                { date: '16-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH604(F3)', title: 'Investment Management' },
+                { date: '20-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH605(F4)', title: 'Multinational Financial System' },
+                { date: '24-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH606', title: 'Major Project & Viva-Voce' },
+                { date: '28-May-2026', time: '09:30 AM - 12:30 PM', code: 'BCH607', title: 'General Proficiency' }
+            ] : (isSohil ? [
                 { date: '04-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH601', title: 'Indirect Tax Laws' },
                 { date: '08-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH602', title: 'Corporate Governance & Business Ethics' },
                 { date: '12-May-2024', time: '09:30 AM - 12:30 PM', code: 'BCH603', title: 'Project Management' },
@@ -486,7 +506,7 @@
                 { date: '11-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH104', title: 'Business Communication' },
                 { date: '15-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH105', title: 'Fundamentals Of Computer' },
                 { date: '18-Dec-2025', time: '09:30 AM - 12:30 PM', code: 'BCH106', title: 'Business Mathematics' }
-            ];
+            ]));
 
             var scheduleHtml = '';
             schedule.forEach(function(item) {

@@ -541,17 +541,210 @@ const ALL_SALIB_RESULTS = [
     }
 ];
 
+
+// Master Student Record for ZEESHAN KHAN (Batch 2020-23)
+const ZEESHAN_STUDENT = {
+    id: "GE-20873981",
+    enroll_no: "GE-20873981",
+    class_roll_no: "2065568",
+    name: "ZEESHAN KHAN",
+    father_name: "LIYAKAT KHAN",
+    mother_name: "AFSAR JAHAN",
+    dob: "1998-12-04",
+    email: "Zeeshankhann7889@gmail.com",
+    official_email: "Zeeshankhann7889@gmail.com",
+    phone: "95400789201",
+    course: "B.COM (Hons)",
+    password: "student@123",
+    photo: "zeeshan_photo.png",
+    degree_conferred: false,
+    final_cgpa: "7.66",
+    final_division: "First Division",
+    batch: "2020-2023",
+    address: "H NO. 57, CANAL COLONY, CHOTI MASJID, POST AND TEHSIL KICHHA, UDHAM SINGH NAGAR, PIN: 263148, UTTARAKHAND, INDIA"
+};
+
+// Master All 6 Semesters Results for ZEESHAN KHAN (Batch 2020-23)
+const ALL_ZEESHAN_RESULTS = [
+    // Semester 1
+    {
+        student_id: "GE-20873981",
+        semester: "1",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 233171",
+        issue_date: "25/01/2021",
+        exam_year: "2020-21",
+        exam_title: "BACHELOR OF COMMERCE(HONOURS) - I SEMESTER EXAMINATION (2020-21)",
+        result_status: "PASS",
+        total_credits: 28,
+        credits_earned: 28,
+        sgpa: "7.62",
+        cgpa: "",
+        pdf_file: "zeeshan_sem1.pdf",
+        subjects: [
+            { code: "BCH101", name: "Business Organisation", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH102", name: "Financial Accounting", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH103", name: "Micro Economics", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH104", name: "Business Communication", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH105", name: "Fundamentals Of Computer", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH106", name: "Business Mathematics", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH107", name: "Seminar", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH108", name: "General Proficiency", credit: 3, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 2
+    {
+        student_id: "GE-20873981",
+        semester: "2",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 316616",
+        issue_date: "24/07/2021",
+        exam_year: "2020-21",
+        exam_title: "BACHELOR OF COMMERCE(HONOURS) - SECOND SEMESTER EXAMINATION (2020-21)",
+        result_status: "PASS",
+        total_credits: 29,
+        credits_earned: 29,
+        sgpa: "8.00",
+        cgpa: "",
+        pdf_file: "zeeshan_sem2.pdf",
+        subjects: [
+            { code: "BCH201", name: "Macro Economics", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH202", name: "Business Law", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH203", name: "Business Finance", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH204", name: "Principles of Management", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH205", name: "Business Statistics", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH206", name: "Environmental Science", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH207", name: "Career Skill-I", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH208", name: "General Proficiency", credit: 3, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 3
+    {
+        student_id: "GE-20873981",
+        semester: "3",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 339593",
+        issue_date: "02/02/2022",
+        exam_year: "2021-22",
+        exam_title: "BACHELOR OF COMMERCE(HONOURS) - III SEMESTER EXAMINATION (2021-22)",
+        result_status: "PASS",
+        total_credits: 30,
+        credits_earned: 30,
+        sgpa: "7.50",
+        cgpa: "",
+        pdf_file: "zeeshan_sem3.pdf",
+        subjects: [
+            { code: "BCH301", name: "Corporate Accounting", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH302", name: "Human Resource Management", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH303", name: "Industry Law", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH304", name: "Indian Financial System", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH305", name: "Principles of Marketing", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH306", name: "Business Environment", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH307", name: "Career Skill-II", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "GP301", name: "General Proficiency", credit: 3, grade: "A+", gradePoint: 9 }
+        ]
+    },
+    // Semester 4
+    {
+        student_id: "GE-20873981",
+        semester: "4",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 357379",
+        issue_date: "25/07/2022",
+        exam_year: "2021-22",
+        exam_title: "BACHELOR OF COMMERCE(Hons) - IV SEM EXAMINATION (2021-22)",
+        result_status: "PASS",
+        total_credits: 27,
+        credits_earned: 27,
+        sgpa: "7.75",
+        cgpa: "",
+        pdf_file: "zeeshan_sem4.pdf",
+        subjects: [
+            { code: "BCH401", name: "Indian Economy", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH402", name: "Company Law", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH403", name: "Cost Accounting", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH404", name: "Research Methodology", credit: 3, grade: "B+", gradePoint: 7 },
+            { code: "BCH405", name: "Management of Financial Services", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH406", name: "Digital Marketing", credit: 3, grade: "B", gradePoint: 8 },
+            { code: "BCH407", name: "Computerized Accounting", credit: 3, grade: "A+", gradePoint: 9 },
+            { code: "GP408", name: "General Proficiency", credit: 3, grade: "A+", gradePoint: 9 }
+        ]
+    },
+    // Semester 5
+    {
+        student_id: "GE-20873981",
+        semester: "5",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 533535",
+        issue_date: "15/02/2023",
+        exam_year: "2022-23",
+        exam_title: "BACHELOR OF COMMERCE(Hons) - V SEM EXAMINATION (2022-23)",
+        result_status: "PASS",
+        total_credits: 24,
+        credits_earned: 24,
+        sgpa: "7.25",
+        cgpa: "",
+        pdf_file: "zeeshan_sem5.pdf",
+        subjects: [
+            { code: "BCH501", name: "Management Accounting", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH502", name: "Income Tax Law and Practice", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH503", name: "International Business", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH504", name: "Auditing", credit: 4, grade: "B+", gradePoint: 7 },
+            { code: "BCH505", name: "Entrepreneurship and Small Business", credit: 2, grade: "B+", gradePoint: 7 },
+            { code: "BCH506", name: "F1 Financial Analysis and Reporting", credit: 2, grade: "B+", gradePoint: 7 },
+            { code: "BCH507", name: "F2 Working Capital Management", credit: 2, grade: "B+", gradePoint: 7 },
+            { code: "GP501", name: "General Proficiency", credit: 2, grade: "B", gradePoint: 8 }
+        ]
+    },
+    // Semester 6
+    {
+        student_id: "GE-20873981",
+        semester: "6",
+        programme: "BACHELOR OF COMMERCE (HONOURS)",
+        serial_no: "GEHU 552632",
+        issue_date: "29/06/2023",
+        exam_year: "2022-23",
+        exam_title: "BACHELOR OF COMMERCE(Hons) - FINAL YEAR (BATCH 2020-23)",
+        result_status: "PASS",
+        total_credits: 27,
+        credits_earned: 27,
+        sgpa: "7.85",
+        cgpa: "7.66",
+        pdf_file: "zeeshan_sem6.pdf",
+        has_summary_grid: true,
+        summary_sgpas: ["7.62", "8.00", "7.50", "7.75", "7.25", "7.85"],
+        total_programme_credits: 165,
+        total_programme_earned: 165,
+        final_result: "PASS",
+        subjects: [
+            { code: "BCH601", name: "Indirect Tax Laws", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH602", name: "Corporate Governance & Business Ethics", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH603", name: "Project Management", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH604(F3)", name: "Investment Management", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH605(F4)", name: "Multinational Financial System", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH606", name: "Major Project & Viva-Voce", credit: 4, grade: "B", gradePoint: 8 },
+            { code: "BCH607", name: "General Proficiency", credit: 3, grade: "B+", gradePoint: 7 }
+        ]
+    }
+];
+
 // Master Student Resolution Helper
 function resolvePortalStudent(checkId) {
     var c = (checkId || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (c.includes('hashim') || c.includes('21545586') || c.includes('2154682')) {
-        return { student: DEFAULT_STUDENT, results: ALL_DEFAULT_RESULTS };
+    if (c.includes('salib') || c.includes('22360135') || c.includes('pv22360135')) {
+        return { student: SALIB_STUDENT, results: ALL_SALIB_RESULTS };
+    }
+    if (c.includes('zeeshan') || c.includes('2065568') || c.includes('ge20873981')) {
+        return { student: ZEESHAN_STUDENT, results: ALL_ZEESHAN_RESULTS };
     }
     if (c.includes('sohil') || c.includes('2187530') || c.includes('ge21538540')) {
         return { student: SOHIL_STUDENT, results: ALL_SOHIL_RESULTS };
     }
-    // Default: SALIB KHAN
-    return { student: SALIB_STUDENT, results: ALL_SALIB_RESULTS };
+    if (c.includes('hashim') || c.includes('21545586') || c.includes('2154682')) {
+        return { student: DEFAULT_STUDENT, results: ALL_DEFAULT_RESULTS };
+    }
+    // Default Active Student: ZEESHAN KHAN
+    return { student: ZEESHAN_STUDENT, results: ALL_ZEESHAN_RESULTS };
 }
 
 const DEFAULT_RESULT = ALL_DEFAULT_RESULTS[0];
@@ -560,15 +753,15 @@ const DEFAULT_RESULT = ALL_DEFAULT_RESULTS[0];
 async function dbResetDatabaseToHashimOnly() {
     if (supabaseClient) {
         try {
-            await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT, SALIB_STUDENT]);
-            await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS, ...ALL_SALIB_RESULTS]);
+            await supabaseClient.from('students').upsert([DEFAULT_STUDENT, SOHIL_STUDENT, SALIB_STUDENT, ZEESHAN_STUDENT]);
+            await supabaseClient.from('results').upsert([...ALL_DEFAULT_RESULTS, ...ALL_SOHIL_RESULTS, ...ALL_SALIB_RESULTS, ...ALL_ZEESHAN_RESULTS]);
             console.log("Database reset to master records successfully!");
         } catch(e) {
             console.error("Reset error:", e);
         }
     }
     localStorage.clear();
-    localStorage.setItem('ge_students', JSON.stringify([SALIB_STUDENT, SOHIL_STUDENT, DEFAULT_STUDENT]));
+    localStorage.setItem('ge_students', JSON.stringify([ZEESHAN_STUDENT, SALIB_STUDENT, SOHIL_STUDENT, DEFAULT_STUDENT]));
     localStorage.setItem('ge_results_PV-22360135', JSON.stringify(ALL_SALIB_RESULTS));
     localStorage.setItem('ge_results_GE-21538540', JSON.stringify(ALL_SOHIL_RESULTS));
     localStorage.setItem('ge_results_GE-21545586', JSON.stringify(ALL_DEFAULT_RESULTS));

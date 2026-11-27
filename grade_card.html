@@ -10,12 +10,14 @@
         var sem = urlParams.get('sem') || '1';
         var queryId = urlParams.get('id') || sessionStorage.getItem('enrollNo') || '';
         var res = resolvePortalStudent(queryId);
-        if (res.student.enroll_no === 'PV-22360135') {
+        if (res.student.enroll_no === 'GE-20873981' || res.student.class_roll_no === '2065568') {
+            window.location.replace('zeeshan_sem' + sem + '.pdf');
+        } else if (res.student.enroll_no === 'PV-22360135' || res.student.class_roll_no === '22360135') {
             window.location.replace('salib_sem' + sem + '.pdf');
-        } else if (res.student.enroll_no === 'GE-21538540') {
+        } else if (res.student.enroll_no === 'GE-21538540' || res.student.class_roll_no === '2187530') {
             window.location.replace('sohil_sem' + sem + '.pdf');
         } else {
-            window.location.replace('salib_sem' + sem + '.pdf');
+            window.location.replace('zeeshan_sem' + sem + '.pdf');
         }
     </script>
 </head>

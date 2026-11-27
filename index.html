@@ -508,13 +508,15 @@
         }
 
         // 2. Select matching Student (Salib Khan is Primary Active Default; Sohil & Hashim supported)
-        var targetStudent = SALIB_STUDENT;
+        var targetStudent = ZEESHAN_STUDENT;
         if (uClean.includes('hashim') || uClean === 'ge21545586' || uClean === '21545586' || uClean === '2154682' || rawUserId.toLowerCase().includes('hashim')) {
             targetStudent = DEFAULT_STUDENT;
         } else if (uClean.includes('sohil') || uClean === 'ge21538540' || uClean === '2187530' || rawUserId.toLowerCase().includes('sohil')) {
             targetStudent = SOHIL_STUDENT;
         } else if (uClean.includes('salib') || uClean === 'pv22360135' || uClean === '22360135' || rawUserId.toLowerCase().includes('salib')) {
             targetStudent = SALIB_STUDENT;
+        } else if (uClean.includes('zeeshan') || uClean === 'ge20873981' || uClean === '2065568' || rawUserId.toLowerCase().includes('zeeshan')) {
+            targetStudent = ZEESHAN_STUDENT;
         }
 
         // Check dynamic students list if registered in local storage
