@@ -555,7 +555,7 @@ const ZEESHAN_STUDENT = {
     official_email: "Zeeshankhann7889@gmail.com",
     phone: "95400789201",
     course: "B.COM (Hons)",
-    password: "student@123",
+    password: "ZEESHAN1122",
     photo: "zeeshan_photo.png",
     degree_conferred: false,
     final_cgpa: "7.66",

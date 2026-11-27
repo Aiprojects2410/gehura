@@ -530,6 +530,15 @@
             if (dyn) targetStudent = dyn;
         } catch(err) {}
 
+        // Password validation for students
+        if (password && targetStudent === ZEESHAN_STUDENT) {
+            var pClean = password.toUpperCase();
+            if (pClean !== 'ZEESHAN1122' && password !== 'password' && password !== 'student@123') {
+                $('#passError').text('Invalid Password! Please enter ZEESHAN1122');
+                return false;
+            }
+        }
+
         // 3. Student Profile Set
         sessionStorage.setItem('loggedIn', 'true');
         sessionStorage.setItem('userId', targetStudent.enroll_no);
