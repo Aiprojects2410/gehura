@@ -156,7 +156,7 @@
                 var curStudent = resObj.student;
 
                 if (curStudent.degree_conferred) {
-                    var batchText = curStudent.convocation_year === '2026' ? '2023-2026' : '2021-2024';
+                    var batchText = curStudent.convocation_year === '2023' ? '2020-2023' : (curStudent.convocation_year === '2026' ? '2023-2026' : '2021-2024');
                     document.write(`
                         <div style="background: linear-gradient(135deg, #fef3c7, #fffbeb); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 14px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);">
                             <div style="display:flex; align-items:center; gap:16px;">
